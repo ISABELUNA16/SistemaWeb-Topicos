@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AtencionMedicamento" table="Atencion_medicamento">
+    <id name="codAmedicamento" type="integer" column="cod_amedicamento">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="codAtencion" type="integer" column="cod_atencion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="codMedicamento" type="integer" column="cod_medicamento" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedConcentracion" type="integer" column="amed_concentracion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedUnidad" type="integer" column="amed_unidad" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedDosis" type="integer" column="amed_dosis" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedTdosis" type="integer" column="amed_tdosis" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedDuracion" type="integer" column="amed_duracion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedTduracion" type="integer" column="amed_tduracion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="codUser" type="integer" column="cod_user" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="amedFegReg" type="datetime" column="amed_feg_reg" nullable="true"/>
+    <field name="amedEstado" type="integer" column="amed_estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

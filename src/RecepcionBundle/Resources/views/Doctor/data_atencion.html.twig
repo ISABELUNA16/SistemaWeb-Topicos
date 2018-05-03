@@ -1,0 +1,49 @@
+{%set i=0%}
+{% for lst in listaAtenciones %}
+    {% set i = i + 1 %}
+    <tr>
+        <td style="font-size: 11px !important;text-align: center;border-right: 1px solid #dddddd;"> {{i}} </td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.nombre}}</td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.paterno}}</td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.materno}}</td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.dni}} </td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.fechareg}} </td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.estado}} </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;">
+            {%if lst.codestado==2%}
+            <a href="javascript:;" class="btn btn-xs red" onclick="RecibirAtencion('{{lst.codigo}}');">
+                <i class="fa fa-clock-o"></i>
+            </a>
+            {%else%}
+            <a href="javascript:;" class="btn btn-xs green">
+                <i class="fa fa-check"></i>
+            </a>    
+            {%endif%}   
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;">
+            <a  class="btn btn-xs default"   href="{{path('antecedentes_home',{codatencion:lst.codigo,tipo:1})}}">
+                <i class="fa fa-hospital-o"></i>
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;">
+            <a  class="btn btn-xs red"  onclick="ExamenClinico('{{lst.codigo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}')">
+                <i class="fa fa-heartbeat"></i>
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;"  >
+            <a class="btn btn-xs blue" onclick="DatosPaciente('{{lst.dni}}','{{lst.percodigo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}','{{lst.tipo}}')">
+                <i class="fa fa-user-md"></i>
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;"  >
+            <a class="btn btn-xs grey-mint" onclick="Historial('{{lst.percodigo}}','{{lst.tipo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}')">
+                <i class="fa fa-folder-open"></i>
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;">
+            <a  class="btn btn-xs green" {%if lst.codestado<=2 or lst.codestado>=4 %}disabled{%else%}href="{{path('doctor_diagnostico',{codatencion:lst.codigo})}}"{%endif%}>Diagnostico
+                <i class="fa fa-stethoscope"></i>
+            </a>
+        </td>
+    </tr>
+{%endfor%}

@@ -1,0 +1,52 @@
+{%if result%}
+    <div class="col-md-12" style="padding-bottom: 10px;display: none">
+        <label class="control-label">Codigo</label>
+        <input type="text" placeholder="INGRESE SU NOMBRE" class="form-control" id="txtcodigo" name="txtcodigo" value="{{data.codigo}}" readonly>
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;display: none">
+        <label class="control-label">Codigo</label>
+        <input type="text" placeholder="INGRESE SU NOMBRE" class="form-control" id="txttipo" name="txttipo" value="{{tipo}}" readonly>
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Nombre</label>
+        <input type="text" placeholder="INGRESE SU NOMBRE" class="form-control" id="txtnombre" name="txtnombre" value="{{data.nombres}}" readonly>
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Apellido Paterno</label>
+        <input type="text" placeholder="INGRESE SU APELLIDO PATERNO" class="form-control" id="txtapepaterno" name="txtapepaterno" value="{{data.apaterno}}" readonly>
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Apellido Materno</label>
+        <input type="text" placeholder="INGRESE SU APELLIDO MATERNO" class="form-control" id="txtapematerno" name="txtapematerno" value="{{data.amaterno}}" readonly>
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px;text-align: center">
+        <button type="button" class="btn btn-danger" onclick="GuardarAtencion();" >REGISTRAR ATENCIÓN</button>
+    </div>
+{%else%}
+    <div class="col-md-12" style="padding-bottom: 10px;display: none">
+        <label class="control-label">Codigo</label>
+        <input type="text" placeholder="INGRESE SU NOMBRE" class="form-control" id="txtcodigo" name="txtcodigo">
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;display: none">
+        <label class="control-label">Codigo</label>
+        <input type="text" placeholder="INGRESE SU NOMBRE" class="form-control" id="txttipo" name="txttipo" value="{{tipo}}">
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Nombre</label>
+        <input type="text" placeholder="INGRESE SU NOMBRE" class="form-control" id="txtnombre" name="txtnombre">
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Apellido Paterno</label>
+        <input type="text" placeholder="INGRESE SU APELLIDO PATERNO" class="form-control" id="txtapepaterno" name="txtapepaterno">
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Apellido Materno</label>
+        <input type="text" placeholder="INGRESE SU APELLIDO MATERNO" class="form-control" id="txtapematerno" name="txtapematerno">
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;padding-top: 10px;text-align: center">
+        <button type="button" class="btn btn-danger" onclick="GuardarAtencion();" >REGISTRAR ATENCIÓN</button>
+    </div>
+{%endif%}    
+
+
+                                                           

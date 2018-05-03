@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AtencionProcedimiento" table="Atencion_procedimiento">
+    <id name="codAprocedimiento" type="integer" column="cod_aprocedimiento">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="codAtencion" type="integer" column="cod_atencion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="codProcedimiento" type="integer" column="cod_procedimiento" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="codUser" type="integer" column="cod_user" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="aprocFegReg" type="datetime" column="aproc_feg_reg" nullable="true"/>
+    <field name="aprocEstado" type="integer" column="aproc_estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

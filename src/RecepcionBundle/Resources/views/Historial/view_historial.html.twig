@@ -1,0 +1,118 @@
+<div class="col-md-3">
+    <div class=" portlet light" style="padding-left: 10px;padding-right: 10px;">
+        <div class="light profile-sidebar-portlet" style="border-bottom: 1px solid #eee;padding: 5px 0 0!important;">
+            <!-- SIDEBAR USERPIC -->
+            <div class="profile-userpic">
+                <img src="/sisweb/TopicoIPD/web/bundles/public/img/icon/user.png" class="img-responsive" alt="" style="    width: 100px !important;"> </div>
+            <!-- SIDEBAR USER TITLE -->
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name" style="font-size: 12px !important;" id="title_historial"></div>
+                <div class="profile-usertitle-job" style="color: #cb2f1d !important;">PACIENTE</div>
+            </div>
+            <!-- END MENU -->
+        </div>
+        <ul class="feeds" style="    padding-top: 5px;">
+            {%for lst in Atenciones%}
+                <li>
+                    <div class="col1">
+                        <div class="cont">
+                            <a class="cont-col1" href="{{path('doctor_generar_receta',{codatencion:lst.codAtencion})}}" target="_blank">
+                                <div class="label label-sm label-danger">
+                                    <i class="fa fa-file-pdf-o"></i>
+                                </div>
+                            </a>
+                            <div class="cont-col2">
+                                <div class="desc"> <a onclick="VerHistorial('{{lst.ateFecReg | date('d-m-y')}}','{{lst.codAtencion}}');">Atención</a> :</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div class="date">{{lst.ateFecReg | date('d-m-y')}}</div>
+                    </div>
+                </li>
+            {%endfor%}
+        </ul>
+    </div>
+</div>
+
+<div class="col-md-9" >
+    <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;">
+        <a onclick="CambiarVistaHistorial(1);" title="DIAGNOSTICO">
+            <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
+                <div class="display" style="margin-bottom: 5px !important;">
+                    <div class="number">
+                        <h3 class="font-red-sharp">
+                            <span style="font-size: 20px !important;">Diagnostico</span>
+                        </h3>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaD">Lista de registros : 00-00-00</small>
+                    </div>
+                    <div class="icon" style="padding-top: 9px !important;">
+                        <i class="icon-pie-chart"></i>
+                    </div>
+                </div>
+                <div class="progress-info">
+                    <div class="progress">
+                        <span style="width: 100%;" class="progress-bar progress-bar-danger red-sharp">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;">
+        <a onclick="CambiarVistaHistorial(2);" title="PROCEDIMIENTO">
+            <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
+                <div class="display" style="margin-bottom: 5px !important;">
+                    <div class="number">
+                        <h3 class="font-red-sharp">
+                            <span style="font-size: 20px !important;">Procedimiento</span>
+                        </h3>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaP">Lista de registros : 00-00-00</small>
+                    </div>
+                    <div class="icon" style="padding-top: 9px !important;">
+                        <i class="icon-pie-chart"></i>
+                    </div>
+                </div>
+                <div class="progress-info">
+                    <div class="progress">
+                        <span style="width: 100%;" class="progress-bar progress-bar-danger red-sharp">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;">
+        <a onclick="CambiarVistaHistorial(3);" title="RECETA">
+            <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
+                <div class="display" style="margin-bottom: 5px !important;">
+                    <div class="number">
+                        <h3 class="font-red-sharp">
+                            <span style="font-size: 20px !important;">Receta</span>
+                        </h3>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Lista de registros : 00-00-00</small>
+                    </div>
+                    <div class="icon" style="padding-top: 9px !important;">
+                        <i class="icon-pie-chart"></i>
+                    </div>
+                </div>
+                <div class="progress-info">
+                    <div class="progress">
+                        <span style="width: 100%;" class="progress-bar progress-bar-danger red-sharp">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-12 col-xs-12 col-sm-12" style="background: white;padding-top: 5px;">
+        <div id="viewlistahistorial">
+          <div class="tab-content"> 
+                <div class="mt-actions">
+                    <p class="font-dark bold uppercase" style="margin-top: 10px;margin-bottom: 5px;text-align: center">Escoger una atencion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

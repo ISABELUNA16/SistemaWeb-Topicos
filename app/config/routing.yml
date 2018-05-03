@@ -1,0 +1,17 @@
+recepcion:
+    resource: "@RecepcionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+acceso:
+    resource: "@AccesoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+modelo:
+    resource: "@ModeloBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+

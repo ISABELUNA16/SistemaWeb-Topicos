@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Paciente" table="Paciente">
+    <id name="codPaciente" type="integer" column="cod_paciente">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="pacNombre" type="string" column="pac_nombre" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="pacApaterno" type="string" column="pac_apaterno" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="pacAmaterno" type="string" column="pac_amaterno" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="pacDni" type="integer" column="pac_dni" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacGenero" type="integer" column="pac_genero" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacAreaTrabajo" type="string" column="pac_area_trabajo" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="pacSede" type="string" column="pac_sede" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="codCondicion" type="integer" column="cod_condicion" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="codSeguro" type="integer" column="cod_seguro" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacNacimiento" type="date" column="pac_nacimiento" nullable="true"/>
+    <field name="pacLugarNac" type="integer" column="pac_lugar_nac" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacLugarProc" type="integer" column="pac_lugar_proc" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacTelefono" type="integer" column="pac_telefono" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacDireccion" type="text" column="pac_direccion" length="-1" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="pacProfession" type="string" column="pac_profession" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="pacServicio" type="integer" column="pac_servicio" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacTipoPlaso" type="integer" column="pac_tipo_plaso" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacEstadoCivil" type="integer" column="pac_estado_civil" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacNumHijoVivos" type="integer" column="pac_num_hijo_vivos" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pacNumHijoFallecidos" type="integer" column="pac_num_hijo_fallecidos" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

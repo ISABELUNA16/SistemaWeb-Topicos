@@ -1,0 +1,34 @@
+{%set i=0%}
+{% for lst in listaAtenciones %}
+    {% set i = i + 1 %}
+    <tr>
+        <td style="font-size: 11px !important;text-align: center;border-right: 1px solid #dddddd;"> {{i}} </td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.nombre}}</td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.paterno}}</td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.materno}}</td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.dni}} </td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.fechareg}} </td>
+        <td style="font-size: 11px !important;text-align: center"> {{lst.estado}} </td>
+
+        <td style="text-align: center;border-left: 1px solid #dddddd;">
+            <a href="javascript:;" class="btn btn-xs red" onclick="ExamenClinico('{{lst.codigo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}')" data-toggle="confirmation" data-original-title="Are you sure ?" title="" >Examen
+                <i class="fa fa-heartbeat"></i>
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;" onclick="DatosPaciente('{{lst.dni}}','{{lst.percodigo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}','{{lst.tipo}}')">
+            <a href="javascript:;" class="btn btn-xs blue">Datos
+                <i class="fa fa-user-md"></i>
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;"  >
+            <a class="btn btn-xs green" onclick="Historial('{{lst.percodigo}}','{{lst.tipo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}')" {%if lst.codestado!=4%}disabled{%endif%}>
+                <i class="fa fa-stethoscope"></i>Receta
+            </a>
+        </td>
+        <td style="text-align: center;border-left: 1px solid #dddddd;">
+            <a href="javascript:;" class="btn btn-xs red" {%if lst.codestado>1%}disabled{%endif%}>
+                <i class="fa fa fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+{%endfor%}

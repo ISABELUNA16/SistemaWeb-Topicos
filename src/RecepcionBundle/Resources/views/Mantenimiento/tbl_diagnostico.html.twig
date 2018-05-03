@@ -1,0 +1,54 @@
+{%if result%} 
+    {%set i=0%}
+    {%for lst in diagnostico%}
+        {%set i=i+1%}
+        {%for lst2 in Tdiagnostico%}
+            {%if lst2.codTdiagnostico==lst.codTdiagnostico%}
+                <div class="mt-actions">
+                    <div class="mt-action">
+                        <div class="mt-action-body">
+                            <div class="mt-action-row">
+                                <div class="mt-action-info ">
+                                    <div class="mt-action-details ">
+                                        <span class="mt-action-author"> {{lst.diagDescripcion}}</span>
+                                        <p class="mt-action-desc">{{lst2.tdiagDescripcion}}</p>
+                                    </div>
+                                </div>
+                                <div class="mt-action-datetime">
+                                    <span class="mt-action-date"><i class="fa fa-medkit"></i> {{lst.diagCodigo}}</span>
+                                </div>
+                                <div class="mt-action-datetime">
+                                    <span class="mt-action-date">{% if lst.diagEstado==1%}Activo{%else%}Inactivo{%endif%}</span>
+                                </div>
+                                <div class="mt-action-buttons">
+                                    <div class="btn-group btn-group-circle" style="    padding-left: 20px;">
+                                        <button class="btn btn-xs red btn-circle" style="margin-left: 0px;margin-right: 0px;" onclick="BorrarDiagnostico('{{lst.codDiagnostico}}')"><i class="fa fa fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {%endif%}                
+        {%endfor%}
+    {%endfor%}
+{%else%}
+    <div class="col-md-6 col-md-offset-4"> 
+        <div class="mt-actions">
+            <div class="mt-action">
+                <div class="mt-action-img">
+                    <img src="{{asset('bundles/public/img/icon/alert.png')}}" style="width: 100%;" > </div>
+                <div class="mt-action-body">
+                    <div class="mt-action-row">
+                        <div class="mt-action-info">
+                            <div class="mt-action-details ">
+                                <span class="mt-action-author" style="color: white">Mensaje</span>
+                                <p class="mt-action-desc">Sin registros existentes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endif%}

@@ -1,0 +1,251 @@
+{%if data%}
+    <div class="col-md-4" style="padding-bottom: 10px;" >
+        <label class="control-label">Dni</label>
+        <input type="text" placeholder="INGRESE EL DNI" class="form-control"  value="{{datos.pacDni}}" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Genero</label>
+        <input type="text" placeholder="INGRESE EL DNI" class="form-control"  value="{{datos.pacGenero}}" disabled>
+
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Fecha Nacimiento</label>
+        <input type="text"  class="form-control" {%if datos.pacNacimiento!=''%}value="{{ datos.pacNacimiento | date('Y-m-d')}}" {%endif%} disabled/>
+    </div>
+    <div class="col-md-8" style="padding-bottom: 10px;">
+        <label class="control-label">Sede</label>
+        <input type="text"  class="form-control" value="ESTADIO NACIONAL" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Condicion Laboral</label>
+        <input type="text"  class="form-control" value="{{datos.codCondicion}}" disabled/>
+    </div>
+    <div class="col-md-8" style="padding-bottom: 10px;">
+        <label class="control-label">Are de Trabajo</label>
+        <input type="text"  class="form-control" value="{{datos.pacAreaTrabajo}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Tipo Seguro</label>
+        <input type="text"  placeholder="SEGURO" class="form-control" value="{{datos.segDescripcion}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Lugar de Nacimiento</label>
+        <input type="text"  class="form-control" value="{{datos.departamento}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label" style="color: white">-</label>
+        <input type="text"  class="form-control" value="{{datos.provincia}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label" style="color: white">-</label>
+        <input type="text"  class="form-control" value="{{datos.distrito}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Procedencia</label>
+        <input type="text"  class="form-control" value="{{datos.dirdepartamento}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label" style="color: white">-</label>
+        <input type="text"  class="form-control" value="{{datos.dirprovincia}}" disabled/>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label" style="color: white">-</label>
+        <input type="text"  class="form-control" value="{{datos.dirdistrito}}" disabled/>
+    </div>
+    <div class="col-md-8" style="padding-bottom: 10px;">
+        <label class="control-label">Profesión</label>
+        <input type="text"  class="form-control"  value="{{ datos.pacProfession}}" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Telefono</label>
+        <input type="text" placeholder="INGRESE SU TELEFONO" class="form-control" value="{{ datos.pacTelefono}}" disabled>
+    </div>
+    <div class="col-md-12" style="padding-bottom: 10px;">
+        <label class="control-label">Dirección</label>
+        <input type="text" placeholder="INGRESE SU DIRRECCIÓN" class="form-control" value="{{ datos.pacDireccion}}" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Tiempo de Servicio</label>
+        <input type="text" placeholder="TIEMPO" class="form-control"  required value="{{ datos.pacServicio}}" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Tipo de plazo</label>
+        <input type="text" placeholder="TIEMPO" class="form-control" value="MESES" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Estado Civil</label>
+        <input type="text" placeholder="EST CIVIL" class="form-control" value="{{ datos.pacEstadoCivil}}" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Hijo Vivos</label>
+        <input type="text" placeholder="N° HIJOS" class="form-control"  value="{{ datos.pacNumHijoVivos}}" disabled>
+    </div>
+    <div class="col-md-4" style="padding-bottom: 10px;">
+        <label class="control-label">Hijos Fallecidos</label>
+        <input type="text" placeholder="N° HIJOS" class="form-control"  value="{{ datos.pacNumHijoFallecidos}}" disabled>
+    </div>
+
+{%else%}
+
+    <form action="#" id="submit_form">   
+        <div class="col-md-4" style="padding-bottom: 10px;" >
+            <label class="control-label">Dni</label>
+            <input type="text" placeholder="INGRESE EL DNI" class="form-control" id="txtdni" name="txtdni" value="{{datos.pacDni}}" readonly>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Genero</label>
+            <select class="form-control" id="cbogenero" name="cbogenero" required>
+                <option value="0">[Seleccionar]</option>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Fecha Nacimiento</label>
+            <input type="date"  class="form-control"id="txtfecha" name="txtfecha" value="{{ datos.pacNacimiento | date('Y-m-d')}}"/>
+        </div>
+        <div class="col-md-8" style="padding-bottom: 10px;">
+            <label class="control-label">Sede</label>
+            <select class="form-control" id="cbosede" name="cbosede" required>
+                <option value="0">[Seleccionar]</option>
+                <option value="1">ESTADIO NACIONAL</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Condicion Laboral</label>
+            <select class="form-control" id="cbocondicion" name="cbocondicion" required>
+                <option value="0">[Seleccionar]</option>
+                {% for cbocond in condicion %}
+                    <option value="{{cbocond.codCondicion}}">{{cbocond.condDescripcion}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="col-md-8" style="padding-bottom: 10px;">
+            <label class="control-label">Are de Trabajo</label>
+            <select class="form-control" id="cboarea" name="cboarea" required>
+                <option value="0">[Seleccionar]</option>
+                <option value="1">Area 1</option>
+                <option value="2">Area 2</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Tipo Seguro</label>
+            <select class="form-control" id="cboseguro" name="cboseguro" required>
+                <option value="0">[Seleccionar]</option>
+                {% for cboseg in seguro %}
+                    <option value="{{cboseg.codSeguro}}">{{cboseg.segDescripcion}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Lugar de Nacimiento</label>
+            <select class="form-control" id="cbodepartamento1" name="cbodepartamento1" required onchange="CargarProvincias(this.value, 1, 0);">
+                <option value="0">[Seleccionar]</option>
+                {% for cbodep in departamento %}
+                    <option value="{{cbodep.dep}}">{{cbodep.nom}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label" style="color: white">-</label>
+            <select class="form-control" id="cboprovincia1" name="cboprovincia1" required onchange="CargarDistrito(this.value, 1, 0);">
+                <option value="0">[Seleccionar]</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label" style="color: white">-</label>
+            <select class="form-control" id="cbodistrito1" name="cbodistrito1" required>
+                <option value="0">[Seleccionar]</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Procedencia</label>
+            <select class="form-control" id="cbodepartamento2" name="cbodepartamento2" required onchange="CargarProvincias(this.value, 2, 0);">
+                <option value="0">[Seleccionar]</option>
+                {% for cbodep in departamento %}
+                    <option value="{{cbodep.dep}}">{{cbodep.nom}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label" style="color: white">-</label>
+            <select class="form-control" id="cboprovincia2" name="cboprovincia2" required onchange="CargarDistrito(this.value, 2, 0);">
+                <option value="0">[Seleccionar]</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label" style="color: white">-</label>
+            <select class="form-control" id="cbodistrito2" name="cbodistrito2" required>
+                <option value="0">[Seleccionar]</option>
+            </select>
+        </div>
+        <div class="col-md-8" style="padding-bottom: 10px;">
+            <label class="control-label">Profesión</label>
+            <input type="text" placeholder="INGRESE SU DIRRECCIÓN" class="form-control" id="txtprofesion" name="txtprofesion" value="{{ datos.pacProfession}}" required>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Telefono</label>
+            <input type="text" placeholder="INGRESE SU TELEFONO" class="form-control" id="txttelefono" name="txttelefono" value="{%if datos.pacTelefono%}{{datos.pacTelefono}}{%endif%}" required>
+        </div>
+        <div class="col-md-12" style="padding-bottom: 10px;">
+            <label class="control-label">Dirección</label>
+            <input type="text" placeholder="INGRESE SU DIRRECCIÓN" class="form-control" id="txtdireccion" name="txtdireccion" value="{{ datos.pacDireccion}}" required>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Tiempo de Servicio</label>
+            <input type="text" placeholder="TIEMPO" class="form-control" id="txtiempo" name="txtiempo" value="{%if datos.pacServicio%}{{ datos.pacServicio}}{%endif%}"   required>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Tipo de plazo</label>
+            <select class="form-control" id="cboplazo" name="cboplazo" required>
+                <option value="0">[Seleccionar]</option>
+                <option value="1">Años</option>
+                <option value="2">Meses</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Estado Civil</label>
+            <select class="form-control" id="cbocivil" name="cbocivil" required>
+                <option value="0">[Seleccionar]</option>
+                <option value="1">Soltero(a)</option>
+                <option value="2">Casado(a)</option>
+            </select>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Hijo Vivos</label>
+            <input type="text" placeholder="HIJOS" class="form-control" id="txthijovivos" name="txthijovivos"  value="{%if datos.pacNumHijoVivos!=''%}{{ datos.pacNumHijoVivos}}{%elseif datos.pacNumHijoVivos=='0'%}0{%endif%}" required>
+        </div>
+        <div class="col-md-4" style="padding-bottom: 10px;">
+            <label class="control-label">Hijos Fallecidos </label>
+            <input type="text" placeholder="HIJOS" class="form-control" id="txthijofallecido" name="txthijofallecido" value="{%if datos.pacNumHijoFallecidos!=''%}{{ datos.pacNumHijoFallecidos}}{%elseif datos.pacNumHijoFallecidos=='0'%}0{%endif%}" required>
+        </div>
+        <div class="col-md-12" style="padding-bottom: 10px;padding-bottom: 10px;text-align: center;">
+            <button type="button" class="btn red" id="btn_registrar_datos" name="btn_registrar_datos" onclick="GuardarDatosPaciente();">Registrar</button> 
+        </div>
+    </form>
+    <script>
+        $('#cbogenero').val({{datos.pacGenero}});{#DATA GENERO#}
+        $('#cbosede').val({{datos.pacSede}});
+        $('#cbocondicion').val({{datos.codCondicion}});
+        $('#cboarea').val({{datos.pacAreaTrabajo}});
+        $('#cboseguro').val({{datos.codSeguro}});
+        $('#cboplazo').val({{datos.pacTipoPlaso}});
+        $('#cbocivil').val({{datos.pacEstadoCivil}});
+
+        {#LUGAR DE NACIMIENTO CARGAR DATOS EXISTENTE DE LOS COMBOS#}
+            {%if lnacimiento%}
+            $('#cbodepartamento1').val('{{lnacimiento.dep}}');
+            CargarProvincias('{{lnacimiento.dep}}', 1, '{{lnacimiento.prov}}');
+            CargarDistrito('{{lnacimiento.prov}}', 1, '{{lnacimiento.dist}}');
+            {%endif%}
+
+        {#PROCEDENCIA CARGAR DATOS EXISTENTE DE LOS COMBOS#}
+            {%if lprocedencia%}
+            $('#cbodepartamento2').val('{{lprocedencia.dep}}');
+            CargarProvincias('{{lprocedencia.dep}}', 2, '{{lprocedencia.prov}}')
+            CargarDistrito('{{lprocedencia.prov}}', 2, '{{lprocedencia.dist}}')
+            {%endif%}
+    </script>
+{%endif%}
+
+

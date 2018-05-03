@@ -1,0 +1,51 @@
+{%if result%}
+    {% for lst in lstAntecedentes %}
+        <div class="mt-actions">
+            <div class="mt-action">
+                <div class="mt-action-img">
+                    <img src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" style="width: 100%;"> </div>
+                <div class="mt-action-body">
+                    <div class="mt-action-row">
+                        <div class="mt-action-info ">
+                            <div class="mt-action-icon ">
+                                <i class="fa fa-stethoscope"></i>
+                            </div>
+                            <div class="mt-action-details ">
+                                <span class="mt-action-author">Doctor : {{lst.nom}} {{lst.ap}}</span>
+                                <p class="mt-action-desc">{{lst.descripcion}}</p>
+                            </div>
+                        </div>
+                        <div class="mt-action-datetime ">
+                            <span class="mt-action-date"><i class="fa fa-calendar"></i> {{lst.fecha | date('Y-m-d')}}</span>
+                        </div>
+                        <div class="mt-action-buttons ">
+                            <div class="btn-group btn-group-circle">
+                                <button class="btn btn-xs red btn-circle" style="margin-left: 0px;margin-right: 0px;" onclick="EliminarAntecedente('{{lst.codigo}}');"><i class="fa fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%endfor%}
+{%else%}
+    <div class="col-md-6 col-md-offset-4"> 
+        <div class="mt-actions">
+            <div class="mt-action">
+                <div class="mt-action-img">
+                    <img src="{{asset('bundles/public/img/icon/alert.png')}}" style="width: 100%;" > </div>
+                <div class="mt-action-body">
+                    <div class="mt-action-row">
+                        <div class="mt-action-info">
+                            <div class="mt-action-details ">
+                                <span class="mt-action-author" style="color: white">Mensaje</span>
+                                <p class="mt-action-desc">Sin registros existentes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endif%}
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Atencion" table="Atencion">
+    <id name="codAtencion" type="integer" column="cod_atencion">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="percodigo" type="integer" column="percodigo" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="ateTipoPer" type="integer" column="ate_tipo_per" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="codUser" type="integer" column="cod_user" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="atePeso" type="decimal" column="ate_peso" precision="8" scale="2" nullable="true"/>
+    <field name="ateTalla" type="decimal" column="ate_talla" precision="8" scale="2" nullable="true"/>
+    <field name="ateIndiceMasa" type="decimal" column="ate_indice_masa" precision="8" scale="2" nullable="true"/>
+    <field name="atePerAbdominal" type="decimal" column="ate_per_abdominal" precision="8" scale="2" nullable="true"/>
+    <field name="ateEstNutricional" type="text" column="ate_est_nutricional" length="-1" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="ateValAtropometria" type="integer" column="ate_val_atropometria" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="ateFreCardiaca" type="decimal" column="ate_fre_cardiaca" precision="8" scale="2" nullable="true"/>
+    <field name="ateFreRespiratoria" type="decimal" column="ate_fre_respiratoria" precision="8" scale="2" nullable="true"/>
+    <field name="ateFreArterial" type="decimal" column="ate_fre_arterial" precision="8" scale="2" nullable="true"/>
+    <field name="ateTemperatura" type="decimal" column="ate_temperatura" precision="8" scale="2" nullable="true"/>
+    <field name="ateValSignos" type="integer" column="ate_val_signos" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="atenAnamenis" type="text" column="aten_anamenis" length="-1" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="ateFecReg" type="datetime" column="ate_fec_reg" nullable="true"/>
+    <field name="codEstado" type="integer" column="cod_estado" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

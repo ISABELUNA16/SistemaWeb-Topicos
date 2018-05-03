@@ -1,0 +1,190 @@
+<?php
+
+namespace ModeloBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Antecente
+ *
+ * @ORM\Table(name="Antecente")
+ * @ORM\Entity
+ */
+class Antecente
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_antecedente", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codAntecedente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ant_descripcion", type="text", length=-1, nullable=true)
+     */
+    private $antDescripcion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_tantecedente", type="integer", nullable=true)
+     */
+    private $codTantecedente;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="ant_fecha_reg", type="datetime", nullable=true)
+     */
+    private $antFechaReg;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_usuario", type="integer", nullable=true)
+     */
+    private $codUsuario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ant_estado", type="integer", nullable=true)
+     */
+    private $antEstado;
+
+
+
+    /**
+     * Get codAntecedente
+     *
+     * @return integer
+     */
+    public function getCodAntecedente()
+    {
+        return $this->codAntecedente;
+    }
+
+    /**
+     * Set antDescripcion
+     *
+     * @param string $antDescripcion
+     *
+     * @return Antecente
+     */
+    public function setAntDescripcion($antDescripcion)
+    {
+        $this->antDescripcion = $antDescripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get antDescripcion
+     *
+     * @return string
+     */
+    public function getAntDescripcion()
+    {
+        return $this->antDescripcion;
+    }
+
+    /**
+     * Set codTantecedente
+     *
+     * @param integer $codTantecedente
+     *
+     * @return Antecente
+     */
+    public function setCodTantecedente($codTantecedente)
+    {
+        $this->codTantecedente = $codTantecedente;
+
+        return $this;
+    }
+
+    /**
+     * Get codTantecedente
+     *
+     * @return integer
+     */
+    public function getCodTantecedente()
+    {
+        return $this->codTantecedente;
+    }
+
+    /**
+     * Set antFechaReg
+     *
+     * @param \DateTime $antFechaReg
+     *
+     * @return Antecente
+     */
+    public function setAntFechaReg($antFechaReg)
+    {
+        $this->antFechaReg = $antFechaReg;
+
+        return $this;
+    }
+
+    /**
+     * Get antFechaReg
+     *
+     * @return \DateTime
+     */
+    public function getAntFechaReg()
+    {
+        return $this->antFechaReg;
+    }
+
+    /**
+     * Set codUsuario
+     *
+     * @param integer $codUsuario
+     *
+     * @return Antecente
+     */
+    public function setCodUsuario($codUsuario)
+    {
+        $this->codUsuario = $codUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get codUsuario
+     *
+     * @return integer
+     */
+    public function getCodUsuario()
+    {
+        return $this->codUsuario;
+    }
+
+    /**
+     * Set antEstado
+     *
+     * @param integer $antEstado
+     *
+     * @return Antecente
+     */
+    public function setAntEstado($antEstado)
+    {
+        $this->antEstado = $antEstado;
+
+        return $this;
+    }
+
+    /**
+     * Get antEstado
+     *
+     * @return integer
+     */
+    public function getAntEstado()
+    {
+        return $this->antEstado;
+    }
+}

@@ -1,0 +1,41 @@
+{%if LstSignos.ateValSignos==0%}
+<div class="col-md-6" style="padding-bottom: 10px;" >
+    <label class="control-label">Frecuencia Cardiaca</label>
+    <input type="text" placeholder="FRECUENCIA CARDIACA" class="form-control" id="txtfcardiaca" name="txtfcardiaca" required>
+</div>
+<div class="col-md-6" style="padding-bottom: 10px;">
+    <label class="control-label">Frecuencia Respiratoria</label>
+    <input type="text" placeholder="FRECUENCIA RESPIRATORIA" class="form-control" id="txtfrespiratoria" name="txtfrespiratoria" required>
+</div>
+<div class="col-md-6" style="padding-bottom: 10px;" >
+    <label class="control-label">Presion Arterial</label>
+    <input type="text" placeholder="PRESION ARTERIAL" class="form-control" id="txtparterial" name="txtparterial" required>
+</div>
+<div class="col-md-6" style="padding-bottom: 10px;">
+    <label class="control-label">Temperatura</label>
+    <input type="text" placeholder="TEMPERATURA" class="form-control" id="txttemperatura" name="txttemperatura" required>
+</div>
+<br>
+<div class="col-md-12" style="padding-bottom: 10px;padding-bottom: 10px;text-align: center;">
+    <button type="button" class="btn red" id="btn_act_signos" name="btn_act_signos" onclick="GuardarSignosVitales();" >Registrar</button> 
+</div>
+{%else%}
+<div class="col-md-6" style="padding-bottom: 10px;" >
+    <label class="control-label">Frecuencia Cardiaca</label>
+    <input type="text" placeholder="FRECUENCIA CARDIACA" class="form-control" id="txtfcardicac" name="txtfcardiaca" disabled value="{{LstSignos.ateFreCardiaca}}">
+</div>
+<div class="col-md-6" style="padding-bottom: 10px;">
+    <label class="control-label">Frecuencia Respiratoria</label>
+    <input type="text" placeholder="FRECUENCIA RESPIRATORIA" class="form-control" id="txtfrespiratoria" name="txtfrespiratoria" disabled value="{{LstSignos.ateFreRespiratoria}}">
+</div>
+<div class="col-md-6" style="padding-bottom: 10px;" >
+    <label class="control-label">Presion Arterial</label>
+    <input type="text" placeholder="PRESION ARTERIAL" class="form-control" id="txtparterial" name="txtparterial" disabled value="{{LstSignos.ateFreArterial}}">
+</div>
+<div class="col-md-6" style="padding-bottom: 10px;">
+    <label class="control-label">Temperatura</label>
+    <input type="text" placeholder="TEMPERATURA" class="form-control" id="txttemperatura" name="txttemperatura" disabled value="{{LstSignos.ateTemperatura}}">
+</div>
+{%endif%}
+
+
