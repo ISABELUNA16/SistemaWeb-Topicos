@@ -1,0 +1,72 @@
+.mt-actions .mt-action {
+                                                                        margin: 0;
+                                                                        padding: 15px 0;
+                                                                        border-bottom: 1px solid #f7f8f9;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-img {
+                                                                        width: 40px;
+                                                                        float: left;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body {
+                                                                        padding-left: 15px;
+                                                                        position: relative;
+                                                                        overflow: hidden;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row {
+                                                                        display: table;
+                                                                        width: 100%;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-info {
+                                                                        display: table-cell;
+                                                                        vertical-align: top;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-info .mt-action-icon {
+                                                                        display: table-cell;
+                                                                        padding: 6px 20px 6px 6px;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-info .mt-action-icon>i {
+                                                                        display: inline-block;
+                                                                        position: relative;
+                                                                        top: 10px;
+                                                                        font-size: 25px;
+                                                                        color: #cb2f1d;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-info .mt-action-details {
+                                                                        display: table-cell;
+                                                                        vertical-align: top;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-info .mt-action-details .mt-action-author {
+                                                                        color: #060606;
+                                                                        font-weight: 600;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-info .mt-action-details .mt-action-desc {
+                                                                        margin-bottom: 0;
+                                                                        color: #999b9b;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-datetime {
+                                                                        vertical-align: top;
+                                                                        display: table-cell;
+                                                                        text-align: center;
+                                                                        width: 150px;
+                                                                        white-space: nowrap;
+                                                                        padding-top: 15px;
+                                                                        color: #A6A8A8;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-datetime .mt-action-dot {
+                                                                        display: inline-block;
+                                                                        width: 10px;
+                                                                        height: 10px;
+                                                                        background-color: red;
+                                                                        border-radius: 50%!important;
+                                                                        margin-left: 5px;
+                                                                        margin-right: 5px;
+                                                                    }
+                                                                    .mt-actions .mt-action .mt-action-body .mt-action-row .mt-action-buttons {
+                                                                        vertical-align: top;
+                                                                        display: table-cell;
+                                                                        text-align: center;
+                                                                        width: 160px;
+                                                                        white-space: nowrap;
+                                                                        padding-top: 10px;
+                                                                    }
+                                                                    
