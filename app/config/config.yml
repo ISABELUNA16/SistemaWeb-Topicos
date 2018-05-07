@@ -44,11 +44,12 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-      global:
+        global:
             title: 'Topico IPD'
             pathRecursos: "/sisweb/recursos"            
             pathWeb: "/public/web"
             pathRaiz: "/sisweb"
+       
 
 # Doctrine Configuration
 doctrine:
@@ -85,7 +86,7 @@ doctrine:
                 password: "%database_password3%"
                 charset:  UTF8
                 mapping_types:
-                    bit: boolean 
+                   bit: boolean
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"

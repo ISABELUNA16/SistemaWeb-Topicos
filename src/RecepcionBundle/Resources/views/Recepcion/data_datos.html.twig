@@ -1,10 +1,10 @@
 {%if data%}
     <div class="col-md-4" style="padding-bottom: 10px;" >
-        <label class="control-label">Dni</label>
+        <label class="control-label">DNI</label>
         <input type="text" placeholder="INGRESE EL DNI" class="form-control"  value="{{datos.pacDni}}" disabled>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
-        <label class="control-label">Genero</label>
+        <label class="control-label">Género</label>
         <input type="text" placeholder="INGRESE EL DNI" class="form-control"  value="{{datos.pacGenero}}" disabled>
 
     </div>
@@ -17,11 +17,11 @@
         <input type="text"  class="form-control" value="ESTADIO NACIONAL" disabled/>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
-        <label class="control-label">Condicion Laboral</label>
+        <label class="control-label">Condición Laboral</label>
         <input type="text"  class="form-control" value="{{datos.codCondicion}}" disabled/>
     </div>
     <div class="col-md-8" style="padding-bottom: 10px;">
-        <label class="control-label">Are de Trabajo</label>
+        <label class="control-label">Área de Trabajo</label>
         <input type="text"  class="form-control" value="{{datos.pacAreaTrabajo}}" disabled/>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
@@ -77,11 +77,11 @@
         <input type="text" placeholder="EST CIVIL" class="form-control" value="{{ datos.pacEstadoCivil}}" disabled>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
-        <label class="control-label">Hijo Vivos</label>
+        <label class="control-label">Hijos vivos</label>
         <input type="text" placeholder="N° HIJOS" class="form-control"  value="{{ datos.pacNumHijoVivos}}" disabled>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
-        <label class="control-label">Hijos Fallecidos</label>
+        <label class="control-label">Hijos fallecidos</label>
         <input type="text" placeholder="N° HIJOS" class="form-control"  value="{{ datos.pacNumHijoFallecidos}}" disabled>
     </div>
 
@@ -89,11 +89,11 @@
 
     <form action="#" id="submit_form">   
         <div class="col-md-4" style="padding-bottom: 10px;" >
-            <label class="control-label">Dni</label>
+            <label class="control-label">DNI</label>
             <input type="text" placeholder="INGRESE EL DNI" class="form-control" id="txtdni" name="txtdni" value="{{datos.pacDni}}" readonly>
         </div>
         <div class="col-md-4" style="padding-bottom: 10px;">
-            <label class="control-label">Genero</label>
+            <label class="control-label">Género</label>
             <select class="form-control" id="cbogenero" name="cbogenero" required>
                 <option value="0">[Seleccionar]</option>
                 <option value="1">Masculino</option>
@@ -121,11 +121,11 @@
             </select>
         </div>
         <div class="col-md-8" style="padding-bottom: 10px;">
-            <label class="control-label">Are de Trabajo</label>
+            <label class="control-label">Área de Trabajo</label>
             <select class="form-control" id="cboarea" name="cboarea" required>
                 <option value="0">[Seleccionar]</option>
-                <option value="1">Area 1</option>
-                <option value="2">Area 2</option>
+                <option value="1">Área 1</option>
+                <option value="2">Área 2</option>
             </select>
         </div>
         <div class="col-md-4" style="padding-bottom: 10px;">
@@ -184,7 +184,7 @@
             <input type="text" placeholder="INGRESE SU DIRRECCIÓN" class="form-control" id="txtprofesion" name="txtprofesion" value="{{ datos.pacProfession}}" required>
         </div>
         <div class="col-md-4" style="padding-bottom: 10px;">
-            <label class="control-label">Telefono</label>
+            <label class="control-label">Teléfono</label>
             <input type="text" placeholder="INGRESE SU TELEFONO" class="form-control" id="txttelefono" name="txttelefono" value="{%if datos.pacTelefono%}{{datos.pacTelefono}}{%endif%}" required>
         </div>
         <div class="col-md-12" style="padding-bottom: 10px;">
@@ -212,11 +212,11 @@
             </select>
         </div>
         <div class="col-md-4" style="padding-bottom: 10px;">
-            <label class="control-label">Hijo Vivos</label>
+            <label class="control-label">Hijos vivos</label>
             <input type="text" placeholder="HIJOS" class="form-control" id="txthijovivos" name="txthijovivos"  value="{%if datos.pacNumHijoVivos!=''%}{{ datos.pacNumHijoVivos}}{%elseif datos.pacNumHijoVivos=='0'%}0{%endif%}" required>
         </div>
         <div class="col-md-4" style="padding-bottom: 10px;">
-            <label class="control-label">Hijos Fallecidos </label>
+            <label class="control-label">Hijos fallecidos </label>
             <input type="text" placeholder="HIJOS" class="form-control" id="txthijofallecido" name="txthijofallecido" value="{%if datos.pacNumHijoFallecidos!=''%}{{ datos.pacNumHijoFallecidos}}{%elseif datos.pacNumHijoFallecidos=='0'%}0{%endif%}" required>
         </div>
         <div class="col-md-12" style="padding-bottom: 10px;padding-bottom: 10px;text-align: center;">

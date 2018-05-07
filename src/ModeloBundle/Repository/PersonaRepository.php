@@ -32,6 +32,7 @@ class PersonaRepository extends \Doctrine\ORM\EntityRepository {
               FROM      presupuesto.dbo.Trabajador AS t1
               WHERE     t1.nCodTra = '$codigo'
                         AND nEstTra = 1;";
+                        
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();
         $datos = $stmt->fetch();

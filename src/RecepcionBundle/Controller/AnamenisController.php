@@ -25,6 +25,7 @@ class AnamenisController extends Controller {
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS TOPICO   
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $Atencion = $em->getRepository('ModeloBundle:Atencion')->find($codatencion); //DATOS ATENCION BY CODATENCION
+        
         if ($Atencion->getateTipoPer() == 1) {
             $Persona = $em2->getRepository('ModeloBundle:Persona')->Data_trabajador_by_Codigo($Atencion->getpercodigo()); //DATOS PACIENTE
         } else {

@@ -33,13 +33,39 @@ class RecepcionController extends Controller
         if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
             return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
         }
+
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
         $DataAtenciones = $em->getRepository('ModeloBundle:Atencion')->Data_Lista_Atenciones();//DATOS LISTA ATENCIONES MEDICAS
         echo $this->renderView('RecepcionBundle:Recepcion:data_atencion.html.twig',['listaAtenciones'=>$DataAtenciones]);
         exit;
     }
     
-    
+    /**
+     * @Route("/evaluarAtencion", name="recepcion_validar_atencion")
+     * @Method("POST")
+     */
+    public function EvaluarAtencionAction(Request $request)
+    {
+        if(!$this->ValidarSession()){
+            return $this->redirectToRoute('acceso_login');
+        }
+
+        $dni = $request->request->get('dni');
+        $fc = $this->getDoctrine()->getManager();
+        $atencionRegistrada = $fc->getRepository('ModeloBundle:Atencion')->data_lista_atenciones_registradas($dni);
+        $cantRegistros = intval($atencionRegistrada[0]['cantRegistro']);
+        
+        if($cantRegistros >= 1){
+            $mensaje = ['mensaje'=>1];
+        }else{
+            $mensaje = ['mensaje'=>2];
+        }
+
+        echo json_encode($mensaje, JSON_PRETTY_PRINT) ;
+        exit;
+    }
+
+
     /**
      * @Route("/guardarAtencion", name="recepcion_new_atencion")
      * @Method("POST")
@@ -52,55 +78,90 @@ class RecepcionController extends Controller
         $session = new Session();
         $codper = $request->request->get('codper');//INPUT CODIGO DE LA PERSONA
         $tipo = $request->request->get('tipo');//INPUT CODIGO DE LA PERSONA
+        $dni = $request->request->get('dni'); //DNI DEL PACIENTE
+        $rpta = '';
+
         $usuario= $session->get('usuario');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
-        
-        if(!empty($codper)){
-            $atencion= new Atencion();
-            $atencion->setPercodigo($codper);
-            $atencion->setCodUser($usuario['codigo']);
-            $atencion->setAteFecReg(new \DateTime);
-            $atencion->setAteTipoPer($tipo);
-            $atencion->setCodEstado(1);
-            
-            $em->persist($atencion);
-            $em->flush();
+
+        $atencionRegistrada = $em->getRepository('ModeloBundle:Atencion')->data_lista_atenciones_registradas($dni);
+        $cantRegistros = intval($atencionRegistrada[0]['cantRegistro']);
+
+        if($cantRegistros >= 1){
+
+            $rpta=['result'=> 'existe'];
+            echo json_encode($rpta, JSON_PRETTY_PRINT);
+            exit;
+
         }else{
-            $nombres = $request->request->get('nom');
-            $paterno = $request->request->get('ap');
-            $materno = $request->request->get('am');
-            $dni= $request->request->get('dni');
+
+            if(!empty($codper)){
+                //si el trabajador es CAS
+                $atencion= new Atencion();
+                $atencion->setPercodigo($codper);
+                $atencion->setCodUser($usuario['codigo']);
+                $atencion->setAteFecReg(new \DateTime);
+                $atencion->setAteTipoPer($tipo);
+                $atencion->setCodEstado(1);
+                
+                $em->persist($atencion);
+                $em->flush();
+
+                $rpta=['result'=>'registrado'];
             
-            $paciente= new Paciente();
-            $paciente->setPacNombre($nombres);
-            $paciente->setPacApaterno($paterno);
-            $paciente->setPacAmaterno($materno);
-            $paciente->setPacDni($dni);
-            $em->persist($paciente);
-            $em->flush();
+            }else{
+
+                //Si el trabajador es tercero o nuevo.
+                $nombres = $request->request->get('nom');
+                $paterno = $request->request->get('ap');
+                $materno = $request->request->get('am');
+                $dni= $request->request->get('dni');
+                
+                $paciente= new Paciente();
+                $paciente->setPacNombre($nombres);
+                $paciente->setPacApaterno($paterno);
+                $paciente->setPacAmaterno($materno);
+                $paciente->setPacDni($dni);
+                $em->persist($paciente);
+                $em->flush();
+                
+                $Percodigo=$paciente->getCodPaciente();
+                
+                $atencion= new Atencion();
+                $atencion->setPercodigo($Percodigo);
+                $atencion->setCodUser($usuario['codigo']);
+                $atencion->setAteFecReg(new \DateTime);
+                $atencion->setAteTipoPer(2);
+                $atencion->setCodEstado(1);
+                
+                $em->persist($atencion);
+                $em->flush();
+
+                $rpta=['result'=>'registrado'];
+            }
             
-            $Percodigo=$paciente->getCodPaciente();
             
-            $atencion= new Atencion();
-            $atencion->setPercodigo($Percodigo);
-            $atencion->setCodUser($usuario['codigo']);
-            $atencion->setAteFecReg(new \DateTime);
-            $atencion->setAteTipoPer(2);
-            $atencion->setCodEstado(1);
+           /* if(!$atencion->getCodAtencion()){
+                $rpta=['result'=>'no registrado'];
             
-            $em->persist($atencion);
-            $em->flush();
+            }else{
+                $rpta=['result'=>'registrado'];
+            }*/
+            
+            if(empty($rpta)){
+                $rpta=['result'=>'no registrado'];
+                echo json_encode($rpta, JSON_PRETTY_PRINT);
+                exit;
+
+            }else{
+                
+                echo json_encode($rpta, JSON_PRETTY_PRINT);
+                exit;    
+            }
+            
         }
         
-        
-        if(!$atencion->getCodAtencion()){
-            $rpta=['result'=>false];
-        }else{
-            $rpta=['result'=>true];
-        }
-        
-        echo json_encode($rpta, JSON_PRETTY_PRINT);
-        exit;
+       
     }
     
     /**
@@ -133,6 +194,7 @@ class RecepcionController extends Controller
         if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
             return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
         }
+
         $codigo =$request->request->get('codigo');//IMPUT CODIGO
         
         $peso = $request->request->get('peso');//INPUT PESO
@@ -148,6 +210,7 @@ class RecepcionController extends Controller
         $atencion->setAteTalla($talla);
         $atencion->setAteIndiceMasa($IMC);
         $atencion->setAtePerAbdominal($pabdominal);
+       
         switch ($IMC) {
             case ($IMC<18):
                 $enutricional='Peso Bajo';
@@ -175,7 +238,7 @@ class RecepcionController extends Controller
             $atencion->setCodEstado(2);
         }    
         $em->flush();
-        $rpta=['result'=>true,'mensaje'=>'Se Registro Correctamente el Examen Antropometrico'];
+        $rpta=['result'=>true,'mensaje'=>'Se registró correctamente el examen Antropométrico'];
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }
@@ -208,7 +271,7 @@ class RecepcionController extends Controller
         }
         $em->flush();
         
-        $rpta=['result'=>true,'mensaje'=>'Se Registro Correctamente el Examen Antropometrico'];
+        $rpta=['result'=>true,'mensaje'=>'Se registró correctamente el examen Antropométrico'];
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }

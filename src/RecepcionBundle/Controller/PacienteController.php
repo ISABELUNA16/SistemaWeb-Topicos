@@ -22,6 +22,7 @@ class PacienteController extends Controller {
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS ACTIVIDAD IPD
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS ACTIVIDAD IPD
         $dni = $request->get('dni'); //PARAMETER POST 
+       
         $DataPersona = $em2->getRepository('ModeloBundle:Persona')->Data_trabajador_by_Dni($dni); //DATOS DE LA TABLA TRABAJADOR
         $result = true;
         $tipo = 1;

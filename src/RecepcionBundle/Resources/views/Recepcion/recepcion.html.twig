@@ -4,7 +4,7 @@
         <div class="container">
             <!-- BEGIN PAGE TITLE -->
             <div class="page-title">
-                <h1><strong style="font-family: monospace;">TOPICO</strong> <small>Sistema Web</small></h1>
+                <h1><strong style="font-family: monospace;">TÓPICO</strong> <small> Sistema Web</small></h1>
             </div>
             <!-- END PAGE TITLE -->                    
         </div>
@@ -13,7 +13,7 @@
 
 {% block breadcrumb %}
     <ul class="page-breadcrumb breadcrumb">
-        <li class="active">Registro de Atencion Medica</li><i class="fa fa-circle"></i> 
+        <li class="active">Registro de Atención Médica</li><i class="fa fa-circle"></i> 
     </ul>
 {% endblock %}
 
@@ -29,7 +29,7 @@
                                 <div class="portlet-title tabbable-line">
                                     <div class="caption caption-md">
                                         <i class="icon-globe theme-font hide"></i>
-                                        <span class="caption-subject font-blue-madison bold uppercase" style="color: #697882 !important;">LISTA DE ATENCIONES DEL DIA DE HOY</span><br>
+                                        <span class="caption-subject font-blue-madison bold uppercase" style="color: #697882 !important;">LISTA DE ATENCIONES DEL DÍA DE HOY</span><br>
                                     </div>
 
                                 </div>
@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="btn-group">
-                                                <button id="sample_editable_1_new"  class="btn sbold red" onclick="RegistrarNuevoPaciente();">NUEVO
+                                                <button id="sample_editable_1_new"  class="btn btn-sm red" onclick="RegistrarNuevoPaciente();">NUEVA ATENCIÓN
                                                 </button>
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                 <img src="{{asset('bundles/public/img/banner_doctor.jpg')}}"/>
                             </div>
                         </div>
-                            <div class="portlet-body" style="padding-top: 0px">
+                        <div class="portlet-body" style="padding-top: 0px">
                             <div class="tab-content">
                                 <!--CONTENT -->
                                 <div class="table-scrollable table-topico">
@@ -60,18 +60,18 @@
                                             .theadtbl{
                                                 border-right: 1px solid #dddddd;
                                                 text-align: center;
-                                                padding-top: 0px !important;
-                                                padding-bottom: 0px !important;
+                                                padding-top: 2px !important;
+                                                padding-bottom: 2px !important;
                                             }
                                         </style>
                                         <tr>
                                             <th class="theadtbl"> N° </th>
-                                            <th class="theadtbl"> NOMBRES COMPLETO</th>
+                                            <th class="theadtbl"> NOMBRES</th>
                                             <th class="theadtbl"> AP. PATERNO </th>
                                             <th class="theadtbl"> AP. MATERNO</th>
-                                            <th class="theadtbl"> N° DOCUMENTO</th>
+                                            <th class="theadtbl"> DNI</th>
                                             <th class="theadtbl"> HORA </th>
-                                            <th class="theadtbl"> ESTADO </th>
+                                            <th class="theadtbl"> ESTADO DE ATENCIÓN</th>
                                             <th class="theadtbl" colspan="4"> ACCIONES</th>
 
                                         </tr>
@@ -83,6 +83,7 @@
                                     </table>
                                 </div>
                             </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -92,19 +93,23 @@
                         <div class="modal-content" style=" width: 50%;">
                             <div class="modal-header ui-draggable-handle">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h4 class="modal-title">BUSCAR PERSONA</h4>
+                                <h5 class="modal-title"><strong>BUSCAR PERSONA </strong></h5>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
+                                    <div id="alerta-error" class="alert alert-danger collapse"  style="margin: 5px;"></div>
+
                                     <div class="col-md-12" style="padding-bottom: 10px;">
                                         <label class="control-label">Documento de Identidad</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
-                                                <i class="fa fa-envelope"></i>
+                                                <i class="fa fa-search"></i>
                                             </span>
-                                            <input type="number" id="txtdni" name="txtdni" minlength="8" maxlength="8" placeholder="INGRESE SU DNI" class="form-control" onchange="consultapersona()">
+                                            <input type="number" id="txtdni" name="txtdni" maxlength="8" min= "1" placeholder="INGRESE SU DNI" class="form-control" onchange="consultapersona()">
                                         </div>
                                     </div>
+
+                                    <hr>
                                     <div id="vistaDataPersona">
 
                                     </div>
@@ -136,7 +141,6 @@
                             <div class="modal-body">
                                 <div class="portlet-title tabbable-line">
                                     <ul class="nav nav-tabs">
-
                                         <li   class="active" >
                                             <a id="tab1" href="#tab_1_1" data-toggle="tab">ANTROPOMETRIA</a>
                                         </li>
@@ -144,20 +148,18 @@
                                             <a id="tab2" href="#tab_1_2" data-toggle="tab">SIGNOS VITALES</a>
                                         </li>
                                     </ul>
-                                </div><br>
+                                </div>
+                                <br>
                                 <div class="portlet-body">
                                     <div class="tab-content">
-
                                         <div class="tab-pane active" id="tab_1_1">
                                           <div class="row" id="tab1view">
                                           </div>
                                         </div>
-
                                         <div class="tab-pane" id="tab_1_2">
                                           <div class="row" id="tab2view">
                                           </div>
                                         </div>
-
                                     </div>                   
                                 </div>
                             </div>
@@ -270,8 +272,11 @@
         Demo.init(); // init demo(theme settings page)
         Todo.init(); // init todo page
         ListarAtenciones();
+        document.getElementById("txtdni").setAttribute("maxlength", "8");
     });
-    
+
+
+
     function CargarProvincias(dep,val,op){
          $.ajax(
                 {
@@ -355,34 +360,34 @@
                 jAlert('error', 'Un error ha ocurrido durante el proceso. Consulte con el Administrador', 'Sistema de Mecenazgo Deportivo', null);
             }
         });
-     }
+    }
     
     function GuardarAtropometria(){
         var rsp;
         var codigo=$('#txtcod').val();
         var peso=$('#txtpeso').val();
         var talla=$('#txttalla').val();
-{#        var masa= $('#txtmasa').val();#}
+{#      var masa= $('#txtmasa').val();#}
         var pabdominal=$('#txtperimetro').val();
-{#        var enutricional=$('#txtnutricion').val();#}
+{#      var enutricional=$('#txtnutricion').val();#}
         var formURL = "guardarAtroponetria";
-        $.ajax(
-                {
-                    url: formURL,
-                    type: "POST",
-                    data: {codigo:codigo,peso:peso,talla:talla,pabdominal:pabdominal},
-                    success: function (data, textStatus, jqXHR)
-                    {   
-                        rsp = JSON.parse(data);
-                        if(rsp.result){
-                            $('#ModalExamenClinico').modal('hide');
-                            jAlert('info', rsp.mensaje , 'Sistema de Topico - IPD', null);
-                            ListarAtenciones();
-                        }else{
-                            jAlert('info', 'Ocurrio un problema al registrar favor de intentarlo de nuevo' , 'Sistema de Topico - IPD', null);
-                        }
-                    }
-                });
+        
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: {codigo:codigo,peso:peso,talla:talla,pabdominal:pabdominal},
+            success: function (data, textStatus, jqXHR)
+            {   
+                rsp = JSON.parse(data);
+                if(rsp.result){
+                    $('#ModalExamenClinico').modal('hide');
+                    jAlert('info', rsp.mensaje , 'Sistema de Tópico - IPD', null);
+                    ListarAtenciones();
+                }else{
+                    jAlert('info', 'Ocurrió un problema al registrar, favor de intentarlo de nuevo' , 'Sistema de Tópico - IPD', null);
+                }
+            }
+        });
     }
     
     function GuardarSignosVitales(){
@@ -463,6 +468,7 @@
                     success: function (data, textStatus, jqXHR)
                     {
                         $('#tblAtenciones').html(data);
+                        // console.log(data);
                     }
                 });
     }
@@ -480,12 +486,14 @@
         dni = $('#txtdni').val();
         $('#msj').hide();
         $('#msjdataper').html('');
+        
         if (dni.length !== 8) {
             $('#msj').show();
             $('#vistaDataPersona').html('');
-            $('#msjdataper').html('El numero de documento(DNI)debe tener 8 caracteres');
+            $('#msjdataper').html('El número de documento(DNI) debe tener 8 caracteres.');
             return  false;
         }
+
         formURL = "dataPersona";
         $('#vistaDataPersona').html("<div class='col-md-12' style='padding-bottom: 10px;text-align:center'><img src='{{asset('bundles/public/img/cargando.gif')}}' /></p></div>");
         $.ajax(
@@ -498,10 +506,10 @@
                         rsp = JSON.parse(data);
                         {#if (rsp.result) {#}
                             $('#vistaDataPersona').html(rsp.data);
-                         {#else {
+                        {#else {
                             $('#msj').show();
                             $('#vistaDataPersona').html('');
-                            $('#msjdataper').html('Se verifico que la persona no se encuentra en nuestra base de datos');
+                            $('#msjdataper').html('Se verificó que la persona no se encuentra en nuestra base de datos');
                         }#}
 
                     }
@@ -509,7 +517,9 @@
     }
 
     function GuardarAtencion() {
+       
         var codigo,nom,ap,am,dni,tipo,formURL, rsp;
+       
         codigo = $('#txtcodigo').val();
         nom = $('#txtnombre').val();
         ap = $('#txtapepaterno').val();
@@ -517,35 +527,60 @@
         dni = $('#txtdni').val();
         tipo= $('#txttipo').val();
 
-        jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function (callback) {
-            if (callback) {
-                formURL = 'guardarAtencion',
-                        $.ajax(
-                                {
-                                    url: formURL,
-                                    type: "POST",
-                                    data: {codper: codigo,nom:nom,ap:ap,am:am,dni:dni,tipo:tipo},
-                                    success: function (data, textStatus, jqXHR)
-                                    {
-                                        rsp = JSON.parse(data);
-                                        if (rsp.result) {
-                                            ListarAtenciones();
-                                            $('#ModalPaciente').modal('hide');
-                                        } else {
-                                            jAlert('info', 'Debe registrar si quiera un involucrado', 'Sistema de Resoluciones', null);
-                                        }
+        if(nom == "" && ap == "" && am == "" ){
 
-                                    }
-                                });
-            } else {
-                $('#ModalPaciente').modal('hide');
-                return false;
-            }
-        });
+            showAlertMessage('#alerta-error', "Complete todos los datos del registro. ");
+
+        }else{
+
+            jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
+                if (callback) {
+
+                    //Evaluar si existe un registro con el los mismos datos estado de atencion REGISTRADO
+                    formURL = 'guardarAtencion',
+                    $.ajax({
+                        url: formURL,
+                        type: "POST",
+                        data: {codper: codigo,nom:nom,ap:ap,am:am,dni:dni,tipo:tipo},
+                        success: function (data, textStatus, jqXHR)
+                        {
+                            rsp = JSON.parse(data);
+                            console.log("dato retornado");
+                            console.log(rsp.result);
+
+                            if( rsp.result == 'existe'){
+                               
+                                jAlert('info', 'Este paciente ya se encuentra registrado ', 'Sistema de Tópico', null);
+                                $('#ModalPaciente').modal('hide');
+                               
+                            }else if (rsp.result == 'registrado'){
+                           
+                                $('#ModalPaciente').modal('hide');
+                                ListarAtenciones();
+                           
+                            }else if(rsp.result == 'no registrado'){
+                                jAlert('error', 'Se produjo un error en el registro', 'Sistema de Tópico - IPD', null);
+                                $('#ModalPaciente').modal('hide');
+                            }
+                                
+                        }
+                    });
+
+                } else {
+                    
+                    $('#ModalPaciente').modal('hide');
+                    return false;
+                }
+            });
+
+        }
+
+       
+   
     }
     
     
-     function Historial(percodigo,tipo,nom,app,apm){
+        function Historial(percodigo,tipo,nom,app,apm){
             $.ajax(
                   {
                       url: '{{path('historial_view')}}',
@@ -593,6 +628,21 @@
                 $('#lstreceta').show();
             }
         }
+
+    /* MOSTRAR MENSAJE DE ALERTA */
+    function showAlertMessage(alert, mensaje){
+        $(alert).text(mensaje).show('fade');
+        setTimeout(function(){
+            hideAlertMessage(alert);    
+        }, 2000);
+    }
+
+    /* COULTAR ALERTA*/
+    function hideAlertMessage(alert){
+        $(alert).hide('fade');
+
+    }
+
 
     </script>
 {% endblock %}
