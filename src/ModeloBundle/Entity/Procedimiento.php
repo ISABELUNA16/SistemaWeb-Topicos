@@ -35,6 +35,12 @@ class Procedimiento
      */
     private $procEstado;
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_tprocedimiento", type="integer", nullable=true)
+     */
+    private $codTprocedimiento;
 
 
     /**
@@ -93,5 +99,29 @@ class Procedimiento
     public function getProcEstado()
     {
         return $this->procEstado;
+    }
+
+    /**
+     * Set codTprocedimiento
+     *
+     * @param integer $codTprocedimiento
+     *
+     * @return Procedimiento
+     */
+    public function setCodTprocedimiento($codTprocedimiento)
+    {
+        $this->codTprocedimiento = $codTprocedimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get codTprocedimiento
+     *
+     * @return integer
+     */
+    public function getCodTprocedimiento()
+    {
+        return $this->codTprocedimiento;
     }
 }

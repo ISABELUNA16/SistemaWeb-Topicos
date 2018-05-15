@@ -75,11 +75,12 @@ class RecepcionController extends Controller
         if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
             return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
         }
+
         $session = new Session();
         $codper = $request->request->get('codper');//INPUT CODIGO DE LA PERSONA
         $tipo = $request->request->get('tipo');//INPUT CODIGO DE LA PERSONA
         $dni = $request->request->get('dni'); //DNI DEL PACIENTE
-        $rpta = '';
+     //   $rpta = '';
 
         $usuario= $session->get('usuario');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
@@ -97,13 +98,15 @@ class RecepcionController extends Controller
 
             if(!empty($codper)){
                 //si el trabajador es CAS
-                $atencion= new Atencion();
+
+                $atencion = new Atencion();
                 $atencion->setPercodigo($codper);
                 $atencion->setCodUser($usuario['codigo']);
                 $atencion->setAteFecReg(new \DateTime);
                 $atencion->setAteTipoPer($tipo);
                 $atencion->setCodEstado(1);
                 
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($atencion);
                 $em->flush();
 
@@ -122,6 +125,7 @@ class RecepcionController extends Controller
                 $paciente->setPacApaterno($paterno);
                 $paciente->setPacAmaterno($materno);
                 $paciente->setPacDni($dni);
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($paciente);
                 $em->flush();
                 
@@ -133,21 +137,14 @@ class RecepcionController extends Controller
                 $atencion->setAteFecReg(new \DateTime);
                 $atencion->setAteTipoPer(2);
                 $atencion->setCodEstado(1);
-                
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($atencion);
                 $em->flush();
 
                 $rpta=['result'=>'registrado'];
             }
-            
-            
-           /* if(!$atencion->getCodAtencion()){
-                $rpta=['result'=>'no registrado'];
-            
-            }else{
-                $rpta=['result'=>'registrado'];
-            }*/
-            
+
+
             if(empty($rpta)){
                 $rpta=['result'=>'no registrado'];
                 echo json_encode($rpta, JSON_PRETTY_PRINT);
@@ -159,9 +156,9 @@ class RecepcionController extends Controller
                 exit;    
             }
             
-        }
+            
+        } 
         
-       
     }
     
     /**
@@ -238,7 +235,7 @@ class RecepcionController extends Controller
             $atencion->setCodEstado(2);
         }    
         $em->flush();
-        $rpta=['result'=>true,'mensaje'=>'Se registró correctamente el examen Antropométrico'];
+        $rpta=['result'=>true,'mensaje'=>'Se registró correctamente el examen Antropométrico. '];
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }

@@ -35,6 +35,12 @@ class Procedimiento
      */
     private $procEstado;
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_tprocedimiento", type="integer", nullable=true)
+     */
+    private $codTprocedimiento;
 
 
     /**

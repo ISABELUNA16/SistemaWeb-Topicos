@@ -31,15 +31,16 @@ class MantProcedimientoController extends Controller {
      * @Method("POST") 
      */
     public function ListaProcedimientoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
+        if (!$this->ValidarSession()) { 
+            return $this->redirectToRoute('acceso_login'); 
         }
         $em = $this->getDoctrine()->getManager();
+        $Tprocedimiento = $em->getRepository('ModeloBundle:Tprocedimiento')->findAll();
         $Procedimiento = $em->getRepository('ModeloBundle:Procedimiento')->findAll();
         $resul=true;
-        return $this->render('RecepcionBundle:Mantenimiento:tbl_procedimiento.html.twig',['Procedimiento'=>$Procedimiento,'result'=>$resul]);
+        return $this->render('RecepcionBundle:Mantenimiento:tbl_procedimiento.html.twig',['Tprocedimiento' => $Tprocedimiento,'Procedimiento'=>$Procedimiento,'result'=>$resul]);
     }
-    
+ 
      /**
      * @Route("/newprocedimiento", name="mante_guardar_procedimiento")
      * @Method("POST")

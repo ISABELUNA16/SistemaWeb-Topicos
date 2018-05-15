@@ -1,53 +1,57 @@
 {%if LstAntropometria.ateValAtropometria==0%}
+
     <div class="col-md-12" style="padding-bottom: 10px;"  >
         <input type="text" class="form-control" id="txtcod" name="txtcod" value="{{codigo}}" style="display: none">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Peso</label>
-        <input type="text" placeholder="PESO EN KG" class="form-control" id="txtpeso" name="txtpeso">
+        <input type="text" placeholder="Peso en kg." class="form-control" id="txtpeso" name="txtpeso">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Talla</label>
-        <input type="text" placeholder="TALLA EN CM" class="form-control" id="txttalla" name="txttalla">
+        <input type="text" placeholder="Talla en cm." class="form-control" id="txttalla" name="txttalla">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Índice de Masa Corporal</label>
-        <input type="text" placeholder="MASA CORPORAL" class="form-control" id="txtmasa" name="txtmasa" disabled>
+        <input type="text" placeholder="Masa corporal" class="form-control" id="txtmasa" name="txtmasa" disabled>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Perímetro Abdominal</label>
-        <input type="text" placeholder="PERIMETRO ABDOMINAL" class="form-control" id="txtperimetro" name="txtperimetro">
+        <input type="text" placeholder="Perímetro abdominal" class="form-control" id="txtperimetro" name="txtperimetro">
     </div>
     <div class="col-md-8" style="padding-bottom: 10px;">
         <label class="control-label">Estado Nutricional</label>
-        <input type="text" placeholder="ESTADO NUTRICIONAL" class="form-control" id="txtnutricion" name="txtnutricion" disabled>
+        <input type="text" placeholder="Estado nutricional" class="form-control" id="txtnutricion" name="txtnutricion" disabled>
     </div>
-    <br>
+    <hr>
     <div class="col-md-12" style="padding-bottom: 10px;padding-bottom: 10px;text-align: center;">
         <button type="button" class="btn red" id="btn_act_atropometria" name="btn_act_atropometria" onclick="GuardarAtropometria();">Registrar</button> 
     </div>
+
 {%else%}
+
     <div class="col-md-12" style="padding-bottom: 10px;"  >
         <input type="text" class="form-control" id="txtcod" name="txtcod" value="{{codigo}}" style="display: none">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Peso</label>
-        <input type="text" placeholder="PESO" class="form-control" id="txtpeso" name="txtpeso" disabled value="{{LstAntropometria.atePeso}}">
+        <input type="text" placeholder="Peso en kg." class="form-control" id="txtpeso" name="txtpeso" disabled value="{{LstAntropometria.atePeso}}">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Talla</label>
-        <input type="text" placeholder="TALLA" class="form-control" id="txttalla" name="txttalla" disabled value="{{LstAntropometria.ateTalla}}">
+        <input type="text" placeholder="Talla en cm." class="form-control" id="txttalla" name="txttalla" disabled value="{{LstAntropometria.ateTalla}}">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Índice de Masa Corporal</label>
-        <input type="text" placeholder="MASA CORPORAL" class="form-control" id="txtmasa" name="txtmasa" disabled value="{{LstAntropometria.ateIndiceMasa}}">
+        <input type="text" placeholder="Masa corporal." class="form-control" id="txtmasa" name="txtmasa" disabled value="{{LstAntropometria.ateIndiceMasa}}">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Perímetro Abdominal</label>
-        <input type="text" placeholder="PERIMETRO ABDOMINAL" class="form-control" id="txtperimetro" name="txtperimetro" disabled value="{{LstAntropometria.atePerAbdominal}}">
+        <input type="text" placeholder="Perímetro abdominal." class="form-control" id="txtperimetro" name="txtperimetro" disabled value="{{LstAntropometria.atePerAbdominal}}">
     </div>
     <div class="col-md-8" style="padding-bottom: 10px;">
         <label class="control-label">Estado Nutricional</label>
-        <input type="text" placeholder="ESTADO NUTRICIONAL" class="form-control" id="txtnutricion" name="txtnutricion" disabled value="{{LstAntropometria.ateEstNutricional}}">
+        <input type="text" placeholder="Estado nutrcional." class="form-control" id="txtnutricion" name="txtnutricion" disabled value="{{LstAntropometria.ateEstNutricional}}">
     </div>
+
 {%endif%}    

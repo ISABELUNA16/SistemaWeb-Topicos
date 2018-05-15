@@ -15,27 +15,27 @@
                 <i class="fa fa-clock-o"></i>
             </a>
             {%else%}
-            <a href="javascript:;" class="btn btn-xs green">
+            <a href="javascript:;" class="btn btn-xs green" title="Estado de la atención">
                 <i class="fa fa-check"></i>
             </a>    
             {%endif%}   
         </td>
-        <td style="text-align: center;border-left: 1px solid #dddddd;">
+        <td style="text-align: center;border-left: 1px solid #dddddd;" title="Antecedentes">
             <a  class="btn btn-xs default"   href="{{path('antecedentes_home',{codatencion:lst.codigo,tipo:1})}}">
                 <i class="fa fa-hospital-o"></i>
             </a>
         </td>
-        <td style="text-align: center;border-left: 1px solid #dddddd;">
+        <td style="text-align: center;border-left: 1px solid #dddddd;" title="Exámenes clínicos">
             <a  class="btn btn-xs red"  onclick="ExamenClinico('{{lst.codigo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}')">
                 <i class="fa fa-heartbeat"></i>
             </a>
         </td>
-        <td style="text-align: center;border-left: 1px solid #dddddd;"  >
+        <td style="text-align: center;border-left: 1px solid #dddddd;" title="Datos del paciente" >
             <a class="btn btn-xs blue" onclick="DatosPaciente('{{lst.dni}}','{{lst.percodigo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}','{{lst.tipo}}')">
                 <i class="fa fa-user-md"></i>
             </a>
         </td>
-        <td style="text-align: center;border-left: 1px solid #dddddd;"  >
+        <td style="text-align: center;border-left: 1px solid #dddddd;" title="Historial del paciente"  >
             <a class="btn btn-xs grey-mint" onclick="Historial('{{lst.percodigo}}','{{lst.tipo}}','{{lst.nombre}}','{{lst.paterno}}','{{lst.materno}}')">
                 <i class="fa fa-folder-open"></i>
             </a>

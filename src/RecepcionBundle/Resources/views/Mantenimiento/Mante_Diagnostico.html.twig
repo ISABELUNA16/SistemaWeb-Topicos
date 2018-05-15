@@ -40,7 +40,7 @@
                                         <img src="/sisweb/TopicoIPD/web/bundles/public/img/icon/maintenance.png" class="img-responsive" alt=""> </div>
                                     <!-- SIDEBAR USER TITLE -->
                                     <div class="profile-usertitle">
-                                        <div class="profile-usertitle-job" style="color: #cb2f1d !important;">Menu</div>
+                                        <div class="profile-usertitle-job" style="color: #cb2f1d !important;">Menú</div>
                                     </div>
                                     <br>
                                     <!-- END MENU -->
@@ -49,7 +49,7 @@
                                     <ul class="nav nav-pills nav-stacked">
                                         <li class="active"> 
                                             <a class="listbadge" href="{{path('mantenimiento_diagnostico')}}" >
-                                                <span class="badge badge-info badge-active" id="item1"> 0 </span>Diagnosticos
+                                                <span class="badge badge-info badge-active" id="item1"> 0 </span>Diagnósticos
                                             </a>   
                                         </li>
                                         <li> 
@@ -76,7 +76,7 @@
                             <!-- PROJECT HEAD -->
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <span class="caption-helper">MANTENIMIENTOS :</span> &nbsp;
+                                    <span class="caption-helper">OPCIONES DE MANTENIMIENTOS :</span> &nbsp;
                                     <span class="caption-subject font-red bold uppercase"> DIAGNOSTICO </span>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                             <div class="form">
                                                 <div class="form-group">
                                                     <div class="col-md-3" style="padding-right: 5px;">
-                                                    <label class="control-label">Tipo de Diagnostico</label>
+                                                    <label class="control-label">Tipo de Diagnóstico</label>
                                                     <select class="form-control" id="cbotipodiagnostico" name="cbotipodiagnostico">
                                                             <option value="0">[Seleccionar]</option>
                                                         </select>
@@ -102,11 +102,11 @@
                                                         </button>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label class="control-label">Diagnostico</label>
+                                                        <label class="control-label">Diagnóstico</label>
                                                         <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese aqui su descripcion " id="txtdescripcion" name="txtdescripcion">                                                         
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label class="control-label">Codigo</label>
+                                                        <label class="control-label">Código</label>
                                                         <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Codigo " id="txtcodigo" name="txtcodigo">                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -136,7 +136,7 @@
                     <div class="modal-content">
                         <div class="modal-header ui-draggable-handle">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h4 class="modal-title" id="title_examen">MANTENIMIENTO DE TIPO DE DIAGNOSTICO</h4>
+                            <p class="modal-title" id="title_examen">MANTENIMIENTO:  TIPO DE DIAGNÓSTICO</p>
                         </div>
                         <div class="modal-body">
                             <div class="portlet-body">
@@ -145,12 +145,12 @@
                                     <div class="form">
                                         <div class="form-group">
                                             <div class="col-md-9">
-                                                <label class="control-label">Tipo de Diagnostico</label>
-                                                <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese aqui su descripcion " id="txttdiagnostico" name="txttdiagnostico">                                                         
+                                                <label class="control-label">Tipo de Diagnóstico</label>
+                                                <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese nuevo tipo de diagnóstico " id="txttdiagnostico" name="txttdiagnostico">                                                         
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="control-label" style="color: white">buton</label>
-                                                <button class="btn  btn-sm red" type="button" onclick="GuardarTdiagnostico();">Guardar</button>
+                                                <button class="btn  btn-sm red" type="button" onclick="GuardarTdiagnostico();">Agregar</button>
                                             </div>
                                         </div>
                                     </div>

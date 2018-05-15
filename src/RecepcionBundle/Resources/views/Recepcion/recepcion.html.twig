@@ -95,10 +95,12 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                                 <h5 class="modal-title"><strong>BUSCAR PERSONA </strong></h5>
                             </div>
+                         
                             <div class="modal-body">
+                                <div id="alerta-error1" class="alert alert-danger collapse"  style="margin: 2px;"></div>
+                                <div id="alerta-error" class="alert alert-danger collapse"  style="margin: 5px;"></div>
+                                <br>
                                 <div class="row">
-                                    <div id="alerta-error" class="alert alert-danger collapse"  style="margin: 5px;"></div>
-
                                     <div class="col-md-12" style="padding-bottom: 10px;">
                                         <label class="control-label">Documento de Identidad</label>
                                         <div class="input-group">
@@ -107,19 +109,19 @@
                                             </span>
                                             <input type="number" id="txtdni" name="txtdni" maxlength="8" min= "1" placeholder="INGRESE SU DNI" class="form-control" onchange="consultapersona()">
                                         </div>
-                                    </div>
-
-                                    <hr>
+                                    </div>  
                                     <div id="vistaDataPersona">
-
                                     </div>
-                                    <div class="col-lg-12 col-sm-12 col-xs-12" id="msj" style="display: none">
+                                    <br>
+                                   
+
+                                   <!-- <div class="col-lg-12 col-sm-12 col-xs-12" id="msj" style="display: none">
                                         <div class="panel panel-danger" >
-                                            <div class="panel-heading" style="padding-top: 2px;padding-bottom: 2px;">
+                                            <div class="panel-heading" style="padding-top: 2px;padding-bottom: 2px;">  
                                                 <h4 id="msjdataper"></h4>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="modal-footer">                                
@@ -136,7 +138,7 @@
                         <div class="modal-content">
                             <div class="modal-header ui-draggable-handle">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h4 class="modal-title" id="title_examen"></h4>
+                                <p class="modal-title" id="title_examen"></p>
                             </div>
                             <div class="modal-body">
                                 <div class="portlet-title tabbable-line">
@@ -153,12 +155,14 @@
                                 <div class="portlet-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1_1">
-                                          <div class="row" id="tab1view">
-                                          </div>
+                                            <div id="advertenciaAntropometria" class="alert alert-danger collapse"  style="margin: 5px;"></div>
+                                            <div class="row" id="tab1view">       
+                                            </div>
                                         </div>
                                         <div class="tab-pane" id="tab_1_2">
-                                          <div class="row" id="tab2view">
-                                          </div>
+                                            <div id="advertenciaSignosVitales" class="alert alert-danger collapse" style="margin: 5px;"> </div>
+                                            <div class="row" id="tab2view">
+                                            </div>
                                         </div>
                                     </div>                   
                                 </div>
@@ -177,7 +181,7 @@
                         <div class="modal-content">
                             <div class="modal-header ui-draggable-handle">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h4 class="modal-title" id="title_datos"></h4>
+                                <p class="modal-title" id="title_datos"></p>
                             </div>
                             <div class="modal-body">
                                 <div class="portlet-title tabbable-line">
@@ -211,7 +215,7 @@
                         <div class="modal-content">
                             <div class="modal-header ui-draggable-handle">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h4 class="modal-title" ><b>HISTORIAL DE PACIENTE</b></h4>
+                                <p class="modal-title" ><b>HISTORIAL DE PACIENTE</b></p>
                             </div>
                             <div class="modal-body" style="    background: #6f6f6e0a !important;">
                                 <div class="portlet-body">
@@ -357,7 +361,7 @@
                  jAlert('info', rsp.mensaje , 'Sistema de Topico - IPD', null);
             },
             error: function () {
-                jAlert('error', 'Un error ha ocurrido durante el proceso. Consulte con el Administrador', 'Sistema de Mecenazgo Deportivo', null);
+                jAlert('error', 'Un error ha ocurrido durante el proceso. Consulte con el Administrador', 'Sistema de Tópico IPD', null);
             }
         });
     }
@@ -372,22 +376,33 @@
 {#      var enutricional=$('#txtnutricion').val();#}
         var formURL = "guardarAtroponetria";
         
-        $.ajax({
-            url: formURL,
-            type: "POST",
-            data: {codigo:codigo,peso:peso,talla:talla,pabdominal:pabdominal},
-            success: function (data, textStatus, jqXHR)
-            {   
-                rsp = JSON.parse(data);
-                if(rsp.result){
-                    $('#ModalExamenClinico').modal('hide');
-                    jAlert('info', rsp.mensaje , 'Sistema de Tópico - IPD', null);
-                    ListarAtenciones();
-                }else{
-                    jAlert('info', 'Ocurrió un problema al registrar, favor de intentarlo de nuevo' , 'Sistema de Tópico - IPD', null);
+        if( peso == "" || talla == "" || pabdominal == ""){
+
+            showAlertMessage('#advertenciaAntropometria', "Debe llenar todos los campos solicitados. ");
+
+        }else{
+
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codigo:codigo,peso:peso,talla:talla,pabdominal:pabdominal},
+                success: function (data, textStatus, jqXHR)
+                {   
+                   
+                    rsp = JSON.parse(data);
+                    if(rsp.result){
+                        $('#ModalExamenClinico').modal('hide');
+                        jAlert('info', rsp.mensaje , 'Sistema de Tópico - IPD', null);
+                        ListarAtenciones();
+                    }else{
+                        jAlert('info', 'Ocurrió un problema al registrar. Por favor, inténtalo nuevamente.' , 'Sistema de Tópico - IPD', null);
+                    }
+
                 }
-            }
-        });
+            });
+
+        }
+
     }
     
     function GuardarSignosVitales(){
@@ -399,42 +414,46 @@
         var temperatura= $('#txttemperatura').val();
         var formURL = "guardarSignos";
         
-        $.ajax(
-                {
-                    url: formURL,
-                    type: "POST",
-                    data: {codigo:codigo,cardiaca:cardiaca,respiratoria:respiratoria,arterial:arterial,temperatura:temperatura},
-                    success: function (data, textStatus, jqXHR)
-                    {   
-                        rsp = JSON.parse(data);
-                        if(rsp.result){
-                            $('#ModalExamenClinico').modal('hide');
-                            jAlert('info', rsp.mensaje , 'Sistema de Topico - IPD', null);
-                            ListarAtenciones();
-                        }else{
-                            jAlert('info', 'Ocurrio un problema al registrar favor de intentarlo de nuevo' , 'Sistema de Topico - IPD', null);
-                        }
+        if(cardiaca == "" || respiratoria == "" || arterial == "" || temperatura == "" ){
+
+            showAlertMessage('#advertenciaSignosVitales', "Debe llenar todos los campos solicitados. ");
+
+        }else{
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codigo:codigo,cardiaca:cardiaca,respiratoria:respiratoria,arterial:arterial,temperatura:temperatura},
+                success: function (data, textStatus, jqXHR)
+                {   
+                    rsp = JSON.parse(data);
+                    if(rsp.result){
+                        $('#ModalExamenClinico').modal('hide');
+                        jAlert('info', rsp.mensaje , 'Sistema de Topico - IPD', null);
+                        ListarAtenciones();
+                    }else{
+                        jAlert('info', 'Ocurrio un problema al registrar favor de intentarlo de nuevo' , 'Sistema de Topico - IPD', null);
                     }
-                });
+                }
+            });
+        }
+                
     }
     
     function ExamenClinico(codigo,nom,app,apm){
         var rsp;
         $('#title_examen').html('<b>EXAMEN CLINICO DE : </b>'+ nom +' '+app+' '+apm);
         var formURL = "dataexamenclinico";
-        $.ajax(
-                {
-                    url: formURL,
-                    type: "POST",
-                    data: {codatencion:codigo},
-                    success: function (data, textStatus, jqXHR)
-                    {   
-                        rsp = JSON.parse(data);
-                        $('#tab1view').html(rsp.antropometria);
-                        $('#tab2view').html(rsp.signos);
-                        $('#ModalExamenClinico').modal('toggle');
-                    }
-                });
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: {codatencion:codigo},
+            success: function (data, textStatus, jqXHR){   
+                rsp = JSON.parse(data);
+                $('#tab1view').html(rsp.antropometria);
+                $('#tab2view').html(rsp.signos);
+                $('#ModalExamenClinico').modal('toggle');
+            }
+        });
        
     }
     
@@ -477,7 +496,7 @@
         $('#msj').hide();
         $('#txtdni').val('');
         $('#vistaDataPersona').html('');
-        $('#msjdataper').html('');
+        //$('#msjdataper').html('');
         $('#ModalPaciente').modal('toggle');
     }
 
@@ -485,12 +504,13 @@
         var dni = 0, formURL, rsp;
         dni = $('#txtdni').val();
         $('#msj').hide();
-        $('#msjdataper').html('');
+       // $('#msjdataper').html('');
         
         if (dni.length !== 8) {
             $('#msj').show();
             $('#vistaDataPersona').html('');
-            $('#msjdataper').html('El número de documento(DNI) debe tener 8 caracteres.');
+            showAlertMessage('#alerta-error', "El número de documento(DNI) debe tener 8 carácteres.");
+        //    $('#msjdataper').html('El número de documento(DNI) debe tener 8 caracteres.');
             return  false;
         }
 
@@ -509,7 +529,8 @@
                         {#else {
                             $('#msj').show();
                             $('#vistaDataPersona').html('');
-                            $('#msjdataper').html('Se verificó que la persona no se encuentra en nuestra base de datos');
+                            showAlertMessage('#msjdataper', "Se verificó que la persona no se encuentra en la base de datos.")
+                           // $('#msjdataper').html('Se verificó que la persona no se encuentra en nuestra base de datos');
                         }#}
 
                     }
@@ -527,9 +548,9 @@
         dni = $('#txtdni').val();
         tipo= $('#txttipo').val();
 
-        if(nom == "" && ap == "" && am == "" ){
+        if(nom == "" || ap == "" || am == "" ){
 
-            showAlertMessage('#alerta-error', "Complete todos los datos del registro. ");
+            showAlertMessage('#alerta-error1', "Complete todos los datos del registro. ");
 
         }else{
 
@@ -550,7 +571,7 @@
 
                             if( rsp.result == 'existe'){
                                
-                                jAlert('info', 'Este paciente ya se encuentra registrado ', 'Sistema de Tópico', null);
+                                jAlert('info', 'Este paciente ya se encuentra registrado ', 'Sistema de Tópico - IPD', null);
                                 $('#ModalPaciente').modal('hide');
                                
                             }else if (rsp.result == 'registrado'){
@@ -563,26 +584,29 @@
                                 $('#ModalPaciente').modal('hide');
                             }
                                 
+                        },
+
+                        error: function(error){
+                            console.log(error);
+
                         }
-                    });
+
+                    })
 
                 } else {
                     
                     $('#ModalPaciente').modal('hide');
                     return false;
                 }
-            });
+            })
 
         }
 
-       
-   
     }
     
     
         function Historial(percodigo,tipo,nom,app,apm){
-            $.ajax(
-                  {
+            $.ajax({
                       url: '{{path('historial_view')}}',
                       type: "POST",
                       data: {percodigo:percodigo,tipo:tipo},
