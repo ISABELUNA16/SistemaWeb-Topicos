@@ -1,0 +1,4 @@
+<option value="0">[Seleccionar]</option>
+{% for cbo in Tprocedimiento %}
+    <option value="{{cbo.codTprocedimiento}}">{{cbo.tprocDescripcion}}</option>
+{% endfor %}

@@ -1,31 +1,36 @@
-{%if result%} 
-    {%set i=0%}
-    {%for lst in Procedimiento%}
-        {%set i=i+1%}
-        <div class="mt-actions">
-            <div class="mt-action">
-                <div class="mt-action-body">
-                    <div class="mt-action-row">
-                        <div class="mt-action-info ">
-                            <div class="mt-action-details ">
-                                <span class="mt-action-author"> Procedimiento {{i}} : </span>
-                                <p class="mt-action-desc">{{lst.procDescripcion}}</p>
-                            </div>
-                        </div>
-                        <div class="mt-action-datetime">
-                            <span class="mt-action-date">{% if lst.procEstado==1%}Activo{%else%}Inactivo{%endif%}</span>
-                        </div>
-                        <div class="mt-action-buttons">
-                            <div class="btn-group btn-group-circle" style="    padding-left: 20px;">
-                                <button class="btn btn-xs red btn-circle" style="margin-left: 0px;margin-right: 0px;" onclick="BorrarProcedimiento('{{lst.codProcedimiento}}')"><i class="fa fa fa-trash"></i></button>
+{% if result %} 
+    {% set i=0 %}
+    {% for lst in Procedimiento %}
+        {% set i=i+1 %}
+        {% for lst2 in Tprocedimiento %}
+            {% if lst2.codTprocedimiento== lst.codTprocedimiento %}
+                <div class="mt-actions">
+                    <div class="mt-action">
+                        <div class="mt-action-body">
+                            <div class="mt-action-row">
+                                <div class="mt-action-info ">
+                                    <div class="mt-action-details ">
+                                        <span class="mt-action-author"> {{lst.procDescripcion}} : </span>
+                                        <p class="mt-action-desc">{{lst2.tprocDescripcion}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-action-datetime">
+                                    <span class="mt-action-date">{% if lst.procEstado==1%}Activo{%else%}Inactivo{%endif%}</span>
+                                </div>
+                                <div class="mt-action-buttons">
+                                    <div class="btn-group btn-group-circle" style="    padding-left: 20px;">
+                                        <button class="btn btn-xs red btn-circle" style="margin-left: 0px;margin-right: 0px;" onclick="BorrarProcedimiento('{{lst.codProcedimiento}}')"><i class="fa fa fa-trash"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    {%endfor%}
-{%else%}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% else %}
     <div class="col-md-6 col-md-offset-4"> 
         <div class="mt-actions">
             <div class="mt-action">
@@ -44,4 +49,4 @@
             </div>
         </div>
     </div>
-{%endif%}
+{% endif %}

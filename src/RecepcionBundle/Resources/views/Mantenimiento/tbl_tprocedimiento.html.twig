@@ -1,0 +1,14 @@
+{% set i=0 %}
+{% for lst in Tprocedimiento %}
+    {% set i=i+1 %}
+    <tr>
+        <td> {{i}} </td>
+        <td> {{lst.tprocDescripcion}} </td>
+        <td>  {% if lst.tprocEstado==1%}Activo{%else%}Inactivo{%endif%} </td>
+        <td>
+            <a onclick="DeleteTprocedimiento('{{lst.codTprocedimiento}}')" class="btn btn-xs red">
+                <i class="fa fa fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+{% endfor %}

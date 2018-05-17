@@ -87,9 +87,23 @@
                                             <!-- TASK HEAD -->
                                             <div class="form">
                                                 <div class="form-group">
+                                                    <div class="col-md-3" style="padding-right: 5px;">
+                                                        <label class="control-label">Tipo de Procedimiento</label>
+                                                        <select class="form-control" id="cbotipoprocedimiento" name="cbotipoprocedimiento">
+                                                           <option value="0">[Seleccionar]</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-1" style="padding-left: 0px;">
+                                                        <label class="control-label" style="color: white">buton</label>
+                                                        <button class="btn  btn-sm red" type="button" style="padding-left: 5px;padding-right: 5px;padding-bottom: 9px;" onclick="VerTipoProcedimiento()">
+                                                            <i class="fa fa fa-search" style="padding-top: 2px;">
+                                                            </i>
+                                                        </button>
+                                                    </div>
+
                                                     <div class="col-md-6">
                                                         <label class="control-label">Procedimiento</label>
-                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese aqui su descripcion " id="txtdescripcion" name="txtdescripcion">                                                         
+                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese la descripción del procedimiento " id="txtdescripcion" name="txtdescripcion">                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="control-label" style="color: white">buton</label>
@@ -112,6 +126,57 @@
                 </div>
             </div>
             <!-- END PAGE CONTENT-->
+
+              <div class="modal fade" id="Modaltprocedimiento" tabindex="-1" role="basic" aria-hidden="true" style="display: none;top: 20%;"   data-keyboard="false" data-backdrop="static">               
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header ui-draggable-handle">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <p class="modal-title" id="title_examen">MANTENIMIENTO:  TIPO DE PROCEDIMIENTO</p>
+                        </div>
+                        <div class="modal-body">
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    
+                                    <div class="form">
+                                        <div class="form-group">
+                                            <div class="col-md-9">
+                                                <label class="control-label">Tipo de Procedimiento</label>
+                                                <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese nuevo tipo de procedimiento " id="txttprocedimiento" name="txttprocedimiento">                                                         
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="control-label" style="color: white">buton</label>
+                                                <button class="btn  btn-sm red" type="button" onclick="GuardarTprocedimiento();">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                   
+                                    <div class="table-scrollable table-scrollable-borderless" style="    padding-top: 20px;">
+                                        <table class="table table-hover table-light">
+                                            <thead>
+                                                <tr class="uppercase">
+                                                    <th> # </th>
+                                                    <th> Descripción </th>
+                                                    <th> Estado </th>
+                                                    <th> Acción </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="viewtbltprocedimiento"> 
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                        <div class="modal-footer">                                
+
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
             
         </div>
     </div>
@@ -154,6 +219,7 @@
             Layout.init(); // init layout
             Demo.init(); // init demo(theme settings page)
             Todo.init(); // init todo page
+            ListarTipoProcedimiento();
             ListarProcedimiento();
         });
         
@@ -180,21 +246,22 @@
         function GuardarProcedimiento(){
             var rsp;
             var descripcion=$('#txtdescripcion').val();
+            var codigotipo=$('#cbotipoprocedimiento').val();
          
             var formURL = "{{path('mante_guardar_procedimiento')}}";
             $.ajax(
                     {
                         url: formURL,
                         type: "POST",
-                        data: {descripcion:descripcion},
+                        data: {descripcion:descripcion, codigotipo:codigotipo},
                         success: function (data, textStatus, jqXHR)
                         {
-                             rsp = JSON.parse(data);
+                            rsp = JSON.parse(data);
                             if (rsp.result) {
                                 ListarProcedimiento();
                                 $('#txtdescripcion').val(''); 
                             } else {
-                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
+                                jAlert('info', 'Ocurrió un error al guardar', 'Sistema de Tópicos IPD', null);
                             }
                         }
                     });
@@ -214,8 +281,62 @@
                     });
         }
         
+        function ListarTipoProcedimiento(){
+        var formURL = "{{path('mante_tprocedimiento')}}";
+        $.ajax(
+                {
+                    url: formURL,
+                    type: "POST",
+                    data: {},
+                    success: function (data, textStatus, jqXHR)
+                    {
+                        $('#cbotipoprocedimiento').html(data);
+                    }
+                });
+        }
+
+        function ListaTblTipoProcedimiento(){
+            var formURL = "{{path('mante_tbl_tprocedimiento')}}";
+            $.ajax(
+                    {
+                        url: formURL,
+                        type: "POST",
+                        data: {},
+                        success: function (data, textStatus, jqXHR)
+                        {
+                            $('#viewtbltprocedimiento').html(data);
+                        }
+                    });
+        }
+
+        function GuardarTprocedimiento(){
+            var rsp;
+            var tprocedimiento=$('#txttprocedimiento').val();
+            console.log(tprocedimiento);
+            var formURL = "{{path('mante_guardar_tprocedimiento')}}";
+            $.ajax(
+                    {
+                        url: formURL,
+                        type: "POST",
+                        data: {tprocedimiento:tprocedimiento},
+                        success: function (data, textStatus, jqXHR)
+                        {
+                             rsp = JSON.parse(data);
+                            if (rsp.result) {
+                                ListarTipoProcedimiento();
+                                ListaTblTipoProcedimiento();
+                                $('#txttprocedimiento').val('');    
+                            } else {
+                                jAlert('info', 'Ocurrió error al guardar', 'Sistema de Tópicos IPD', null);
+                            }
+                        }
+                    });
+        }
         
-        
+          function VerTipoProcedimiento() {
+            ListaTblTipoProcedimiento();
+            $('#Modaltprocedimiento').modal('toggle');
+        }
 
     </script>
 {% endblock %}
