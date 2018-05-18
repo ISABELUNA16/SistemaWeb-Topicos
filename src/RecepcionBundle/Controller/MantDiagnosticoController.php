@@ -111,24 +111,28 @@ class MantDiagnosticoController extends Controller {
      * @Method("POST") 
      */
     public function ListaTdiagnosticoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
+        
+        if (!$this->ValidarSession()) { 
+            return $this->redirectToRoute('acceso_login');
         }
-        $em = $this->getDoctrine()->getManager();
-        $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findby(array('tdiagEstado'=>1));
+        
+        $em2 = $this->getDoctrine()->getManager();
+        $Tdiagnostico = $em2->getRepository('ModeloBundle:Tdiagnostico')->findby(array('tdiagEstado'=>1));
         return $this->render('RecepcionBundle:Mantenimiento:cbo_tdiagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico]);
     }
     
     /**
-     * @Route("/lstTblTipoMedicamento", name="mante_tbl_tdiagnostico")
+     * @Route("/lstTblTipoDiagnostico", name="mante_tbl_tdiagnostico")
      * @Method("POST") 
      */
     public function ListaTblDiagnosticoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
+        
+        if (!$this->ValidarSession()) { 
+            return $this->redirectToRoute('acceso_login'); 
         }
-        $em = $this->getDoctrine()->getManager();
-        $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findAll();
+
+        $em2 = $this->getDoctrine()->getManager();
+        $Tdiagnostico = $em2->getRepository('ModeloBundle:Tdiagnostico')->findAll();
         return $this->render('RecepcionBundle:Mantenimiento:tbl_tdiagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico]);
     }
     
@@ -179,17 +183,22 @@ class MantDiagnosticoController extends Controller {
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
         $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findOneBy(array('codTdiagnostico'=>$codtdiagnostico));
+        
         if($Tdiagnostico){
+      
           $em->remove($Tdiagnostico);
           $em->flush(); 
           $rpta=['result'=>true];
+      
+          echo json_encode($rpta, JSON_PRETTY_PRINT);
+          exit;
+
         }else{
           $rpta=['result'=>false];
+          echo json_encode($rpta, JSON_PRETTY_PRINT);
+          exit;
         }
-        
-        $rpta=['result'=>true,'mensaje'=>'Se registro correctamente'];
-        echo json_encode($rpta, JSON_PRETTY_PRINT);
-        exit;
+      
     }
    
     private function ValidarSession() {

@@ -1,14 +1,14 @@
-{%set i=0%}
-{%for lst in Tdiagnostico%}
-    {%set i=i+1%}
+{% set i=0 %}
+{% for lst in Tdiagnostico %}
+    {% set i = i + 1 %}
     <tr>
         <td> {{i}} </td>
         <td> {{lst.tdiagDescripcion}} </td>
-        <td>  {% if lst.tdiagEstado==1%}Activo{%else%}Inactivo{%endif%} </td>
+        <td>  {% if lst.tdiagEstado == 1 %}Activo{% else %}Inactivo{% endif %} </td>
         <td>
             <a onclick="DeleteTdiagnostico('{{lst.codTdiagnostico}}')" class="btn btn-xs red">
                 <i class="fa fa fa-trash"></i>
             </a>
         </td>
     </tr>
-{%endfor%}
+{% endfor %}

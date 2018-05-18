@@ -35,6 +35,12 @@ class Medicamento
      */
     private $medEstado;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_tmedicamento", type="integer", nullable=true)
+     */
+    private $codTmedicamento;
 
 
     /**
@@ -93,5 +99,29 @@ class Medicamento
     public function getMedEstado()
     {
         return $this->medEstado;
+    }
+
+    /**
+     * Set codTmedicamento
+     *
+     * @param integer $codTmedicamento
+     *
+     * @return Medicamento
+     */
+    public function setCodTmedicamento($codTmedicamento)
+    {
+        $this->codTmedicamento = $codTmedicamento;
+
+        return $this;
+    }
+
+    /**
+     * Get codTmedicamento
+     *
+     * @return integer
+     */
+    public function getCodTmedicamento()
+    {
+        return $this->codTmedicamento;
     }
 }

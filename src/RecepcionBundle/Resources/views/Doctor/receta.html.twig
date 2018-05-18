@@ -4,7 +4,7 @@
         <div class="container">
             <!-- BEGIN PAGE TITLE -->
             <div class="page-title">
-                <h1><strong style="font-family: monospace;">TOPICO</strong> <small>Sistema Web</small></h1>
+                <h1><strong style="font-family: monospace;">TÓPICO</strong> <small>Sistema Web</small></h1>
             </div>
             <!-- END PAGE TITLE -->                    
         </div>
@@ -13,7 +13,7 @@
 
 {% block breadcrumb %}
     <ul class="page-breadcrumb breadcrumb">
-        <li class="active">Registro de Datos Clinicos</li><i class="fa fa-circle"></i> 
+        <li class="active">Registro de Datos Clínicos</li><i class="fa fa-circle"></i> 
     </ul>
 {% endblock %}
 
@@ -61,7 +61,7 @@
                                         </li>
                                         <li>
                                             <a  class="listbadge" href="{{path('doctor_diagnostico',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger"  id="item1"> 0 </span>Diagnostico
+                                                <span class="badge badge-danger"  id="item1"> 0 </span>Diagnóstico
                                             </a>
                                         </li>
                                         <li>
@@ -71,12 +71,12 @@
                                         </li>
                                         <li class="active">
                                             <a  class="listbadge"  href="{{path('doctor_receta',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger badge-active"  id="item3"> 0 </span>Receta Medica
+                                                <span class="badge badge-danger badge-active"  id="item3"> 0 </span>Receta Médica
                                             </a>
                                         </li>
                                         <li class="active" id="btnfinalizar" style="text-align: center;display: none;padding-top: 15px;">
                                             <button class="btn btn-circle btn-success" type="button" onclick="FinalizarAtencion()">
-                                                Finalizar Atencion<br>
+                                                Finalizar Atención<br>
                                             </button>
                                         </li>
                                     </ul>
@@ -91,8 +91,8 @@
                             <!-- PROJECT HEAD -->
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <span class="caption-helper">DIAGNOSTICO :</span> &nbsp;
-                                    <span class="caption-subject font-red bold uppercase">REGISTRO DE LA RECETA MEDIA</span>
+                                    <span class="caption-helper">DIAGNÓSTICO :</span> &nbsp;
+                                    <span class="caption-subject font-red bold uppercase">REGISTRO DE LA RECETA MÉDICA</span>
                                 </div>
                             </div>
                             <div class="portlet-body">
@@ -111,7 +111,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Gramos " id="txtconcentracion" name="txtconcentracion">
+                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder=" % concentración " id="txtconcentracion" name="txtconcentracion">
                                                     </div>    
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label">Dosis :</label>
@@ -133,7 +133,7 @@
                                                         <label class="control-label"  style="color: white">tduracion :</label>
                                                         <select class="form-control" id="cbotduracion" name="cbotduracion">
                                                             <option value="0">[Seleccionar]</option>
-                                                            <option value="1">dias</option>
+                                                            <option value="1">días</option>
                                                             <option value="2">semanas</option>
                                                             <option value="3">mes</option>
                                                         </select>
@@ -143,7 +143,7 @@
                                                         <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Unidad " id="txtunidad" name="txtunidad"> 
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
-                                                        <label class="control-label" style="color: white">Diagnostico</label>
+                                                        <label class="control-label" style="color: white">Diagnóstico</label>
                                                         <button class="btn  btn-sm red" type="button" onclick="GuardarReceta();">Guardar</button>
                                                     </div>
                                                 </div>
@@ -165,7 +165,7 @@
                                                         Dosis
                                                     </div>
                                                     <div class="col-md-2">
-                                                        Duracion
+                                                        Duración
                                                     </div>
                                                     <div class="col-md-2">
                                                         
@@ -254,7 +254,7 @@
             tdosis=$('#cbotdosis').val();
             duracion=$('#txtduracion').val();
             tduracion=$('#cbotduracion').val();
-            jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function (callback) {
+            jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
             if (callback) {
             var formURL = "{{path('doctor_guardar_medicamento')}}";
             $.ajax(

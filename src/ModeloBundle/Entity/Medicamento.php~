@@ -35,6 +35,12 @@ class Medicamento
      */
     private $medEstado;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_tmedicamento", type="integer", nullable=true)
+     */
+    private $codTmedicamento;
 
 
     /**

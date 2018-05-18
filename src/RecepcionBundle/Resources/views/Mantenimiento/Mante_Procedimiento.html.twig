@@ -4,7 +4,7 @@
         <div class="container">
             <!-- BEGIN PAGE TITLE -->
             <div class="page-title">
-                <h1><strong style="font-family: monospace;">TOPICO</strong> <small>Sistema Web</small></h1>
+                <h1><strong style="font-family: monospace;">TÓPICO</strong> <small>Sistema Web</small></h1>
             </div>
             <!-- END PAGE TITLE -->                    
         </div>
@@ -40,7 +40,7 @@
                                         <img src="/sisweb/TopicoIPD/web/bundles/public/img/icon/maintenance.png" class="img-responsive" alt=""> </div>
                                     <!-- SIDEBAR USER TITLE -->
                                     <div class="profile-usertitle">
-                                        <div class="profile-usertitle-job" style="color: #cb2f1d !important;">Menu</div>
+                                        <div class="profile-usertitle-job" style="color: #cb2f1d !important;">Menú</div>
                                     </div>
                                     <br>
                                     <!-- END MENU -->
@@ -49,7 +49,7 @@
                                     <ul class="nav nav-pills nav-stacked" id="items">
                                         <li > 
                                             <a class="listbadge" href="{{path('mantenimiento_diagnostico')}}">
-                                                <span class="badge badge-info " id="item1"> 0 </span>Diagnosticos
+                                                <span class="badge badge-info " id="item1"> 0 </span>Diagnósticos
                                             </a>   
                                         </li>
                                         <li class="active"> 
@@ -107,14 +107,14 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="control-label" style="color: white">buton</label>
-                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarProcedimiento();">Guardar</button>
+                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarProcedimiento();">Agregar</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-lg-12 col-xs-12 col-sm-12">
-                                        <div class="tab-content" id="viewtblDiagnostico">    
+                                        <div class="tab-content" id="viewtblProcedimiento">    
                                             
                                         </div>  
                                     </div>
@@ -127,7 +127,7 @@
             </div>
             <!-- END PAGE CONTENT-->
 
-              <div class="modal fade" id="Modaltprocedimiento" tabindex="-1" role="basic" aria-hidden="true" style="display: none;top: 20%;"   data-keyboard="false" data-backdrop="static">               
+            <div class="modal fade" id="Modaltprocedimiento" tabindex="-1" role="basic" aria-hidden="true" style="display: none;top: 20%;"   data-keyboard="false" data-backdrop="static">               
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header ui-draggable-handle">
@@ -226,6 +226,7 @@
         function BorrarProcedimiento(codigo){
             var rsp;
             var formURL = "{{path('mante_borrar_procedimiento')}}";
+            console.log('enviando');
             $.ajax(
                     {
                         url: formURL,
@@ -234,7 +235,9 @@
                         success: function (data, textStatus, jqXHR)
                         {
                              rsp = JSON.parse(data);
+                             console.log(rsp);
                             if (rsp.result) {
+
                                 ListarProcedimiento();
                             } else {
                                 jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
@@ -276,7 +279,7 @@
                         data: {},
                         success: function (data, textStatus, jqXHR)
                         {
-                            $('#viewtblDiagnostico').html(data);
+                            $('#viewtblProcedimiento').html(data);
                         }
                     });
         }
@@ -333,7 +336,28 @@
                     });
         }
         
-          function VerTipoProcedimiento() {
+         function DeleteTprocedimiento(codtprocedimiento){
+            var rsp;
+            var formURL = "{{path('mante_delete_tprocedimiento')}}";
+            $.ajax(
+                    {
+                        url: formURL,
+                        type: "POST",
+                        data: {codtprocedimiento:codtprocedimiento},
+                        success: function (data, textStatus, jqXHR)
+                        {
+                             rsp = JSON.parse(data);
+                            if (rsp.result) {
+                                ListaTblTipoProcedimiento(); 
+                                ListarTipoProcedimiento();
+                            } else {
+                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
+                            }
+                        }
+                    });
+        }
+
+        function VerTipoProcedimiento() {
             ListaTblTipoProcedimiento();
             $('#Modaltprocedimiento').modal('toggle');
         }

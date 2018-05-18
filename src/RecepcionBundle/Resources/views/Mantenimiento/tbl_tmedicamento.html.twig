@@ -1,0 +1,16 @@
+{% set i = 0 %}
+{% for lst in Tmedicamento %}
+    {% set i = i + 1 %}
+    <tr>
+        <td> {{i}} </td>
+        <td> {{lst.tmedDescripcion}} </td>
+        <td>  {% if lst.tmedEstado == 1 %}Activo{% else %}Inactivo{% endif %} </td>
+        <td>
+            <a onclick="DeleteTmedicamento('{{lst.codTmedicamento}}')" class="btn btn-xs red">
+                <i class="fa fa fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+{% endfor %}
+
+

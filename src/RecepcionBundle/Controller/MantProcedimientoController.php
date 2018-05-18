@@ -63,7 +63,7 @@ class MantProcedimientoController extends Controller {
         $em->flush();
         
         if(!$Procedimiento->getCodProcedimiento()){
-           $rpta=['result'=>false,'mensaje'=>'Ocurrió un problema al registrar la atención favor de intentarlo nuevamente, si en caso el problema persiste comunicarse con la unidad de informática para verificar la incidencia'];
+           $rpta=['result'=>false,'mensaje'=>'Ocurrió un problema al registrar la atención. Inténtelo nuevamente, si en caso el problema persiste comuníquese con la unidad de informática para verificar la incidencia'];
         }else{
            $rpta=['result'=>true,'mensaje'=>'Se registró correctamente'];
         }
@@ -100,7 +100,6 @@ class MantProcedimientoController extends Controller {
     
     
     //FUNCIONES PARA EL MODAL DEL TIPO DE PROCEDIMIENTO
-    
     
     /**
      * @Route("/lstTipoProcedimiento", name="mante_tprocedimiento")
@@ -164,7 +163,7 @@ class MantProcedimientoController extends Controller {
         exit;
     }
 
-      /**
+    /**
      * @Route("/deleteTprocedimiento", name="mante_delete_tprocedimiento")
      * @Method("POST")
      */
@@ -179,16 +178,21 @@ class MantProcedimientoController extends Controller {
 
         $Tprocedimiento = $em->getRepository('ModeloBundle:Tprocedimiento')->findOneBy(array('codTprocedimiento'=>$codtprocedimiento));
         if($Tprocedimiento){
+         
           $em->remove($Tprocedimiento);
           $em->flush(); 
           $rpta=['result'=>true];
+          echo json_encode($rpta, JSON_PRETTY_PRINT);
+          exit;
+          
         }else{
+       
           $rpta=['result'=>false];
+          echo json_encode($rpta, JSON_PRETTY_PRINT);
+          exit;
         }
         
-        $rpta=['result'=>true,'mensaje'=>'Se eliminó correctamente.'];
-        echo json_encode($rpta, JSON_PRETTY_PRINT);
-        exit;
+       
     }
     
 

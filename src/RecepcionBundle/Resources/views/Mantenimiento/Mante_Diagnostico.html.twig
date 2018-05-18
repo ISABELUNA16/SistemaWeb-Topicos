@@ -4,7 +4,7 @@
         <div class="container">
             <!-- BEGIN PAGE TITLE -->
             <div class="page-title">
-                <h1><strong style="font-family: monospace;">TOPICO</strong> <small>Sistema Web</small></h1>
+                <h1><strong style="font-family: monospace;">TÓPICO</strong> <small>Sistema Web</small></h1>
             </div>
             <!-- END PAGE TITLE -->                    
         </div>
@@ -160,7 +160,7 @@
                                             <thead>
                                                 <tr class="uppercase">
                                                     <th> # </th>
-                                                    <th> Descripcion </th>
+                                                    <th> Descripción </th>
                                                     <th> Estado </th>
                                                     <th> Acción </th>
                                                 </tr>
@@ -223,7 +223,7 @@
             Layout.init(); // init layout
             Demo.init(); // init demo(theme settings page)
             Todo.init(); // init todo page
-            ListarTipoMedicamento();
+            ListarTipoDiagnostico();
             ListarDiagnotico();
         });
         
@@ -290,7 +290,7 @@
         
         
         
-        function ListarTipoMedicamento(){
+        function ListarTipoDiagnostico(){
             var formURL = "{{path('mante_tdiagnostico')}}";
             $.ajax(
                     {
@@ -331,11 +331,11 @@
                         {
                              rsp = JSON.parse(data);
                             if (rsp.result) {
-                                ListarTipoMedicamento();
+                                ListarTipoDiagnostico();
                                 ListaTblTipoDiagnostico();
                                 $('#txttdiagnostico').val('');    
                             } else {
-                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
+                                jAlert('info', 'Ocurrió un error al guardar.', 'Sistema de Tópicos IPD', null);
                             }
                         }
                     });
@@ -354,9 +354,9 @@
                              rsp = JSON.parse(data);
                             if (rsp.result) {
                                 ListaTblTipoDiagnostico(); 
-                                ListarTipoMedicamento();
+                                ListarTipoDiagnostico();
                             } else {
-                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
+                                jAlert('info', 'Ocurrió un error al guardar', 'Sistema de Tópicos IPD', null);
                             }
                         }
                     });

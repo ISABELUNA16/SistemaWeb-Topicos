@@ -1,9 +1,9 @@
-{%if result%} 
-    {%set i=0%}
-    {%for lst in diagnostico%}
-        {%set i=i+1%}
-        {%for lst2 in Tdiagnostico%}
-            {%if lst2.codTdiagnostico==lst.codTdiagnostico%}
+{% if result %} 
+    {% set i=0 %}
+    {% for lst in diagnostico %}
+        {% set i = i + 1 %}
+        {% for lst2 in Tdiagnostico %}
+            {% if lst2.codTdiagnostico == lst.codTdiagnostico %}
                 <div class="mt-actions">
                     <div class="mt-action">
                         <div class="mt-action-body">
@@ -18,7 +18,7 @@
                                     <span class="mt-action-date"><i class="fa fa-medkit"></i> {{lst.diagCodigo}}</span>
                                 </div>
                                 <div class="mt-action-datetime">
-                                    <span class="mt-action-date">{% if lst.diagEstado==1%}Activo{%else%}Inactivo{%endif%}</span>
+                                    <span class="mt-action-date">{% if lst.diagEstado == 1 %}Activo{% else %}Inactivo{% endif %}</span>
                                 </div>
                                 <div class="mt-action-buttons">
                                     <div class="btn-group btn-group-circle" style="    padding-left: 20px;">
@@ -29,10 +29,10 @@
                         </div>
                     </div>
                 </div>
-            {%endif%}                
-        {%endfor%}
-    {%endfor%}
-{%else%}
+            {% endif %}                
+        {% endfor %}
+    {% endfor %}
+{% else %}
     <div class="col-md-6 col-md-offset-4"> 
         <div class="mt-actions">
             <div class="mt-action">
@@ -51,4 +51,4 @@
             </div>
         </div>
     </div>
-{%endif%}
+{% endif %}
