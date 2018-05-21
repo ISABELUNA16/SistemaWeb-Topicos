@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use ModeloBundle\Entity\AtencionDiagnostico;
 use ModeloBundle\Entity\AtencionMedicamento;
 use Symfony\Component\HttpFoundation\Response;
-use ModeloBundle\Entity\Tdiagnostico;
 use ModeloBundle\Entity\Diagnostico;
+use ModeloBundle\Entity\Tdiagnostico;
 
 class MantDiagnosticoController extends Controller {
 
@@ -41,7 +41,7 @@ class MantDiagnosticoController extends Controller {
         return $this->render('RecepcionBundle:Mantenimiento:tbl_diagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico,'diagnostico'=>$diagnostico,'result'=>$resul]);
     }
     
-     /**
+    /**
      * @Route("/newdiagnostico", name="mante_guardar_diagnostico")
      * @Method("POST")
      */
@@ -102,23 +102,20 @@ class MantDiagnosticoController extends Controller {
         exit;
 
     }
-    
-//    FUNCIONES PARA EL MODAL DEL TIPO DE DIAGNOSTICO
-    
-    
+        
     /**
      * @Route("/lstTipoDiagnostico", name="mante_tdiagnostico")
      * @Method("POST") 
      */
-    public function ListaTdiagnosticoAction() {
-        
+    public function ListaTdiagnosticoAction() {  
         if (!$this->ValidarSession()) { 
             return $this->redirectToRoute('acceso_login');
         }
         
-        $em2 = $this->getDoctrine()->getManager();
-        $Tdiagnostico = $em2->getRepository('ModeloBundle:Tdiagnostico')->findby(array('tdiagEstado'=>1));
+        $em = $this->getDoctrine()->getManager();
+        $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findby(array('tdiagEstado'=>1));
         return $this->render('RecepcionBundle:Mantenimiento:cbo_tdiagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico]);
+     
     }
     
     /**
@@ -131,13 +128,12 @@ class MantDiagnosticoController extends Controller {
             return $this->redirectToRoute('acceso_login'); 
         }
 
-        $em2 = $this->getDoctrine()->getManager();
-        $Tdiagnostico = $em2->getRepository('ModeloBundle:Tdiagnostico')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findAll();
         return $this->render('RecepcionBundle:Mantenimiento:tbl_tdiagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico]);
+    
     }
-    
-    
-
+  
      /**
      * @Route("/guardarTdiagnostico", name="mante_guardar_tdiagnostico")
      * @Method("POST")

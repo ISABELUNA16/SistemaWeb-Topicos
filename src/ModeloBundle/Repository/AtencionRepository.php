@@ -105,4 +105,26 @@ class AtencionRepository extends \Doctrine\ORM\EntityRepository {
         $datos = $stmt->fetchAll();
         return $datos;
     }
+
+
+
+    //VALIDAR SI EXISTEN PACIENTES EN ATENCION
+    
+    public function data_lista_atenciones_doctor(){
+
+        $query = "SELECT  count(*) cantRegistro
+                FROM    Atencion AS at
+                        INNER JOIN Paciente AS pac ON pac.cod_paciente = at.percodigo
+                        AND at.ate_tipo_per = 2
+                        INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
+                WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103)
+                        AND est.cod_estado = 3 ";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->execute();
+        $cantidad = $stmt->fetchAll();
+        return $cantidad;
+    }
+
+
 }

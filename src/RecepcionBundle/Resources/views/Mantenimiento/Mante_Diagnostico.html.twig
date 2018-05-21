@@ -223,8 +223,8 @@
             Layout.init(); // init layout
             Demo.init(); // init demo(theme settings page)
             Todo.init(); // init todo page
-            ListarTipoDiagnostico();
             ListarDiagnotico();
+            ListarTipoDiagnosticos();
         });
         
         function BorrarDiagnostico(codigo){
@@ -275,9 +275,9 @@
         }
         
         function ListarDiagnotico(){
+            console.log('listado de diagnosticos');
             var formURL = "{{path('mante_tbl_diagnostico')}}";
-            $.ajax(
-                    {
+            $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {},
@@ -290,24 +290,26 @@
         
         
         
-        function ListarTipoDiagnostico(){
+        function ListarTipoDiagnosticos(){
+           
+           console.log("tipo de diagnosticoooooo");
+
             var formURL = "{{path('mante_tdiagnostico')}}";
-            $.ajax(
-                    {
-                        url: formURL,
-                        type: "POST",
-                        data: {},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            $('#cbotipodiagnostico').html(data);
-                        }
-                    });
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {},
+                success: function (data, textStatus, jqXHR)
+                {
+                    $('#cbotipodiagnostico').html(data);
+                    console.log(data);;
+                }
+            });
         }
         
         function ListaTblTipoDiagnostico(){
             var formURL = "{{path('mante_tbl_tdiagnostico')}}";
-            $.ajax(
-                    {
+            $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {},
@@ -322,8 +324,7 @@
             var rsp;
             var tdiagnostico=$('#txttdiagnostico').val();
             var formURL = "{{path('mante_guardar_tdiagnostico')}}";
-            $.ajax(
-                    {
+            $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {tdiagnostico:tdiagnostico},
@@ -331,7 +332,7 @@
                         {
                              rsp = JSON.parse(data);
                             if (rsp.result) {
-                                ListarTipoDiagnostico();
+                                ListarTipoDiagnosticos();
                                 ListaTblTipoDiagnostico();
                                 $('#txttdiagnostico').val('');    
                             } else {
@@ -344,8 +345,7 @@
         function DeleteTdiagnostico(codtdiagnostico){
             var rsp;
             var formURL = "{{path('mante_delete_tdiagnostico')}}";
-            $.ajax(
-                    {
+            $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {codtdiagnostico:codtdiagnostico},
@@ -354,7 +354,7 @@
                              rsp = JSON.parse(data);
                             if (rsp.result) {
                                 ListaTblTipoDiagnostico(); 
-                                ListarTipoDiagnostico();
+                                ListarTipoDiagnosticos();
                             } else {
                                 jAlert('info', 'Ocurrió un error al guardar', 'Sistema de Tópicos IPD', null);
                             }
@@ -363,6 +363,7 @@
         }
         
         function VerTipoDiagnostico() {
+           
             ListaTblTipoDiagnostico();
             $('#Modaltdiagnostico').modal('toggle');
         }

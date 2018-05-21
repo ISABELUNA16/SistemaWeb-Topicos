@@ -239,13 +239,14 @@
         }
         
         function GuardarDiagnostico() {
+           
             var coddiagnostico,rsp;
             coddiagnostico=$('#select2').val();
-            jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function (callback) {
-            if (callback) {
-            var formURL = "{{path('doctor_guardar_diagnostico')}}";
-            $.ajax(
-                    {
+
+            jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function(callback) {
+                if (callback) {
+                    var formURL = "{{path('doctor_guardar_diagnostico')}}";
+                    $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {coddiagnostico: coddiagnostico,codatencion:{{codatencion}}},
@@ -263,30 +264,28 @@
                     });
                 } else {
                    return false;
-               }
-            });       
+                }
+            });      
         }
 
         function Eliminaradiagnostico(codadiagnostico){
             var rsp;
             var formURL = '{{path('doctor_delete_adiagnostico')}}';
-            $.ajax(
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {codadiagnostico:codadiagnostico},
+                    success: function (data, textStatus, jqXHR)
                     {
-                        url: formURL,
-                        type: "POST",
-                        data: {codadiagnostico:codadiagnostico},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            rsp = JSON.parse(data);
-                            if(rsp.result){
-                                 ListarCantidades('{{codatencion}}');
-                                 lstAdiagnotico('{{codatencion}}');
-                            }else{
-                                 jAlert('info', 'Ocurrio error al eliminar', 'Sistema de Topicos IPD', null);
-                            }
+                        rsp = JSON.parse(data);
+                        if(rsp.result){
+                             ListarCantidades('{{codatencion}}');
+                             lstAdiagnotico('{{codatencion}}');
+                        }else{
+                             jAlert('info', 'Ocurrio error al eliminar', 'Sistema de Topicos IPD', null);
                         }
-                    });
-                    
+                    }
+                });
             }
 
          function ListarCantidades(codatencion) {

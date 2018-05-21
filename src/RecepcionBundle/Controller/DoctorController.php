@@ -38,7 +38,7 @@ class DoctorController extends Controller
         echo $this->renderView('RecepcionBundle:Doctor:data_atencion.html.twig',['listaAtenciones'=>$DataAtenciones]);
         exit;
     }
-    
+
     /**
      * @Route("/recibiratencion", name="doctor_recibir_atencion")
      * @Method("POST")
@@ -51,17 +51,28 @@ class DoctorController extends Controller
         
         $codAtencion = $request->request->get('codigo');//INPUT CODIGO DE LA PERSONA
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
-        $atencion=$em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion' => $codAtencion));
-        $atencion->setCodEstado(3);
-        $em->flush();
-        $rpta=['result'=>true,'mensaje'=>'Se Recibio correctamente'];
-        echo json_encode($rpta, JSON_PRETTY_PRINT);
-        exit;
+
+        $cantidadAtenciones = $em->getRepository('ModeloBundle:Atencion')->data_lista_atenciones_doctor();
+        $cantRegistros = intval($cantidadAtenciones[0]['cantRegistro']);
+
+        if($cantRegistros >= 1){
+            
+            $mensaje = ['mensaje'=>1];
+            echo json_encode($mensaje, JSON_PRETTY_PRINT);
+            exit;
+       
+        }else{
+            
+            $atencion=$em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion' => $codAtencion));
+            $atencion->setCodEstado(3);
+            $em->flush();
+            $mensaje = ['mensaje'=>2];
+            echo json_encode($mensaje, JSON_PRETTY_PRINT);
+            exit;
+        }
+
     }
-    
-    
- 
-    
+        
     private function ValidarSession(){
         $sesion_creada=true;//VARIABLE INICIALIZADA CON TRUE 
         $session = new Session();//INICIAR SESSION

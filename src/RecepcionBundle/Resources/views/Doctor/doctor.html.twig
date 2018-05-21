@@ -272,19 +272,27 @@
         
         function RecibirAtencion(codigo){
             var formURL = "recibiratencion";
-            $.ajax(
-                    {
+            $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {codigo:codigo},
                         success: function (data, textStatus, jqXHR)
                         {
-                            ListarAtenciones();
+                            rsp = JSON.parse(data);
+                            console.log(rsp.mensaje);
+
+                            if(rsp.mensaje == 1){
+                                 jAlert('info', 'Existe una atención en curso, por favor ingrese el diagnóstico del paciente en atención.', 'Sistema de Tópico - IPD', null);
+                                ListarAtenciones();
+                            }else{
+                                ListarAtenciones();    
+                            }
                         }
                     });
         }
         
         function ListarAtenciones() {
+          
             $('#tblAtenciones').html("<tr><td style='font-size: 11px !important;' colspan='8'>  <center><br><br>Cargando....<br><br></center> </td> </tr>");
             var formURL = "lstatenciondoctor";
             $.ajax(
