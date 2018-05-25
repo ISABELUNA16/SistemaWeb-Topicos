@@ -49,13 +49,28 @@ class AtencionRepository extends \Doctrine\ORM\EntityRepository {
     
     public function data_lista_atenciones_registradas($dni){
 
-        $query = "SELECT  count(*) cantRegistro
-                FROM    Atencion AS at
-                        INNER JOIN Paciente AS pac ON pac.cod_paciente = at.percodigo
-                        AND at.ate_tipo_per = 2
-                        INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
-                WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103)
-                        AND (est.cod_estado = 1 OR est.cod_estado = 2 OR est.cod_estado = 3) AND  pac.pac_dni= '$dni'";
+        $query = "DECLARE @CantidadCas int, @CantidadTercero int
+   
+                SET @CantidadCas = (SELECT count(*) cantRegistro
+                                    FROM    Atencion AS at
+                                            INNER JOIN presupuesto.dbo.Trabajador AS per ON per.nCodTra = at.percodigo
+                                            AND at.ate_tipo_per = 1
+                                            INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
+                                    WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103)
+                                            AND (est.cod_estado = 1 OR est.cod_estado = 2 OR est.cod_estado = 3) AND  per.cLe= '$dni');
+                SET @CantidadTercero = (SELECT  count(*) cantRegistro
+                                        FROM    Atencion AS at
+                                                INNER JOIN Paciente AS pac ON pac.cod_paciente = at.percodigo
+                                                AND at.ate_tipo_per = 2
+                                                INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
+                                        WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103)
+                                                AND (est.cod_estado = 1 OR est.cod_estado = 2 OR est.cod_estado = 3) AND  pac.pac_dni= '$dni');
+                                                
+                IF(@CantidadCas <> 0)
+                 select  @CantidadCas AS cantRegistro
+                
+                ELSE IF (@CantidadTercero >= 0)
+                  select @CantidadTercero AS cantRegistro " ;
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);
         $stmt->execute();
@@ -112,13 +127,28 @@ class AtencionRepository extends \Doctrine\ORM\EntityRepository {
     
     public function data_lista_atenciones_doctor(){
 
-        $query = "SELECT  count(*) cantRegistro
-                FROM    Atencion AS at
-                        INNER JOIN Paciente AS pac ON pac.cod_paciente = at.percodigo
-                        AND at.ate_tipo_per = 2
-                        INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
-                WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103)
-                        AND est.cod_estado = 3 ";
+        $query = "DECLARE @CantidadCas int, @CantidadTercero int
+   
+                SET @CantidadCas = (SELECT count(*) cantRegistro
+                                    FROM    Atencion AS at
+                                            INNER JOIN presupuesto.dbo.Trabajador AS per ON per.nCodTra = at.percodigo
+                                            AND at.ate_tipo_per = 1
+                                            INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
+                                    WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103)
+                                            AND est.cod_estado = 3)
+                SET @CantidadTercero = (SELECT  count(*) cantRegistro
+                                        FROM    Atencion AS at
+                                                INNER JOIN Paciente AS pac ON pac.cod_paciente = at.percodigo
+                                                AND at.ate_tipo_per = 2
+                                                INNER JOIN dbo.Estado AS est ON est.cod_estado = at.cod_estado
+                                        WHERE   CONVERT(VARCHAR(10), at.ate_fec_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103) 
+                                                AND est.cod_estado = 3)
+                                                
+                IF(@CantidadCas <> 0)
+                 select  @CantidadCas AS cantRegistro
+                
+                ELSE IF (@CantidadTercero >= 0)
+                  select @CantidadTercero AS cantRegistro" ; 
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);
         $stmt->execute();

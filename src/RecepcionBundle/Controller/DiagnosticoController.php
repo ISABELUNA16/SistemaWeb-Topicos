@@ -64,12 +64,12 @@ class DiagnosticoController extends Controller {
             $em->flush();
 
             if (!$Adiagnostico->getCodAdiagnostico()) {
-                $rpta = ['result' => false, 'mensaje' => 'Ocurrio un problema al registrar favor de intentarlo de nuevo'];
+                $rpta = ['result' => false, 'mensaje' => 'Ocurrió un problema al registrar favor de intentarlo de nuevo'];
             } else {
-                $rpta = ['result' => true, 'mensaje' => 'Se registro correctamente'];
+                $rpta = ['result' => true, 'mensaje' => 'Se registró correctamente'];
             }
         } else {
-            $rpta = ['result' => false, 'mensaje' => 'Ya se encuentra el diagnostico registrado'];
+            $rpta = ['result' => false, 'mensaje' => 'Ya se encuentra el diagnóstico registrado'];
         }
 
 

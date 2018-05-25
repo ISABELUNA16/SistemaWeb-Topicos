@@ -104,18 +104,16 @@
                                             <div class="form">
                                                 <div class="form-group">
                                                     <div class="col-md-4">
-                                                        <label class="control-label">Tipo de Diagnóstico</label>
-                                                        <select class="js-example-basic-single" name="select2tipo" id="select2tipo" onchange="Diagnostico(this.value)">
+                                                        <label class="control-label">Tipo de Diagnóstico</label><br>
+                                                        <select class="form-control" name="select2tipo" id="select2tipo" onchange="Diagnostico(this.value)">
                                                             <option value="0">[Seleccionar]</option>
                                                             {%for cbo in tdiagnostico%}
                                                                 <option value="{{cbo.codTdiagnostico}}">{{cbo.tdiagDescripcion}}</option>
                                                             {%endfor%}
                                                         </select>
-
-
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label class="control-label">Diagnostico</label>
+                                                        <label class="control-label">Diagnóstico</label><br>
                                                         <select class="form-control" name="select2" id="select2">
                                                             <option value="0">[Seleccionar]</option>
                                                         </select>
@@ -258,7 +256,7 @@
                                 lstAdiagnotico('{{codatencion}}');
                                 $('#select2').html('<option value="0">[Seleccionar]</option>');
                             }else{
-                                jAlert('info', rsp.mensaje, 'Sistema de Topico - IPD', null);
+                                jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
                             }
                         }
                     });

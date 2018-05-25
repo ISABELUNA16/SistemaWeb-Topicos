@@ -91,8 +91,8 @@
                             <!-- PROJECT HEAD -->
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <span class="caption-helper">DIAGNOSTICO :</span> &nbsp;
-                                    <span class="caption-subject font-red bold uppercase">REGISTRO DE PROCEDIMIENTO MEDICOS</span>
+                                    <span class="caption-helper">PROCEDIMIENTOS :</span> &nbsp;
+                                    <span class="caption-subject font-red bold uppercase">REGISTRO DE PROCEDIMIENTO MÉDICOS</span>
                                 </div>
                             </div>
                             <!-- end PROJECT HEAD -->
@@ -103,17 +103,25 @@
                                             <!-- TASK HEAD -->
                                             <div class="form">
                                                 <div class="form-group">
-                                                    <div class="col-md-10">
-                                                        <label class="control-label">Procedimiento :</label>
-                                                        <select class="js-example-basic-single col-md-7" name="select2" id="select2" >
+                                                    <div class="col-md-4">
+                                                        <label class="control-label">Tipo de Procedimiento</label><br>
+                                                        <select class="form-control" name="select2tipo" id="select2tipo" onchange="Procedimiento(this.value)">
                                                             <option value="0">[Seleccionar]</option>
-                                                            {%for cbo in procedimiento%}
-                                                                <option value="{{cbo.codProcedimiento}}">{{cbo.procDescripcion}}</option>
+                                                            {%for cbo in tprocedimiento%}
+                                                                <option value="{{cbo.codTprocedimiento}}">{{cbo.tprocDescripcion}}</option>
                                                             {%endfor%}
                                                         </select>
                                                     </div>
+
+                                                    <div class="col-md-6">
+                                                        <label class="control-label">Procedimiento</label>
+                                                        <select class="form-control" name="select2" id="select2">
+                                                            <option value="0">[Seleccionar]</option>
+                                                        </select>
+                                                    </div>
                                                     <div class="col-md-2">
-                                                        {#<label class="control-label" style="color: white">Diagnostico</label>#}
+                                                        <label class="control-label" style="color: white">Diagnostico</label>
+
                                                         <button class="btn  btn-sm red" type="button" onclick="GuardarProcedimiento();">Guardar</button>
                                                     </div>
                                                 </div>
@@ -170,11 +178,13 @@
     {#    <script src="{{global.pathWeb}}/bundles/public/js/index.js"></script>  #}
 
     <script>
+
         jQuery(document).ready(function () {
             Metronic.init(); // init metronic core componets
             Layout.init(); // init layout
             Demo.init(); // init demo(theme settings page)
             Todo.init(); // init todo page
+            $('#select2tipo').select2();
             $('#select2').select2();
             lstAprocedimiento('{{codatencion}}');
             ListarCantidades('{{codatencion}}');
@@ -182,7 +192,18 @@
         });
         
         
-        
+        function Procedimiento(codTprocedimiento) {
+            var formURL = "{{path('doctor_lista_tprocedimiento')}}";
+            $.ajax({
+                        url: formURL,
+                        type: "POST",
+                        data: {codTprocedimiento: codTprocedimiento},
+                        success: function (data, textStatus, jqXHR)
+                        {
+                            $('#select2').html(data);
+                        }
+                    });
+        }
         
 
         function lstAprocedimiento(codatencion) {

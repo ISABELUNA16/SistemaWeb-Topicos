@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use ModeloBundle\Entity\AtencionDiagnostico;
 use ModeloBundle\Entity\AtencionProcedimiento;
+use ModeloBundle\Entity\Atencion;
+
 
 class ProcedimientoController extends Controller {
 
@@ -29,10 +31,28 @@ class ProcedimientoController extends Controller {
         } else {
             $Persona = $em->getRepository('ModeloBundle:Paciente')->Data_paciente_by_Codigo($Atencion->getpercodigo()); //DATOS PACIENTE
         }
-        $procedimiento = $em->getRepository('ModeloBundle:Procedimiento')->findAll();
+
+        $Tprocedimiento = $em->getRepository('ModeloBundle:Tprocedimiento')->findAll();
         $NomPaciente = $Persona['nombres'] . ' ' . $Persona['apaterno'] . ' ' . $Persona['amaterno'];
-        return $this->render('RecepcionBundle:Doctor:procedimiento.html.twig', ['Paciente' => $NomPaciente, 'procedimiento' => $procedimiento, 'codatencion' => $codatencion]);
+        return $this->render('RecepcionBundle:Doctor:procedimiento.html.twig', ['Paciente' => $NomPaciente, 'tprocedimiento' => $Tprocedimiento, 'codatencion' => $codatencion]);
     }
+
+    /**
+     * @Route("/lstprocedimiento", name="doctor_lista_tprocedimiento")
+     * @Method("POST")
+     */
+    public function LstProcedimientoAction(Request $request) {
+        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
+            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
+        }
+        $codTprocedimiento = $request->request->get('codTprocedimiento');
+
+        $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+        $Procedimiento = $em->getRepository('ModeloBundle:Procedimiento')->findBy(array('codTprocedimiento' => $codTprocedimiento)); //DATOS LISTA ATENCIONES MEDICAS
+        echo $this->renderView('RecepcionBundle:Doctor:cbo_procedimiento.html.twig', ['lstProcedimiento' => $Procedimiento]);
+        exit;
+    }
+
 
     /**
      * @Route("/lstaprocedimiento", name="doctor_lista_aprocedimiento")
@@ -80,12 +100,12 @@ class ProcedimientoController extends Controller {
             $em->flush();
 
             if (!$Aprocedimiento->getCodProcedimiento()) {
-                $rpta = ['result' => false, 'mensaje' => 'Ocurrio un problema al registrar favor de intentarlo de nuevo'];
+                $rpta = ['result' => false, 'mensaje' => 'Ocurrió un problema al registrar favor de intentarlo de nuevo'];
             } else {
-                $rpta = ['result' => true, 'mensaje' => 'Se registro correctamente'];
+                $rpta = ['result' => true, 'mensaje' => 'Se registró correctamente'];
             }
         } else {
-            $rpta = ['result' => false, 'mensaje' => 'Ya se encuentra el diagnostico registrado'];
+            $rpta = ['result' => false, 'mensaje' => 'Ya se encuentra el diagnóstico registrado'];
         }
 
 
