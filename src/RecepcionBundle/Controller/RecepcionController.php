@@ -16,11 +16,7 @@ class RecepcionController extends Controller
      * @Route("/recepcion", name="recepcion_home")
      */
     public function RecepcionHomeAction()
-    {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        
+    {     
         return $this->render('RecepcionBundle:Recepcion:recepcion.html.twig');
     }
     
@@ -30,12 +26,8 @@ class RecepcionController extends Controller
      */
     public function LstAtencionesAction()
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-
-        $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
-        $DataAtenciones = $em->getRepository('ModeloBundle:Atencion')->Data_Lista_Atenciones();//DATOS LISTA ATENCIONES MEDICAS
+        $em = $this->getDoctrine()->getManager();
+        $DataAtenciones = $em->getRepository('ModeloBundle:Atencion')->Data_Lista_Atenciones();
         echo $this->renderView('RecepcionBundle:Recepcion:data_atencion.html.twig',['listaAtenciones'=>$DataAtenciones]);
         exit;
     }
@@ -46,10 +38,6 @@ class RecepcionController extends Controller
      */
     public function EvaluarAtencionAction(Request $request)
     {
-        if(!$this->ValidarSession()){
-            return $this->redirectToRoute('acceso_login');
-        }
-
         $dni = $request->request->get('dni');
         $fc = $this->getDoctrine()->getManager();
         $atencionRegistrada = $fc->getRepository('ModeloBundle:Atencion')->data_lista_atenciones_registradas($dni);
@@ -72,18 +60,12 @@ class RecepcionController extends Controller
      */
     public function NuevoAtencioAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+        $codper = $request->request->get('codper');
+        $tipo = $request->request->get('tipo');
+        $dni = $request->request->get('dni'); 
+        $usuario = $this->getUser()->getCodUser();
 
-        $session = new Session();
-        $codper = $request->request->get('codper');//INPUT CODIGO DE LA PERSONA
-        $tipo = $request->request->get('tipo');//INPUT CODIGO DE LA PERSONA
-        $dni = $request->request->get('dni'); //DNI DEL PACIENTE
-     //   $rpta = '';
-
-        $usuario= $session->get('usuario');
-        $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
+        $em = $this->getDoctrine()->getManager();
 
         $atencionRegistrada = $em->getRepository('ModeloBundle:Atencion')->data_lista_atenciones_registradas($dni);
         $cantRegistros = intval($atencionRegistrada[0]['cantRegistro']);
@@ -101,7 +83,7 @@ class RecepcionController extends Controller
 
                 $atencion = new Atencion();
                 $atencion->setPercodigo($codper);
-                $atencion->setCodUser($usuario['codigo']);
+                $atencion->setCodUser($usuario);
                 $atencion->setAteFecReg(new \DateTime);
                 $atencion->setAteTipoPer($tipo);
                 $atencion->setCodEstado(1);
@@ -133,7 +115,7 @@ class RecepcionController extends Controller
                 
                 $atencion= new Atencion();
                 $atencion->setPercodigo($Percodigo);
-                $atencion->setCodUser($usuario['codigo']);
+                $atencion->setCodUser($usuario);
                 $atencion->setAteFecReg(new \DateTime);
                 $atencion->setAteTipoPer(2);
                 $atencion->setCodEstado(1);
@@ -144,21 +126,15 @@ class RecepcionController extends Controller
                 $rpta=['result'=>'registrado'];
             }
 
-
             if(empty($rpta)){
                 $rpta=['result'=>'no registrado'];
                 echo json_encode($rpta, JSON_PRETTY_PRINT);
                 exit;
-
-            }else{
-                
+            }else{      
                 echo json_encode($rpta, JSON_PRETTY_PRINT);
                 exit;    
-            }
-            
-            
+            }            
         } 
-        
     }
     
     /**
@@ -167,13 +143,12 @@ class RecepcionController extends Controller
      */
     public function dataexamenclinicoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        $codatencion = $request->request->get('codatencion');//INPUT CODIGO DE LA ATENCION
-        $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
-        $Examen = $em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion' => $codatencion));//DATOS LISTA ATENCIONES MEDICAS
-        $Antropometria= $this->renderView('RecepcionBundle:Recepcion:data_atropometria.html.twig',['LstAntropometria'=>$Examen,'codigo'=>$codatencion]);//VIEW DEL EXAMEN DE ANTROPOMETRIA
+        
+        $codatencion = $request->request->get('codatencion');
+        $em = $this->getDoctrine()->getManager();
+
+        $Examen = $em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion' => $codatencion));
+        $Antropometria= $this->renderView('RecepcionBundle:Recepcion:data_atropometria.html.twig',['LstAntropometria'=>$Examen,'codigo'=>$codatencion]);
         $Signos= $this->renderView('RecepcionBundle:Recepcion:data_signos.html.twig',['LstSignos'=>$Examen]);//VIEW DE SIGNOS VITALES
         
         $rpta=['antropometria'=>$Antropometria,'signos'=>$Signos];
@@ -188,19 +163,15 @@ class RecepcionController extends Controller
      */
     public function guardaratropometriaAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-
-        $codigo =$request->request->get('codigo');//IMPUT CODIGO
         
-        $peso = $request->request->get('peso');//INPUT PESO
-        $talla = $request->request->get('talla');//INPUT TALLA
-        $pabdominal = $request->request->get('pabdominal');//INPUT PERIMETRO ABDOMINAL
+        $codigo =$request->request->get('codigo');
+        $peso = $request->request->get('peso');
+        $talla = $request->request->get('talla');
+        $pabdominal = $request->request->get('pabdominal');
         
         $IMC=$peso/(($talla/100)*($talla/100));
         
-        $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
+        $em = $this->getDoctrine()->getManager();
         $atencion=$em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion' => $codigo));
 
         $atencion->setAtePeso($peso);
@@ -247,16 +218,14 @@ class RecepcionController extends Controller
      */
     public function guardarsignostriaAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        $codigo =$request->request->get('codigo');//IMPUT CODIGO
-        $cardiaca = $request->request->get('cardiaca');//INPUT CARDIACA
-        $respiratoria = $request->request->get('respiratoria');//INPUT RESPIRATORIA
-        $arterial = $request->request->get('arterial');//INPUT ARTERIAL
-        $temperatura = $request->request->get('temperatura');//INPUT TEMPERATURA
+        $codigo =$request->request->get('codigo');
+        $cardiaca = $request->request->get('cardiaca');
+        $respiratoria = $request->request->get('respiratoria');
+        $arterial = $request->request->get('arterial');
+        $temperatura = $request->request->get('temperatura');
         
-        $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
+        $em = $this->getDoctrine()->getManager();
+
         $atencion=$em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion' => $codigo));
         $atencion->setAteFreCardiaca($cardiaca);
         $atencion->setAteFreRespiratoria($respiratoria);
@@ -273,17 +242,4 @@ class RecepcionController extends Controller
         exit;
     }
     
-    
-    
-    private function ValidarSession(){
-        $sesion_creada=true;//VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session();//INICIAR SESSION
-        $UserSession=$session->get('usuario');//OBTENER SESSION
-        if(empty($UserSession)){
-            $sesion_creada=false;
-        }
-        return $sesion_creada;//RETORNA DE VARIABLE
-    }
-    
-   
 }

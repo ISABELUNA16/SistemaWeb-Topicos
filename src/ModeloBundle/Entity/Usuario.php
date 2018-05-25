@@ -3,6 +3,7 @@
 namespace ModeloBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuario
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Usuario")
  * @ORM\Entity(repositoryClass="ModeloBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var integer
@@ -26,14 +27,14 @@ class Usuario
      *
      * @ORM\Column(name="user_name", type="string", length=50, nullable=true)
      */
-    private $userName;
+    private $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="user_pasword", type="text", length=-1, nullable=true)
      */
-    private $userPasword;
+    private $password;
 
     /**
      * @var integer
@@ -70,6 +71,55 @@ class Usuario
      */
     private $userEstado;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="json_array")
+     */
+    private $roles = array();
+
+
+    /*Implementación para el logueo*/
+
+    public function getUsername(){
+        return $this->userName;
+    }
+
+    public function getSalt(){
+        return null;
+    }
+
+    public function getRoles(){
+        return $this->roles;
+    }
+
+    public function eraseCredentials(){
+        
+    }
+
+     /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+     /**
+     * Get password
+     *
+     * @return int
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
 
     /**
@@ -83,51 +133,17 @@ class Usuario
     }
 
     /**
-     * Set userName
+     * Set username
      *
-     * @param string $userName
-     *
-     * @return Usuario
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
-
-        return $this;
-    }
-
-    /**
-     * Get userName
-     *
-     * @return string
-     */
-    public function getUserName()
-    {
-        return $this->userName;
-    }
-
-    /**
-     * Set userPasword
-     *
-     * @param string $userPasword
+     * @param string $username
      *
      * @return Usuario
      */
-    public function setUserPasword($userPasword)
+    public function setUsername($username)
     {
-        $this->userPasword = $userPasword;
+        $this->username = $username;
 
         return $this;
-    }
-
-    /**
-     * Get userPasword
-     *
-     * @return string
-     */
-    public function getUserPasword()
-    {
-        return $this->userPasword;
     }
 
     /**
@@ -248,5 +264,19 @@ class Usuario
     public function getUserEstado()
     {
         return $this->userEstado;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return Usuario
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

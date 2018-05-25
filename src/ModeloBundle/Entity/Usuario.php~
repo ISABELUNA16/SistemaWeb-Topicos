@@ -3,6 +3,7 @@
 namespace ModeloBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuario
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Usuario")
  * @ORM\Entity(repositoryClass="ModeloBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var integer
@@ -26,14 +27,14 @@ class Usuario
      *
      * @ORM\Column(name="user_name", type="string", length=50, nullable=true)
      */
-    private $userName;
+    private $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="user_pasword", type="text", length=-1, nullable=true)
      */
-    private $userPasword;
+    private $password;
 
     /**
      * @var integer
@@ -70,183 +71,54 @@ class Usuario
      */
     private $userEstado;
 
-
-
     /**
-     * Get codUser
+     * @var string
      *
-     * @return integer
+     * @ORM\Column(name="role", type="json_array")
      */
-    public function getCodUser()
-    {
-        return $this->codUser;
-    }
+    private $roles = array();
 
-    /**
-     * Set userName
-     *
-     * @param string $userName
-     *
-     * @return Usuario
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
 
-        return $this;
-    }
+    /*Implementación para el logueo*/
 
-    /**
-     * Get userName
-     *
-     * @return string
-     */
-    public function getUserName()
-    {
+    public function getUsername(){
         return $this->userName;
     }
 
-    /**
-     * Set userPasword
+    public function getSalt(){
+        return null;
+    }
+
+    public function getRoles(){
+        return $this->roles;
+    }
+
+    public function eraseCredentials(){
+        
+    }
+
+     /**
+     * Set password
      *
-     * @param string $userPasword
+     * @param string $password
      *
-     * @return Usuario
+     * @return Usuarios
      */
-    public function setUserPasword($userPasword)
+    public function setPassword($password)
     {
-        $this->userPasword = $userPasword;
+        $this->password = $password;
 
         return $this;
     }
 
-    /**
-     * Get userPasword
+     /**
+     * Get password
      *
-     * @return string
+     * @return int
      */
-    public function getUserPasword()
+    public function getPassword()
     {
-        return $this->userPasword;
+        return $this->password;
     }
 
-    /**
-     * Set percodigo
-     *
-     * @param integer $percodigo
-     *
-     * @return Usuario
-     */
-    public function setPercodigo($percodigo)
-    {
-        $this->percodigo = $percodigo;
-
-        return $this;
-    }
-
-    /**
-     * Get percodigo
-     *
-     * @return integer
-     */
-    public function getPercodigo()
-    {
-        return $this->percodigo;
-    }
-
-    /**
-     * Set userEmail
-     *
-     * @param string $userEmail
-     *
-     * @return Usuario
-     */
-    public function setUserEmail($userEmail)
-    {
-        $this->userEmail = $userEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get userEmail
-     *
-     * @return string
-     */
-    public function getUserEmail()
-    {
-        return $this->userEmail;
-    }
-
-    /**
-     * Set userPerfil
-     *
-     * @param integer $userPerfil
-     *
-     * @return Usuario
-     */
-    public function setUserPerfil($userPerfil)
-    {
-        $this->userPerfil = $userPerfil;
-
-        return $this;
-    }
-
-    /**
-     * Get userPerfil
-     *
-     * @return integer
-     */
-    public function getUserPerfil()
-    {
-        return $this->userPerfil;
-    }
-
-    /**
-     * Set userFecReg
-     *
-     * @param \DateTime $userFecReg
-     *
-     * @return Usuario
-     */
-    public function setUserFecReg($userFecReg)
-    {
-        $this->userFecReg = $userFecReg;
-
-        return $this;
-    }
-
-    /**
-     * Get userFecReg
-     *
-     * @return \DateTime
-     */
-    public function getUserFecReg()
-    {
-        return $this->userFecReg;
-    }
-
-    /**
-     * Set userEstado
-     *
-     * @param integer $userEstado
-     *
-     * @return Usuario
-     */
-    public function setUserEstado($userEstado)
-    {
-        $this->userEstado = $userEstado;
-
-        return $this;
-    }
-
-    /**
-     * Get userEstado
-     *
-     * @return integer
-     */
-    public function getUserEstado()
-    {
-        return $this->userEstado;
-    }
 }

@@ -16,9 +16,7 @@ class PacienteController extends Controller {
      * @Method("POST")
      */
     public function DataPersonaAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS ACTIVIDAD IPD
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS ACTIVIDAD IPD
         $dni = $request->get('dni'); //PARAMETER POST 
@@ -46,9 +44,7 @@ class PacienteController extends Controller {
      * @Method("POST")
      */
     public function datadatosAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+     
         $codper = $request->request->get('percodigo'); //INPUT CODIGO
         $tipo = $request->request->get('tipo'); //INPUT TIPO
         $dni = $request->request->get('dni'); //INPUT DNI
@@ -58,6 +54,7 @@ class PacienteController extends Controller {
         $em3 = $this->getDoctrine()->getManager('actividad'); //CONEXION A BASE DE ACTIVIDAD IPD
         $lnacimiento = [];
         $lprocedencia = [];
+     
         if ($tipo == 1) {
             $trabajador = true;
             $Paciente = $em2->getRepository('ModeloBundle:Persona')->data_trabajador($dni);
@@ -94,13 +91,10 @@ class PacienteController extends Controller {
      * @Method("POST")
      */
     public function dataprovinciaAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-        $dep = $request->request->get('dep'); //INPUT CODIGO DEPARTAMENTO
 
-        $em3 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE ACTIVIDAD IPD
-        $Provincia = $em3->getRepository('ModeloBundle:Persona')->Data_Provincia($dep);
+        $dep = $request->request->get('dep'); //INPUT CODIGO DEPARTAMENTO
+        $em = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE ACTIVIDAD IPD
+        $Provincia = $em->getRepository('ModeloBundle:Persona')->Data_Provincia($dep);
 
         $Datos = $this->renderView('RecepcionBundle:Recepcion:data_provincia.html.twig', ['provincia' => $Provincia]); //VIEW
 
@@ -114,9 +108,7 @@ class PacienteController extends Controller {
      * @Method("POST")
      */
     public function datadistritoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $prov = $request->request->get('prov'); //INPUT PROVINCIA
         $dep = $request->request->get('dep'); //INPUT DEPARTAMENTO
 
@@ -134,11 +126,11 @@ class PacienteController extends Controller {
      * @Method("POST")
      */
     public function guardardatospacienteAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+      
         $PacienteData = $em->getRepository('ModeloBundle:Paciente')->findOneBy(array('pacDni' => $request->request->get('txtdni')));
+      
         if (!$PacienteData) {
             $Paciente = new Paciente();
             $Paciente->setPacDni($request->request->get('txtdni'));
@@ -183,16 +175,6 @@ class PacienteController extends Controller {
         $rpta = ['mensaje' => 'Se Actualizo la informacion del paciente correctamente'];
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
-    }
-
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
     }
 
 }
