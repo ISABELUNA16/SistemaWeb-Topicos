@@ -1,19 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block page_head %}
-    <div class="page-head">
-        <div class="container">
-            <!-- BEGIN PAGE TITLE -->
-            <div class="page-title">
-                <h1><strong style="font-family: monospace;">TOPICO</strong> <small>Sistema Web</small></h1>
-            </div>
-            <!-- END PAGE TITLE -->                    
-        </div>
-    </div>
 {% endblock %}
 
 {% block breadcrumb %}
     <ul class="page-breadcrumb breadcrumb">
-        <li class="active">Registro de Datos Clinicos</li><i class="fa fa-circle"></i> 
+        <li class="active">Registro de Datos Clínicos</li><i class="fa fa-circle"></i> 
     </ul>
 {% endblock %}
 
@@ -25,12 +16,6 @@
                 <div class="todo-ui">
                     <div class="todo-sidebar">
                         <div class="portlet light ">
-                            {#<div class="portlet-title">
-                                <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
-                                    <span class="caption-subject font-red bold uppercase">ANTECENDENTE </span>
-                                    <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">Click para ver o ocultar el menu</span>
-                                </div>
-                            </div>#}
                             <style>
                                 .listbadge{
                                     color:#697882;
@@ -56,12 +41,12 @@
                                     <ul class="nav nav-pills nav-stacked" id="items">
                                         <li>
                                             <a  class="listbadge" href="{{path('doctor_anamenis',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger"  id="item4"> 0 </span>Anamenis 
+                                                <span class="badge badge-danger"  id="item4"> 0 </span>Anamnesis 
                                             </a>
                                         </li>
                                         <li class="active" >
                                             <a  class="listbadge" href="{{path('doctor_diagnostico',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger badge-active" id="item1"> 0 </span>Diagnostico
+                                                <span class="badge badge-danger badge-active" id="item1"> 0 </span>Diagnóstico
                                             </a>
                                         </li>
                                         <li>
@@ -119,7 +104,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label class="control-label" style="color: white">Diagnostico</label>
+                                                        <label class="control-label" style="color: white">Diagnóstico</label>
                                                         <button class="btn  btn-sm red" type="button" onclick="GuardarDiagnostico();">Guardar</button>
                                                     </div>
                                                 </div>

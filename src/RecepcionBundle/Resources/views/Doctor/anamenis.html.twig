@@ -1,14 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block page_head %}
-    <div class="page-head">
-        <div class="container">
-            <!-- BEGIN PAGE TITLE -->
-            <div class="page-title">
-                <h1><strong style="font-family: monospace;">TÓPICO</strong> <small>Sistema Web</small></h1>
-            </div>
-            <!-- END PAGE TITLE -->                    
-        </div>
-    </div>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -25,12 +16,6 @@
                 <div class="todo-ui">
                     <div class="todo-sidebar">
                         <div class="portlet light ">
-                            {#<div class="portlet-title">
-                                <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
-                                    <span class="caption-subject font-red bold uppercase">ANTECENDENTE </span>
-                                    <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">Click para ver o ocultar el menu</span>
-                                </div>
-                            </div>#}
                             <style>
                                 .listbadge{
                                     color:#697882;
@@ -56,27 +41,27 @@
                                     <ul class="nav nav-pills nav-stacked" id="items">
                                         <li class="active">
                                             <a  class="listbadge" href="{{path('doctor_anamenis',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger badge-active" id="item4"> 0 </span>Anamenis
+                                                <span class="badge badge-danger badge-active" id="item4"> 0 </span>Anamnesis
                                             </a>
                                         </li>
                                         <li  >
                                             <a  class="listbadge" href="{{path('doctor_diagnostico',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger " id="item1"> 0 </span>Diagnostico
+                                                <span class="badge badge-danger " id="item1"> 0 </span>Diagnóstico
                                             </a>
                                         </li>
                                         <li>
                                             <a  class="listbadge" href="{{path('doctor_procedimiento',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger" id="item2"> 0 </span>Prodimientos
+                                                <span class="badge badge-danger" id="item2"> 0 </span>Procedimientos
                                             </a>
                                         </li>
                                         <li>
                                             <a  class="listbadge"  href="{{path('doctor_receta',{codatencion:codatencion})}}">
-                                                <span class="badge badge-danger" id="item3"> 0 </span>Receta Medica
+                                                <span class="badge badge-danger" id="item3"> 0 </span>Receta Médica
                                             </a>
                                         </li>
                                         <li class="active" id="btnfinalizar" style="text-align: center;display: none;padding-top: 15px;">
                                             <button class="btn btn-circle btn-success" type="button" onclick="FinalizarAtencion()">
-                                                Finalizar Atencion<br>
+                                                Finalizar Atención<br>
                                             </button>
                                         </li>
                                     </ul>
@@ -91,8 +76,8 @@
                             <!-- PROJECT HEAD -->
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <span class="caption-helper">DIAGNOSTICO :</span> &nbsp;
-                                    <span class="caption-subject font-red bold uppercase">REGISTRO DEL ANAMENIS</span>
+                                    <span class="caption-helper">DIAGNÓSTICO :</span> &nbsp;
+                                    <span class="caption-subject font-red bold uppercase">REGISTRO DEL ANAMNESIS</span>
                                 </div>
                             </div>
                             <!-- end PROJECT HEAD -->
@@ -104,14 +89,14 @@
                                             <div class="form">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
-                                                        <label class="control-label">Ingresar descripicón</label>
+                                                        <label class="control-label">Ingresar descripción</label>
                                                         <textarea id="txtanamenis" class="form-control" style="height: 200px !important;">
                                                             
                                                         </textarea>
                                                     </div>
                                                     
                                                     <div class="col-md-2">
-                                                        <label class="control-label" style="color: white">Diagnostico</label>
+                                                        <label class="control-label" style="color: white">Diagnóstico</label>
                                                         <button class="btn  btn-sm red" type="button" onclick="GuardarDiagnostico();">Guardar</button>
                                                     </div>
                                                 </div>

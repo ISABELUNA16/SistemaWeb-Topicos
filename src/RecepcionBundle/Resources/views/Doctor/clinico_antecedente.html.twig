@@ -1,19 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block page_head %}
-    <div class="page-head">
-        <div class="container">
-            <!-- BEGIN PAGE TITLE -->
-            <div class="page-title">
-                <h1><strong style="font-family: monospace;">TOPICO</strong> <small>Sistema Web</small></h1>
-            </div>
-            <!-- END PAGE TITLE -->                    
-        </div>
-    </div>
 {% endblock %}
 
 {% block breadcrumb %}
     <ul class="page-breadcrumb breadcrumb">
-        <li class="active">Registro de Datos Clinicos</li><i class="fa fa-circle"></i> 
+        <li class="active">Registro de Datos Clínicos</li><i class="fa fa-circle"></i> 
+        <li  style=" float:right; "title="Atrás"><a href="{{path('doctor_home')}}"><i class="fa fa-arrow-left" style="font-size:1.5em; color:black"></i></a></li>
     </ul>
 {% endblock %}
 
@@ -25,12 +17,6 @@
                 <div class="todo-ui">
                     <div class="todo-sidebar">
                         <div class="portlet light ">
-                            {#<div class="portlet-title">
-                                <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
-                                    <span class="caption-subject font-red bold uppercase">ANTECENDENTE </span>
-                                    <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">Click para ver o ocultar el menu</span>
-                                </div>
-                            </div>#}
                             <style>
                                 .listbadge{
                                     color:#697882;
@@ -92,23 +78,27 @@
                             <!-- PROJECT HEAD -->
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <span class="caption-helper">DATOS CLINICOS :</span> &nbsp;
+                                    <span class="caption-helper">DATOS CLÍNICOS :</span> &nbsp;
                                     <span class="caption-subject font-red bold uppercase"> ANTECEDENTES {{tipodescripcion}}</span>
                                 </div>
                             </div>
                             <!-- end PROJECT HEAD -->
                             <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-7" style="    border-bottom: 1px solid #eee;">
+                                    <div class="col-md-5 col-sm-5 text-center">
+                                         <div id="advertenciaAntecedente" class="alert alert-danger collapse" style="margin: 5px;"> </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-7" style="border-bottom: 1px solid #eee;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
+                                           
                                             <div class="form">
                                                 <div class="form-group">
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese aqui su descripcion " id="txtdescripcion" name="txtdescripcion">                                                         
+                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Ingrese la descripción del antecedente" id="txtdescripcion" name="txtdescripcion">                                                         
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarAntecedente();">Guardar</button>
+                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarAntecedente();"> Guardar</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -233,27 +223,48 @@
         }
         
         function GuardarAntecedente() {
-            var descripcion;
-            descripcion=$('#txtdescripcion').val();
-            var formURL = '{{path('Antecedente_guardar')}}';
-            $.ajax(
+            var descripcion = $('#txtdescripcion').val();
+
+            if( descripcion == ""){
+                showAlertMessage('#advertenciaAntecedente', "Debe ingresar alguna descripción ");
+                document.getElementById("txtdescripcion").focus();
+                
+            }else{
+
+                var formURL = '{{path('Antecedente_guardar')}}';
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {codatencion:{{codatencion}},tipo:{{tipo}},descripcion:descripcion},
+                    success: function (data, textStatus, jqXHR)
                     {
-                        url: formURL,
-                        type: "POST",
-                        data: {codatencion:{{codatencion}},tipo:{{tipo}},descripcion:descripcion},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            rsp = JSON.parse(data);
-                            if (rsp.result) {
-                                ListarAntecedentes('{{codatencion}}');
-                                ListarCantidades('{{codatencion}}');
-                                $('#txtdescripcion').val('');
-                            } else {
-                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
-                            }
+                        rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarAntecedentes('{{codatencion}}');
+                            ListarCantidades('{{codatencion}}');
+                            $('#txtdescripcion').val('');
+                        } else {
+                            jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
                         }
-                    });
+                    }
+                });
+            }
+            
         }
+
+    function showAlertMessage(alert, mensaje){
+        $(alert).text(mensaje).show('fade');
+        setTimeout(function(){
+            hideAlertMessage(alert);    
+        }, 2000);
+    }
+
+    function hideAlertMessage(alert){
+        $(alert).hide('fade');
+
+    }
+
+
     </script>
 {% endblock %}
 
