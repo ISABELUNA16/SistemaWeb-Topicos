@@ -19,9 +19,7 @@ class MantMedicamentoController extends Controller {
      * @Route("/mantmedicamento", name="mantenimiento_medicamento")
      */
     public function MatenimientoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+       
         return $this->render('RecepcionBundle:Mantenimiento:Mante_Medicamento.html.twig');
     }
     
@@ -31,9 +29,7 @@ class MantMedicamentoController extends Controller {
      * @Method("POST") 
      */
     public function ListaMedicamentoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+       
         $em = $this->getDoctrine()->getManager();
         $Tmedicamento = $em->getRepository('ModeloBundle:Tmedicamento')->findAll();
         $Medicamento = $em->getRepository('ModeloBundle:Medicamento')->findAll();
@@ -48,9 +44,6 @@ class MantMedicamentoController extends Controller {
      */
     public function GuardarmedicamentoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
         
         $descripcion = $request->request->get('descripcion');
         $codTmedicamento = $request->request->get('codigotipo');
@@ -70,8 +63,6 @@ class MantMedicamentoController extends Controller {
         }else{
            $rpta=['result'=>true,'mensaje'=>'Se registró correctamente'];
         }
-        
-       
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }
@@ -109,10 +100,6 @@ class MantMedicamentoController extends Controller {
      */
     public function ListaTmedicamentoAction() {
 
-        if (!$this->ValidarSession()) { 
-            return $this->redirectToRoute('acceso_login'); 
-      
-        }
         $em = $this->getDoctrine()->getManager();
         $Tmedicamento = $em->getRepository('ModeloBundle:Tmedicamento')->findby(array('tmedEstado'=>1));
         return $this->render('RecepcionBundle:Mantenimiento:cbo_tmedicamento.html.twig',['Tmedicamento'=>$Tmedicamento]);
@@ -123,9 +110,7 @@ class MantMedicamentoController extends Controller {
      * @Method("POST") 
      */
     public function ListaTblMedicamentoAction() {
-        if (!$this->ValidarSession()) { 
-            return $this->redirectToRoute('acceso_login'); 
-        }
+       
         $em = $this->getDoctrine()->getManager();
         $Tmedicamento = $em->getRepository('ModeloBundle:Tmedicamento')->findAll();
         return $this->render('RecepcionBundle:Mantenimiento:tbl_tmedicamento.html.twig',['Tmedicamento'=>$Tmedicamento]);
@@ -137,12 +122,8 @@ class MantMedicamentoController extends Controller {
      */
     public function GuardarTmedicamentoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ 
-            return $this->redirectToRoute('acceso_login');
-        }
-        $session = new Session();//INICIAR SESSION
-        $usuario= $session->get('usuario');
-        
+
+        $usuario = $this->getUser()->getCodUser(); 
         $tmedicamento = $request->request->get('tmedicamento');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
@@ -169,10 +150,7 @@ class MantMedicamentoController extends Controller {
      */
     public function DeleteTmedicamentoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ 
-            return $this->redirectToRoute('acceso_login');
-        }
-
+      
         $codtmedicamento = $request->request->get('codtmedicamento');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
@@ -191,16 +169,5 @@ class MantMedicamentoController extends Controller {
           exit;
         }  
     }
-
     
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
-    }
-
 }

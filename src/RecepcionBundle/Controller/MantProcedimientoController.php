@@ -20,9 +20,7 @@ class MantProcedimientoController extends Controller {
      * @Route("/mantprocedimiento", name="mantenimiento_procedimiento")
      */
     public function MatenimientoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+     
         return $this->render('RecepcionBundle:Mantenimiento:Mante_Procedimiento.html.twig');
     }
     
@@ -32,9 +30,7 @@ class MantProcedimientoController extends Controller {
      * @Method("POST") 
      */
     public function ListaProcedimientoAction() {
-        if (!$this->ValidarSession()) { 
-            return $this->redirectToRoute('acceso_login'); 
-        }
+     
         $em = $this->getDoctrine()->getManager();
         $Tprocedimiento = $em->getRepository('ModeloBundle:Tprocedimiento')->findAll();
         $Procedimiento = $em->getRepository('ModeloBundle:Procedimiento')->findAll();
@@ -48,9 +44,6 @@ class MantProcedimientoController extends Controller {
      */
     public function GuardarprocedimientoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
         $descripcion = $request->request->get('descripcion');
         $codTprocedimiento = $request->request->get('codigotipo');
   
@@ -66,9 +59,7 @@ class MantProcedimientoController extends Controller {
            $rpta=['result'=>false,'mensaje'=>'Ocurrió un problema al registrar la atención. Inténtelo nuevamente, si en caso el problema persiste comuníquese con la unidad de informática para verificar la incidencia'];
         }else{
            $rpta=['result'=>true,'mensaje'=>'Se registró correctamente'];
-        }
-        
-       
+        }  
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }
@@ -79,9 +70,7 @@ class MantProcedimientoController extends Controller {
      */
     public function BorrarprocedimientoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+       
         $codProcedimiento = $request->request->get('codProcedimiento');
         
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
@@ -107,10 +96,6 @@ class MantProcedimientoController extends Controller {
      */
     public function ListaTprocedimientoAction() {
 
-        if (!$this->ValidarSession()) { 
-            return $this->redirectToRoute('acceso_login'); 
-      
-        }
         $em = $this->getDoctrine()->getManager();
         $Tprocedimiento = $em->getRepository('ModeloBundle:Tprocedimiento')->findby(array('tprocEstado'=>1));
         return $this->render('RecepcionBundle:Mantenimiento:cbo_tprocedimiento.html.twig',['Tprocedimiento'=>$Tprocedimiento]);
@@ -121,9 +106,7 @@ class MantProcedimientoController extends Controller {
      * @Method("POST") 
      */
     public function ListaTblProcedimientoAction() {
-        if (!$this->ValidarSession()) { 
-            return $this->redirectToRoute('acceso_login'); 
-        }
+       
         $em = $this->getDoctrine()->getManager();
         $Tprocedimiento = $em->getRepository('ModeloBundle:Tprocedimiento')->findAll();
         return $this->render('RecepcionBundle:Mantenimiento:tbl_tprocedimiento.html.twig',['Tprocedimiento'=>$Tprocedimiento]);
@@ -136,12 +119,8 @@ class MantProcedimientoController extends Controller {
      */
     public function GuardarTprocedimientoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ 
-            return $this->redirectToRoute('acceso_login');
-        }
-        $session = new Session();//INICIAR SESSION
-        $usuario= $session->get('usuario');
-        
+       
+        $usuario = $this->getUser()->getCodUser(); 
         $tprocedimiento = $request->request->get('tprocedimiento');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
@@ -169,10 +148,7 @@ class MantProcedimientoController extends Controller {
      */
     public function DeleteTprocedimientoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ 
-            return $this->redirectToRoute('acceso_login');
-        }
-
+       
         $codtprocedimiento = $request->request->get('codtprocedimiento');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
@@ -193,18 +169,6 @@ class MantProcedimientoController extends Controller {
         }
         
        
-    }
-    
-
-
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
     }
 
 }

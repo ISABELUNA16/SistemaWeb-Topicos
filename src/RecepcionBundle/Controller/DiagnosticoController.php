@@ -18,9 +18,6 @@ class DiagnosticoController extends Controller {
      * @Method("GET")
      */
     public function DiagnosticoAction($codatencion) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
         
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS TOPICO   
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -42,22 +39,21 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function GuardarDiagnosticoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-        $session = new Session(); //INICIAR SESSION
-        $usuario = $session->get('usuario');
+        
+        $usuario = $this->getUser()->getCodUser();
         $codDiagnostico = $request->request->get('coddiagnostico');
         $codAtencion = $request->request->get('codatencion');
 
         $em = $this->getDoctrine()->getManager();
         $DataAdiagnostico = $em->getRepository('ModeloBundle:AtencionDiagnostico')->findOneBy(array('codAtencion' => $codAtencion, 'codDiagnostico' => $codDiagnostico));
+        
         if (!$DataAdiagnostico) {
+
             $Adiagnostico = new AtencionDiagnostico();
             $Adiagnostico->setCodAtencion($codAtencion);
             $Adiagnostico->setCodDiagnostico($codDiagnostico);
             $Adiagnostico->setAdiagTipo(0);
-            $Adiagnostico->setCodUser($usuario['codigo']);
+            $Adiagnostico->setCodUser($usuario);
             $Adiagnostico->setAdiagFegReg(new \DateTime);
             $Adiagnostico->setAdiagEstado(1);
             $em->persist($Adiagnostico);
@@ -72,7 +68,6 @@ class DiagnosticoController extends Controller {
             $rpta = ['result' => false, 'mensaje' => 'Ya se encuentra el diagnóstico registrado'];
         }
 
-
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }
@@ -82,9 +77,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function deleteAdiagnosticoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codAdiagnostico = $request->request->get('codadiagnostico');
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $Adiagnostico = $em->getRepository('ModeloBundle:AtencionDiagnostico')->find(array('codAdiagnostico' => $codAdiagnostico)); //DATOS ANTECEDENTE POR ID 
@@ -104,9 +97,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function CambiarTipoDiagnosticoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codAdiagnostico = $request->request->get('codigo');
         $tipo = $request->request->get('tipo');
 
@@ -124,9 +115,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function LstDiagnosticoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codTdiagnostico = $request->request->get('codTdiagnostico');
 
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -140,9 +129,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function LstDiagItemsCountAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codatencion = $request->request->get('codatencion');
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $ItemsDiag = $em->getRepository('ModeloBundle:AtencionDiagnostico')->findby(array('codAtencion'=>$codatencion,'adiagEstado'=>1));
@@ -163,9 +150,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function LstAdiagnosticoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codatencion = $request->request->get('codatencion');
 
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -183,9 +168,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function CambioTipoAdiagnosticoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codadiagnostico = $request->request->get('codadiagnostico');
 
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -203,9 +186,7 @@ class DiagnosticoController extends Controller {
      * @Method("POST")
      */
     public function FinalizarAtencionAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+        
         $codAtencion = $request->request->get('codatencion');
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $Atencion = $em->getRepository('ModeloBundle:Atencion')->find($codAtencion); //DATOS LISTA ATENCIONES MEDICAS
@@ -220,14 +201,5 @@ class DiagnosticoController extends Controller {
         exit;
     }
 
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
-    }
-
+    
 }

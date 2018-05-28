@@ -18,10 +18,7 @@ class AnamenisController extends Controller {
      * @Method("GET")
      */
     public function AnamenisAction($codatencion) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-
+      
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS TOPICO   
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $Atencion = $em->getRepository('ModeloBundle:Atencion')->find($codatencion); //DATOS ATENCION BY CODATENCION
@@ -36,16 +33,5 @@ class AnamenisController extends Controller {
         return $this->render('RecepcionBundle:Doctor:anamenis.html.twig', ['Paciente' => $NomPaciente, 'tdiagnostico' => $Tdiagnostico, 'codatencion' => $codatencion]);
     }
 
-    
-
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
-    }
 
 }

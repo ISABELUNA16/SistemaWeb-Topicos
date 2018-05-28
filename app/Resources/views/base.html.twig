@@ -81,14 +81,15 @@
                     <a href="javascript:;" class="menu-toggler"></a>
                     <!-- END RESPONSIVE MENU TOGGLER -->
                     <!-- BEGIN TOP NAVIGATION MENU -->
-                    {% set usuario =  app.session.get('usuario') %}  
+                   
                     {#                    {% if usuario is not null %}#}
                     <div class="top-menu">
                         <ul class="nav navbar-nav pull-right">
                             <li class="dropdown dropdown-user dropdown-dark">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png">
-                                    <span class="username username-hide-mobile">{{usuario.nombres}} {{usuario.apaterno}}</span>
+                                    <img alt="" class="img-circle"  src="{{asset('bundles/public/img/usersimple.png')}}">
+                                    <span class="username username-hide-mobile"> {{app.user.username|default('Rosmery Isabel Luna Tito ')}} </span>
+                                  
                                 </a>
                             </li>
                             <li class="droddown dropdown-separator">
@@ -119,26 +120,32 @@
                     <!-- BEGIN MEGA MENU -->
                     <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
                     <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
-        <div class="hor-menu  ">
-            <ul class="nav navbar-nav">
-               {# {%if usuario.codperf==2%}#}
-                <li class="menu-dropdown classic-menu-dropdown active">
-                    <a href="{{path('recepcion_home')}}"style="color: white;    background: #cb2f1d !important;"> Recepción
-                        <span class="arrow"></span>
-                    </a>
-                </li>
-                <li class="menu-dropdown classic-menu-dropdown">
-                    <a href="{{path('doctor_home')}}" style="color: white;    background: #cb2f1d !important;" >Doctor
-                        <span class="arrow"></span>
-                    </a>
-                </li>
-                <li class="menu-dropdown classic-menu-dropdown ">
-                    <a href="{{path('mantenimiento_diagnostico')}}" style="color: white;    background: #cb2f1d !important;" >Mantenimientos
-                        <span class="arrow"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+                           
+                    <!-- BEGIN PAGE TITLE -->
+                    <div class="page-title" >
+                        <p style=" margin-top:10px;"><strong style="font-size:20px; font-family: monospace; color: white; background: #cb2f1d !important;">TÓPICO</strong> <small style="color:white"> Sistema Web</small></p>
+                    </div>
+               
+                   <!-- <div class="hor-menu  ">
+                        <ul class="nav navbar-nav">
+                           {# {%if usuario.codperf==2%}#}
+                            <li class="menu-dropdown classic-menu-dropdown active">
+                                <a href="{{path('recepcion_home')}}"style="color: white; background: #cb2f1d !important;"> Recepción
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
+                            <li class="menu-dropdown classic-menu-dropdown">
+                                <a href="{{path('doctor_home')}}" style="color: white; background: #cb2f1d !important;" >Doctor
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
+                            <li class="menu-dropdown classic-menu-dropdown ">
+                                <a href="{{path('mantenimiento_diagnostico')}}" style="color: white;    background: #cb2f1d !important;" >Mantenimientos
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>-->
                 {% block menu %}{% endblock %}
                 <!-- END MEGA MENU -->
             </div>

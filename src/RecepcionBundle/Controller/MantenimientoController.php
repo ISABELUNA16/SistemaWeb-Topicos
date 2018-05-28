@@ -18,9 +18,7 @@ class MantenimientoController extends Controller {
      * @Route("/mantenimiento", name="mantenimiento_principal")
      */
     public function MatenimientoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+
         return $this->render('RecepcionBundle:Mantenimiento:Mante_Diagnostico.html.twig');
     }
     
@@ -29,9 +27,7 @@ class MantenimientoController extends Controller {
      * @Method("POST") 
      */
     public function ListaDiagnosticoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $em = $this->getDoctrine()->getManager();
         $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findby(array('tdiagEstado'=>1));
         return $this->render('RecepcionBundle:Mantenimiento:cbo_tdiagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico]);
@@ -42,9 +38,7 @@ class MantenimientoController extends Controller {
      * @Method("POST") 
      */
     public function ListaTblDiagnosticoAction() {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $em = $this->getDoctrine()->getManager();
         $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findAll();
         return $this->render('RecepcionBundle:Mantenimiento:tbl_tdiagnostico.html.twig',['Tdiagnostico'=>$Tdiagnostico]);
@@ -58,12 +52,8 @@ class MantenimientoController extends Controller {
      */
     public function GuardarTdiagnosticoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        $session = new Session();//INICIAR SESSION
-        $usuario= $session->get('usuario');
         
+        $usuario = $this->getUser()->getCodUser();  
         $tdiagnostico = $request->request->get('tdiagnostico');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
@@ -90,9 +80,7 @@ class MantenimientoController extends Controller {
      */
     public function DeleteTdiagnosticoAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+        
         $codtdiagnostico = $request->request->get('codtdiagnostico');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
 
@@ -110,14 +98,5 @@ class MantenimientoController extends Controller {
         exit;
     }
    
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
-    }
-
+    
 }

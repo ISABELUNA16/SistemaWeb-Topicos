@@ -18,13 +18,11 @@ class RecetaController extends Controller {
      * @Method("GET")
      */
     public function RecetaAction($codatencion) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-
+      
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS TOPICO   
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $Atencion = $em->getRepository('ModeloBundle:Atencion')->find($codatencion); //DATOS ATENCION BY CODATENCION
+      
         if ($Atencion->getateTipoPer() == 1) {
             $Persona = $em2->getRepository('ModeloBundle:Persona')->Data_trabajador_by_Codigo($Atencion->getpercodigo()); //DATOS PACIENTE
         } else {
@@ -40,9 +38,7 @@ class RecetaController extends Controller {
      * @Method("POST")
      */
     public function LstArecetaAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $codatencion = $request->request->get('codatencion');
 
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -60,11 +56,8 @@ class RecetaController extends Controller {
      * @Method("POST")
      */
     public function GuardarMedicamentoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-        $session = new Session(); //INICIAR SESSION
-        $usuario = $session->get('usuario');
+        
+        $usuario = $this->getUser()->getCodUser();
         $codMedicamento = $request->request->get('codmedicamento');
         $codAtencion = $request->request->get('codatencion');
         
@@ -75,8 +68,9 @@ class RecetaController extends Controller {
         $duracion = $request->request->get('duracion');
         $tduracion = $request->request->get('tduracion');
 
-//        var_dump($concentracion);exit;  
+
         $em = $this->getDoctrine()->getManager();
+
         $DataMedicamento = $em->getRepository('ModeloBundle:AtencionMedicamento')->findOneBy(array('codAtencion' => $codAtencion, 'codMedicamento' => $codMedicamento));
         if (!$DataMedicamento) {
             $Amedicamento = new AtencionMedicamento();
@@ -114,15 +108,14 @@ class RecetaController extends Controller {
      * @Method("GET")
      */
     public function generarpdfAction($codatencion) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+       
         $em2 = $this->getDoctrine()->getManager('trabajador');
         $em = $this->getDoctrine()->getManager();
 
         $Atencion = $em->getRepository('ModeloBundle:Atencion')->find($codatencion); //DATOS ATENCION BY CODATENCION
         $Usuario = $em->getRepository('ModeloBundle:Usuario')->findOneBy(array('codUser'=>$Atencion->getcodUser()));
         $Doctor = $em2->getRepository('ModeloBundle:Persona')->Data_trabajador_by_Codigo($Usuario->getpercodigo());
+       
         if ($Atencion->getateTipoPer() == 1) {
             $Persona = $em2->getRepository('ModeloBundle:Persona')->Data_trabajador_by_Codigo($Atencion->getpercodigo()); //DATOS PACIENTE
         } else {
@@ -137,16 +130,6 @@ class RecetaController extends Controller {
         $Amedicamento = $em->getRepository('ModeloBundle:AtencionMedicamento')->Data_Lista_Amedicamento($codatencion);
 
         return $this->render('RecepcionBundle:Historial:imprimir.html.php', ['Nomdoctor'=>$Nomdoctor,'Nompaciente'=>  $Nompaciente,'Diagnostico' => $Adiagnostico, 'Procedimiento' => $Aprocedimiento, 'Receta' => $Amedicamento]);
-    }
-
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
     }
 
 }

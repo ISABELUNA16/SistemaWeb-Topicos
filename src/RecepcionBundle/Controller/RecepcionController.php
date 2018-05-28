@@ -5,6 +5,7 @@ namespace RecepcionBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use ModeloBundle\Entity\Atencion;
@@ -16,8 +17,16 @@ class RecepcionController extends Controller
      * @Route("/recepcion", name="recepcion_home")
      */
     public function RecepcionHomeAction()
-    {     
-        return $this->render('RecepcionBundle:Recepcion:recepcion.html.twig');
+    {    
+        
+       // $Role = $this->getUser()->getRoles();
+        
+        //if($Role == 'ROLE_DOCTOR'){
+         //   return $this->render('RecepcionBundle:Recepcion:doctor.html.twig');
+        //}else{
+            return $this->render('RecepcionBundle:Recepcion:recepcion.html.twig');
+       // }
+        
     }
     
     /**

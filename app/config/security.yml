@@ -33,10 +33,11 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login
-                default_target_path: /recepcion
+                default_target_path: /panel
+
             http_basic: ~
             logout:
-                path: /logout
+                path: /security_logout
                 target: /
 
 
@@ -49,3 +50,7 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+
+   # access_control:
+   #     - {path: ^/doctor, roles: ROLE_DOCTOR}

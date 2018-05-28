@@ -5,7 +5,6 @@ namespace AccesoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use ModeloBundle\Component\Security\Authentication\authenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -29,6 +28,17 @@ class AccesoController extends Controller {
             ));
        
     }
+
+
+    /**
+     * @Route("/panel", name="panel_principal")
+     */
+    public function panelAction()
+    {    
+        return $this->render('RecepcionBundle:Principal:panelPrincipal.html.twig');
+     
+    }
+
 
     /**
      * @Route("/cerrar", name="acceso_cerrar")

@@ -54,8 +54,8 @@
        
         <div class="content" id="login-page">
             <div class="container-fluid">
-                <div class="panel" id="login-panel" style="box-shadow: 7px 9px 13px -6px rgba(0,0,0,0.75);    opacity: 0.9;">
-                    <div class="panel-heading" style="    padding-top: 16px;text-align: center;">
+                <div class="panel" id="login-panel" style="box-shadow: 7px 9px 13px -6px rgba(0,0,0,0.75);opacity: 0.9;">
+                    <div class="panel-heading" style="padding-top: 16px;text-align: center;">
                         <div class="vcentered">
                             <img src="{{global.pathRecursos}}/imagenes/logos/logotipo2_small.png" alt="logo" class="logo-default" style="width: 110%;"/>
                         </div>
@@ -63,28 +63,24 @@
                     <div class="panel-body" >
                 
                         <form class="row" action="{{path('acceso_login')}}" method="POST">
-
+                            
                             {% if error %}
-                                <div class="alert alert-danger alert-dismissible">
-                                    <p style="text-center">
-                                        <strong>
-                                            Credenciales Inválidas
-                                        </strong>
-                                    </p>
+                                <div class="alert alert-danger alert-dismissible text-center">
+                                    <p> Credenciales Inválidas </p>
                                 </div>
                             {% endif %}
 
                             <div class="form-wrapper col-lg-12 col-sm-12 col-xs-12">
-                                <label for="Login">Usuario </label>
+                                <label for="Login"> Usuario </label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="username"  name="_username" value="{{last_username}}" autofocus required>
+                                    <input type="text" class="form-control text-center" id="username"  name="_username" value="" autofocus required>
                                 </div>
                             </div>
 
                             <div class="form-wrapper col-lg-12 col-sm-12 col-xs-12">
-                                <label for="Password">Contraseña </label>
+                                <label for="Password"> Contraseña </label>
                                 <div class="form-group ">
-                                   <input id="password" type="password" class="form-control" name="_password" required>
+                                   <input id="password" type="password" class="form-control text-center" name="_password" required>
                                    
                                 </div>
                             </div>

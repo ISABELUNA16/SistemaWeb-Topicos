@@ -19,10 +19,7 @@ class AntecedenteController extends Controller
      */
     public function AntecedenteActon($codatencion,$tipo)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        
+       
          $em2 = $this->getDoctrine()->getManager('trabajador');//CONEXION A PRESUESTO   
          $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
          $Atencion= $em->getRepository('ModeloBundle:Atencion')->find($codatencion);//DATOS ATENCION BY CODATENCION
@@ -48,9 +45,7 @@ class AntecedenteController extends Controller
      */
     public function LstAntecedentesAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+       
         $codAtencion = $request->request->get('codatencion');
         $tipo = $request->request->get('tipo');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
@@ -72,9 +67,7 @@ class AntecedenteController extends Controller
      */
     public function deleteAntecedentesAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+       
         $codAntecedente = $request->request->get('codantecedente');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
         $Antecedentes = $em->getRepository('ModeloBundle:Antecedente')->find(array('codAntecedente'=>$codAntecedente));//DATOS ANTECEDENTE POR ID 
@@ -95,9 +88,7 @@ class AntecedenteController extends Controller
      */
     public function LstAnteItemsCountAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+       
         $codatencion = $request->request->get('codatencion');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
         $AtencionPersona=$em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion'=>$codatencion));
@@ -119,12 +110,9 @@ class AntecedenteController extends Controller
      */
     public function GuardarAntecedenteAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        $session = new Session();//INICIAR SESSION
-        $usuario= $session->get('usuario');
-        
+
+        $usuario = $this->getUser()->getCodUser();
+         
         $codAtencion = $request->request->get('codatencion');
         $descripcion = $request->request->get('descripcion');
         $tipo = $request->request->get('tipo');
@@ -137,7 +125,7 @@ class AntecedenteController extends Controller
         $Antecedente->setAntEstado(1);
         $Antecedente->setAntFechaReg(new \DateTime);
         $Antecedente->setCodTantecedente($tipo);
-        $Antecedente->setCodUser($usuario['codigo']);
+        $Antecedente->setCodUser($usuario);
         $em->persist($Antecedente);
         $em->flush();
         
@@ -150,18 +138,6 @@ class AntecedenteController extends Controller
         $rpta=['result'=>true,'mensaje'=>'Se registro correctamente'];
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
-    }
-    
-    
-    
-    private function ValidarSession(){
-        $sesion_creada=true;//VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session();//INICIAR SESSION
-        $UserSession=$session->get('usuario');//OBTENER SESSION
-        if(empty($UserSession)){
-            $sesion_creada=false;
-        }
-        return $sesion_creada;//RETORNA DE VARIABLE
     }
     
    

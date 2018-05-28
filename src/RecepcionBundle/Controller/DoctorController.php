@@ -17,10 +17,6 @@ class DoctorController extends Controller
      */
     public function RecepcionHomeAction()
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
-        
         return $this->render('RecepcionBundle:Doctor:doctor.html.twig');
     }
     
@@ -30,9 +26,7 @@ class DoctorController extends Controller
      */
     public function LstAtencionesAction()
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+        
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
         $DataAtenciones = $em->getRepository('ModeloBundle:Atencion')->Doctor_Lista_Atenciones();//DATOS LISTA ATENCIONES MEDICAS
         echo $this->renderView('RecepcionBundle:Doctor:data_atencion.html.twig',['listaAtenciones'=>$DataAtenciones]);
@@ -45,9 +39,6 @@ class DoctorController extends Controller
      */
     public function RecibirAtencionAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
         
         $codAtencion = $request->request->get('codigo');//INPUT CODIGO DE LA PERSONA
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
@@ -71,16 +62,6 @@ class DoctorController extends Controller
             exit;
         }
 
-    }
-        
-    private function ValidarSession(){
-        $sesion_creada=true;//VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session();//INICIAR SESSION
-        $UserSession=$session->get('usuario');//OBTENER SESSION
-        if(empty($UserSession)){
-            $sesion_creada=false;
-        }
-        return $sesion_creada;//RETORNA DE VARIABLE
     }
     
    

@@ -18,9 +18,7 @@ class HistorialController extends Controller
      */
     public function ViewHistorialAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+       
         $percodigo = $request->request->get('percodigo');
         $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
         $Atenciones = $em->getRepository('ModeloBundle:Atencion')->findBy(array('percodigo'=>$percodigo,'codEstado'=>[5,4]),array('ateFecReg'=>'DESC'));
@@ -34,9 +32,7 @@ class HistorialController extends Controller
      */
     public function LstViewHistorialAction(Request $request)
     {   
-        if(!$this->ValidarSession()){ //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login');//REDIREC LOGIN
-        }
+        
         $codAtencion = $request->request->get('codatencion');
         
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -55,16 +51,5 @@ class HistorialController extends Controller
                                  'lstAmedicamento'=>$Amedicamento,'resultM'=>$resultM ]);
         exit;
     }
-    
-    private function ValidarSession(){
-        $sesion_creada=true;//VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session();//INICIAR SESSION
-        $UserSession=$session->get('usuario');//OBTENER SESSION
-        if(empty($UserSession)){
-            $sesion_creada=false;
-        }
-        return $sesion_creada;//RETORNA DE VARIABLE
-    }
-    
-   
+
 }

@@ -19,10 +19,7 @@ class ProcedimientoController extends Controller {
      * @Method("GET")
      */
     public function ProcedimientoAction($codatencion) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-
+      
         $em2 = $this->getDoctrine()->getManager('trabajador'); //CONEXION A BASE DE DATOS TOPICO   
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
         $Atencion = $em->getRepository('ModeloBundle:Atencion')->find($codatencion); //DATOS ATENCION BY CODATENCION
@@ -42,9 +39,7 @@ class ProcedimientoController extends Controller {
      * @Method("POST")
      */
     public function LstProcedimientoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $codTprocedimiento = $request->request->get('codTprocedimiento');
 
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -59,9 +54,7 @@ class ProcedimientoController extends Controller {
      * @Method("POST")
      */
     public function LstAprocedimientoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
+      
         $codatencion = $request->request->get('codatencion');
 
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
@@ -79,21 +72,19 @@ class ProcedimientoController extends Controller {
      * @Method("POST")
      */
     public function GuardarProcedmientoAction(Request $request) {
-        if (!$this->ValidarSession()) { //CONDICIONAL DE VERIFICACION DE SESSION
-            return $this->redirectToRoute('acceso_login'); //REDIREC LOGIN
-        }
-        $session = new Session(); //INICIAR SESSION
-        $usuario = $session->get('usuario');
+       
+        $usuario = $this->getUser()->getCodUser();
         $codProcedimiento = $request->request->get('codprocedimiento');
         $codAtencion = $request->request->get('codatencion');
 
         $em = $this->getDoctrine()->getManager();
         $DataProcedimiento = $em->getRepository('ModeloBundle:AtencionProcedimiento')->findOneBy(array('codAtencion' => $codAtencion, 'codProcedimiento' => $codProcedimiento));
+       
         if (!$DataProcedimiento) {
             $Aprocedimiento = new AtencionProcedimiento();
             $Aprocedimiento->setCodAtencion($codAtencion);
             $Aprocedimiento->setCodProcedimiento($codProcedimiento);
-            $Aprocedimiento->setCodUser($usuario['codigo']);
+            $Aprocedimiento->setCodUser($usuario);
             $Aprocedimiento->setAprocFegReg(new \DateTime);
             $Aprocedimiento->setAprocEstado(1);
             $em->persist($Aprocedimiento);
@@ -107,20 +98,10 @@ class ProcedimientoController extends Controller {
         } else {
             $rpta = ['result' => false, 'mensaje' => 'Ya se encuentra el diagnóstico registrado'];
         }
-
-
+        
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }
 
-    private function ValidarSession() {
-        $sesion_creada = true; //VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session(); //INICIAR SESSION
-        $UserSession = $session->get('usuario'); //OBTENER SESSION
-        if (empty($UserSession)) {
-            $sesion_creada = false;
-        }
-        return $sesion_creada; //RETORNA DE VARIABLE
-    }
 
 }
