@@ -199,9 +199,9 @@
                         <div class="modal-content">
                             <div class="modal-header ui-draggable-handle">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h4 class="modal-title" ><b>HISTORIAL DE PACIENTE</b></h4>
+                                <p class="modal-title" ><b>HISTORIAL DEL PACIENTE</b></p>
                             </div>
-                            <div class="modal-body" style="    background: #6f6f6e0a !important;">
+                            <div class="modal-body " style="background: #6f6f6e0a !important;">
                                 <div class="portlet-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1_1">
@@ -439,9 +439,10 @@
         }
         
         function VerHistorial(fecha,codatencion){
-            $('#hfechaD').html('Lista de registros : '+fecha);
-            $('#hfechaP').html('Lista de registros : '+fecha);
-            $('#hfechaR').html('Lista de registros : '+fecha);
+            $('#hfechaD').html('Lista de registros : <br> '+fecha);
+            $('#hfechaP').html('Lista de registros : <br> '+fecha);
+            $('#hfechaR').html('Lista de registros : <br> '+fecha);
+            $('#hfechaA').html('Lista de registros : <br> '+fecha);
             $.ajax(
                   {
                       url: '{{path('historial_view_lista')}}',
@@ -460,14 +461,22 @@
                 $('#lstdiagnostico').show();
                 $('#lstprocedimiento').hide();
                 $('#lstreceta').hide();
+                $('#lstanamnesis').hide();
             }else if(tipovista===2){
                 $('#lstdiagnostico').hide();
                 $('#lstprocedimiento').show();
                 $('#lstreceta').hide();
+                $('#lstanamnesis').hide();
             }else if(tipovista===3){
                 $('#lstdiagnostico').hide();
                 $('#lstprocedimiento').hide();
                 $('#lstreceta').show();
+                $('#lstanamnesis').hide();
+            }else if(tipovista===4){
+                $('#lstdiagnostico').hide();
+                $('#lstprocedimiento').hide();
+                $('#lstreceta').hide();
+                $('#lstanamnesis').show();
             }
         }
 

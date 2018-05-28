@@ -36,19 +36,26 @@ class HistorialController extends Controller
         $codAtencion = $request->request->get('codatencion');
         
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
-        $Adiagnostico = $em->getRepository('ModeloBundle:AtencionDiagnostico')->Data_Lista_Adiagnosticos($codAtencion); //DATOS LISTA ATENCIONES MEDICAS
+        $Adiagnostico = $em->getRepository('ModeloBundle:AtencionDiagnostico')->Data_Lista_Adiagnosticos($codAtencion);
         $Aprocedimiento = $em->getRepository('ModeloBundle:AtencionProcedimiento')->Data_Lista_Aprocedimiento($codAtencion);
         $Amedicamento= $em->getRepository('ModeloBundle:AtencionMedicamento')->Data_Lista_Amedicamento($codAtencion);
+        $Aanamnesis = $em->getRepository('ModeloBundle:AtencionAnamnesis')->Data_Lista_Aanamnesis($codAtencion);
+        
         $resultD = true;
         $resultP = true;
         $resultM = true;
+        $resultA = true;
+        
         if (!$Adiagnostico)$resultD = false;
         if (!$Aprocedimiento)$resultP = false;
         if (!$Amedicamento)$resultM = false;
+        if (!$Aanamnesis)$resultA = false;
+
         echo $this->renderView('RecepcionBundle:Historial:data_historial.html.twig',
                                 ['lstAdiagnostico' => $Adiagnostico, 'resultD' => $resultD,
                                  'lstAprocedimiento'=>$Aprocedimiento,'resultP'=>$resultP,
-                                 'lstAmedicamento'=>$Amedicamento,'resultM'=>$resultM ]);
+                                 'lstAmedicamento'=>$Amedicamento,'resultM'=>$resultM,
+                                 'lstAanamnesis'=>$Aanamnesis, 'resultA'=>$resultA]);
         exit;
     }
 

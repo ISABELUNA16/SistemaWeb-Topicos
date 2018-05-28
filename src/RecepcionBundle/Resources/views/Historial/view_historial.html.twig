@@ -36,18 +36,15 @@
 </div>
 
 <div class="col-md-9" >
-    <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;">
+    <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
         <a onclick="CambiarVistaHistorial(1);" title="DIAGNOSTICO">
             <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
                 <div class="display" style="margin-bottom: 5px !important;">
                     <div class="number">
                         <h3 class="font-red-sharp">
-                            <span style="font-size: 20px !important;">Diagnostico</span>
+                            <span style="font-size: 20px !important;">Diagnóstico</span>
                         </h3>
-                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaD">Lista de registros : 00-00-00</small>
-                    </div>
-                    <div class="icon" style="padding-top: 9px !important;">
-                        <i class="icon-pie-chart"></i>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaD">Lista de diagnósticos.</small>
                     </div>
                 </div>
                 <div class="progress-info">
@@ -59,7 +56,7 @@
             </div>
         </a>
     </div>
-    <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;">
+    <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
         <a onclick="CambiarVistaHistorial(2);" title="PROCEDIMIENTO">
             <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
                 <div class="display" style="margin-bottom: 5px !important;">
@@ -67,10 +64,28 @@
                         <h3 class="font-red-sharp">
                             <span style="font-size: 20px !important;">Procedimiento</span>
                         </h3>
-                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaP">Lista de registros : 00-00-00</small>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaP">Procedimientos.</small>
                     </div>
-                    <div class="icon" style="padding-top: 9px !important;">
-                        <i class="icon-pie-chart"></i>
+                </div>
+                 <div class="progress-info">
+                    <div class="progress">
+                        <span style="width: 100%;" class="progress-bar progress-bar-danger red-sharp">
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
+        <a onclick="CambiarVistaHistorial(3);" title="RECETA">
+            <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
+                <div class="display" style="margin-bottom: 5px !important;">
+                    <div class="number">
+                        <h3 class="font-red-sharp">
+                            <span style="font-size: 20px !important;">Receta</span>
+                        </h3>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Lista de recetas. </small>
                     </div>
                 </div>
                 <div class="progress-info">
@@ -82,18 +97,16 @@
             </div>
         </a>
     </div>
-    <div class="col-md-4" style="padding-left: 5px;padding-right: 5px;">
-        <a onclick="CambiarVistaHistorial(3);" title="RECETA">
+
+    <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
+        <a onclick="CambiarVistaHistorial(4);" title="ANAMNESIS">
             <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
                 <div class="display" style="margin-bottom: 5px !important;">
                     <div class="number">
                         <h3 class="font-red-sharp">
-                            <span style="font-size: 20px !important;">Receta</span>
+                            <span style="font-size: 20px !important;">Anamnesis</span>
                         </h3>
-                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Lista de registros : 00-00-00</small>
-                    </div>
-                    <div class="icon" style="padding-top: 9px !important;">
-                        <i class="icon-pie-chart"></i>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Listado de registros</small>
                     </div>
                 </div>
                 <div class="progress-info">
@@ -110,7 +123,7 @@
         <div id="viewlistahistorial">
           <div class="tab-content"> 
                 <div class="mt-actions">
-                    <p class="font-dark bold uppercase" style="margin-top: 10px;margin-bottom: 5px;text-align: center">Escoger una atencion</p>
+                    <p class="font-dark bold uppercase" style="margin-top: 10px;margin-bottom: 5px;text-align: center">Escoger una atención</p>
                 </div>
             </div>
         </div>
