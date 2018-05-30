@@ -88,7 +88,26 @@ class AnamenisController extends Controller {
 
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
-
     }
+
+     /**
+     * @Route("/lstaanamnesis", name="doctor_lista_aanamnesis")
+     * @Method("POST")
+     */
+    public function LstAanamnesisAction(Request $request) {
+        
+        $codatencion = $request->request->get('codatencion');
+
+        $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+        $Aanamnesis = $em->getRepository('ModeloBundle:AtencionAnamnesis')->Data_Lista_Aanamnesis($codatencion); //DATOS LISTA ATENCIONES MEDICAS
+        $result = true;
+       
+        if (!$Aanamnesis) {
+            $result = false;
+        }
+        echo $this->renderView('RecepcionBundle:Doctor:data_anamnesis.html.twig', ['lstAanamnesis' => $Aanamnesis, 'result' => $result]);
+        exit;
+    }
+
 
 }
