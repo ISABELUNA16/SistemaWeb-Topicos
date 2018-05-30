@@ -12,7 +12,7 @@
             <!-- END MENU -->
         </div>
         <ul class="feeds" style="    padding-top: 5px;">
-            {%for lst in Atenciones%}
+            {% for lst in Atenciones %}
                 <li>
                     <div class="col1">
                         <div class="cont">
@@ -30,7 +30,7 @@
                         <div class="date">{{lst.ateFecReg | date('d-m-y')}}</div>
                     </div>
                 </li>
-            {%endfor%}
+            {% endfor %}
         </ul>
     </div>
 </div>
@@ -106,7 +106,7 @@
                         <h3 class="font-red-sharp">
                             <span style="font-size: 20px !important;">Anamnesis</span>
                         </h3>
-                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Listado de registros</small>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaA">Listado de registros</small>
                     </div>
                 </div>
                 <div class="progress-info">

@@ -165,8 +165,9 @@ ob_start();
     </body> 
 </html>
 <?php
+$html = ob_get_clean();
 $dompdf = new DOMPDF();
-$dompdf->loadHtml(ob_get_clean());
+$dompdf->load_html($html);
 $dompdf->render();
 $dompdf->stream("Receta.pdf", array("Attachment" => 0));
 ?>

@@ -8,6 +8,7 @@ class AtencionAnamnesisRepository extends \Doctrine\ORM\EntityRepository {
         
         $sql= "SELECT  At1.cod_aanamnesis AS codigo ,
                         At1.cod_atencion AS codatencion ,
+                        A.anam_descripcion AS tipo,
                         At1.aanam_observacion AS observacion ,
                         At1.aanam_feg_reg AS fecha ,
                         per.cNombres AS nom ,
