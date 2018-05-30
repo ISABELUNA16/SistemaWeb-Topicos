@@ -4,7 +4,8 @@
 
 {% block breadcrumb %}
     <ul class="page-breadcrumb breadcrumb">
-        <li class="active">Registro de Datos Clinicos</li><i class="fa fa-circle"></i> 
+        <li class="active"><strong>DOCTOR </strong><small> Registros clínicos </small> </li> <i class="fa fa-circle"></i>  
+        <li  style=" float:right; "title="Atrás"><a href="{{path('doctor_home')}}"><i class="fa fa-arrow-left" style="font-size:1.5em; color:black"></i></a></li>
     </ul>
 {% endblock %}
 
@@ -76,35 +77,55 @@
                             <!-- PROJECT HEAD -->
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <span class="caption-helper">DIAGNÓSTICO :</span> &nbsp;
+                                    <span class="caption-helper">ANAMNESIS :</span> &nbsp;
                                     <span class="caption-subject font-red bold uppercase">REGISTRO DEL ANAMNESIS</span>
                                 </div>
                             </div>
                             <!-- end PROJECT HEAD -->
-                            <div class="portlet-body">
+                           
+
+                             <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-7" >
+                                    <div class="col-md-8">
+                                        <div id="alert-anamnesis" class="alert alert-warning alert-dismissible text-center" role="alert"></div>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-7" style="border-bottom: 1px solid #eee;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
                                             <div class="form">
                                                 <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <label class="control-label">Ingresar descripción</label>
-                                                        <textarea id="txtanamenis" class="form-control" style="height: 200px !important;">
-                                                            
-                                                        </textarea>
+                                                    <div class="col-md-5">
+                                                        <label class="control-label" style="color:grey">Aparatos - Sistemas </label><br>
+                                                        <select class="form-control" name="anamnesisSelect" id="anamnesisSelect" onchange="validar(this.value)">
+                                                            <option value="0"> -- [Seleccionar] -- </option>
+                                                            {%for cbo in anamnesis %}
+                                                                <option value="{{cbo.codAnamnesis}}">{{cbo.anamDescripcion}}</option>
+                                                            {%endfor%}
+                                                        </select>
                                                     </div>
-                                                    
-                                                    <div class="col-md-2">
-                                                        <label class="control-label" style="color: white">Diagnóstico</label>
-                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarDiagnostico();">Guardar</button>
+
+                                                    <div class="col-md-5" id="observacionAnam">
+                                                        <label class="control-label" style="color:grey">Observación </label>
+                                                        <textarea id="txtanamenis" class="form-control" style="height: 100px !important;"></textarea>
+                                                    </div>
+                                                    <div class="col-md-2" id="guardarAnam">
+                                                        <label class="control-label" style="color: white">anamnesis</label>
+
+                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarAnamnesis();">Guardar</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
 
                                     </div>
-                                    
+                                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                                        <div class="tab-content" id="viewanamnesis">
+                                            {#VIEW#}
+
+                                            {#FIN#}
+                                        </div>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,29 +174,56 @@
             Demo.init(); // init demo(theme settings page)
             Todo.init(); // init todo page
             ListarCantidades('{{codatencion}}');
+             $("#observacionAnam").hide();
+             $("#guardarAnam").hide();
+             $("#alert-anamnesis").hide();
         });
         
-      
-        function GuardarDiagnostico() {
-            var coddiagnostico,rsp;
-            coddiagnostico=$('#select2').val();
-            jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function (callback) {
+        
+        function validar(val){
+            console.log(val);
+            if( val == "0"){
+                showAlertMessage('#alert-anamnesis', "Debe seleccionar una de las opciones ");
+                $("#observacionAnam").hide();
+                $("#guardarAnam").hide();
+            }else{
+                $("#observacionAnam").show();
+                $("#guardarAnam").show();
+            }
+        }
+
+
+        function GuardarAnamnesis() {
+            
+            var rsp;
+            var codAnamnesis = $('#anamnesisSelect').val();
+            var observacion = document.getElementById("txtanamenis").value;
+            console.log(observacion);
+
+            jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
+            
             if (callback) {
-            var formURL = "{{path('doctor_guardar_diagnostico')}}";
-            $.ajax(
-                    {
+                var formURL = "{{path('doctor_guardar_AtencionAnamnesis')}}";
+                    $.ajax({
                         url: formURL,
                         type: "POST",
-                        data: {coddiagnostico: coddiagnostico,codatencion:{{codatencion}}},
+                        data: {codAnamnesis: codAnamnesis,observacion: observacion ,codatencion:{{codatencion}}},
                         success: function (data, textStatus, jqXHR)
                         {
                             rsp = JSON.parse(data);
+                            
+                            console.log("retorna bien");
                             if(rsp.result){
+
                                 ListarCantidades('{{codatencion}}');
-                                lstAdiagnotico('{{codatencion}}');
-                                $('#select2').html('<option value="0">[Seleccionar]</option>');
+                                $('#anamnesisSelect').val("0");
+                                $('#observacionAnam').empty();
+                                
+                                jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null); 
+
                             }else{
-                                jAlert('info', rsp.mensaje, 'Sistema de Topico - IPD', null);
+                                
+                                jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
                             }
                         }
                     });
@@ -190,8 +238,7 @@
         function ListarCantidades(codatencion) {
             var rsp;
             var formURL = '{{path('Diagnostico_lista_items_count')}}';
-            $.ajax(
-                    {
+                    $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {codatencion:codatencion},
@@ -212,11 +259,11 @@
                         }
                     });
         }
+
         function FinalizarAtencion(){
             var rsp;
             var formURL = '{{path('doctor_finalizar_atencion')}}';
-            $.ajax(
-                    {
+                    $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {codatencion:'{{codatencion}}'},
@@ -232,6 +279,23 @@
                         }
                     });
         }
+
+
+    /* MOSTRAR MENSAJE DE ALERTA */
+    function showAlertMessage(alert, mensaje){
+        $(alert).text(mensaje).show('fade');
+        setTimeout(function(){
+            hideAlertMessage(alert);    
+        }, 2000);
+    }
+
+    /* COULTAR ALERTA*/
+    function hideAlertMessage(alert){
+        $(alert).hide('fade');
+
+    }
+
+
     </script>
 {% endblock %}
 

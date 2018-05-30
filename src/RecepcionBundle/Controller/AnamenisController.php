@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use ModeloBundle\Entity\AtencionDiagnostico;
 use ModeloBundle\Entity\AtencionProcedimiento;
+use ModeloBundle\Entity\AtencionAnamnesis;
 use ModeloBundle\Entity\Atencion;
 
 class AnamenisController extends Controller {
@@ -28,10 +29,66 @@ class AnamenisController extends Controller {
         } else {
             $Persona = $em->getRepository('ModeloBundle:Paciente')->Data_paciente_by_Codigo($Atencion->getpercodigo()); //DATOS PACIENTE
         }
-        $Tdiagnostico = $em->getRepository('ModeloBundle:Tdiagnostico')->findAll();
+        $anamnesis = $em->getRepository('ModeloBundle:Anamnesis')->findAll();
         $NomPaciente = $Persona['nombres'] . ' ' . $Persona['apaterno'] . ' ' . $Persona['amaterno'];
-        return $this->render('RecepcionBundle:Doctor:anamenis.html.twig', ['Paciente' => $NomPaciente, 'tdiagnostico' => $Tdiagnostico, 'codatencion' => $codatencion]);
+        return $this->render('RecepcionBundle:Doctor:anamenis.html.twig', ['Paciente' => $NomPaciente, 'anamnesis' => $anamnesis, 'codatencion' => $codatencion]);
     }
 
+
+    /**
+     * @Route("/lstanamnesis", name="doctor_lista_anamnesis")
+     * @Method("POST")
+     */
+    public function LstAnamnesisAction(Request $request) {
+      
+        $em = $this->getDoctrine()->getManager(); 
+        $anamnesis = $em->getRepository('ModeloBundle:Anamnesis')->listadoAnamnesis(); //DATOS LISTA ATENCIONES MEDICAS
+        echo $this->renderView('RecepcionBundle:Doctor:cbo_anamnesis.html.twig', ['lstProcedimiento' => $anamnesis]);
+        exit;
+    }
+
+
+    /**
+     * @Route("/guardaranamnesis", name="doctor_guardar_AtencionAnamnesis")
+     * @Method("POST")
+     */
+    public function GuardarAnamnesisAction(Request $request) {
+        
+        $usuario = $this->getUser()->getCodUser();
+        $codAnamnesis = $request->request->get('codAnamnesis');
+        $observacion = $request->request->get('observacion');
+        $codAtencion = $request->request->get('codatencion');
+        
+        $em = $this->getDoctrine()->getManager(); 
+
+        if( !empty($codAnamnesis) &&  !empty($observacion) && !empty($codAtencion)){
+
+            $Anamnesis = new AtencionAnamnesis();
+            $Anamnesis->setCodAtencion($codAtencion);
+            $Anamnesis->setCodAnamnesis($codAnamnesis);
+            $Anamnesis->setAanamObservacion($observacion);
+            $Anamnesis->setCodUser($usuario);
+            $Anamnesis->setAanamFegReg(new \DateTime);
+            $Anamnesis->setAanamEstado(1);
+            $em->persist($Anamnesis);
+            $em->flush();
+
+            if (!$Anamnesis->getCodAanamnesis()) {
+
+                $rpta = ['result' => false, 'mensaje' => 'Ocurrio un problema al registrar, intentelo nuevamente'];
+            } else {
+
+                $rpta = ['result' => true, 'mensaje' => 'Se registro correctamente.'];
+            }
+        
+        }else{
+
+            $rpta = ['result' => false, 'mensaje' => 'Los campos no deben estar vacios.'];
+        }
+
+        echo json_encode($rpta, JSON_PRETTY_PRINT);
+        exit;
+
+    }
 
 }

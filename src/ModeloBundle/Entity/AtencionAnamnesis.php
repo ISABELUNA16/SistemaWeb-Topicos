@@ -38,7 +38,7 @@ class AtencionAnamnesis
     /**
      * @var string
      *
-     * @ORM\Column(name="aanam_observacion", type="string", length=100, nullable=true)
+     * @ORM\Column(name="aanam_observacion", type="string", length=400, nullable=true)
      */
     private $aanamObservacion;
 
@@ -59,7 +59,7 @@ class AtencionAnamnesis
     /**
      * @var integer
      *
-     * @ORM\Column(name="aanam_estado", type="integer", nullable=true)
+     * @ORM\Column(name="anam_estado", type="integer", nullable=true)
      */
     private $aanamEstado;
 
