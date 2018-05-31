@@ -74,6 +74,10 @@
                             <!-- end PROJECT HEAD -->
                             <div class="portlet-body">
                                 <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                         <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
+                                    </div>
+
                                     <div class="col-md-12 col-sm-7" style="border-bottom: 3px solid #cb2f1d;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
@@ -130,6 +134,9 @@
                             <div class="portlet-body">
                                 <div class="tab-content">
                                     
+                                    <div id="alerta-errorTipo" class="alert alert-danger collapse text-center"></div>
+                                    
+
                                     <div class="form">
                                         <div class="form-group">
                                             <div class="col-md-9">
@@ -242,24 +249,31 @@
             var rsp;
             var descripcion=$('#txtdescripcion').val();
             var codigotipo=$('#cbotipoprocedimiento').val();
-         
-            var formURL = "{{path('mante_guardar_procedimiento')}}";
-            $.ajax(
+            
+            if(descripcion != "" && codigotipo != ""){
+
+                var formURL = "{{path('mante_guardar_procedimiento')}}";
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {descripcion:descripcion, codigotipo:codigotipo},
+                    success: function (data, textStatus, jqXHR)
                     {
-                        url: formURL,
-                        type: "POST",
-                        data: {descripcion:descripcion, codigotipo:codigotipo},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            rsp = JSON.parse(data);
-                            if (rsp.result) {
-                                ListarProcedimiento();
-                                $('#txtdescripcion').val(''); 
-                            } else {
-                                jAlert('info', 'Ocurrió un error al guardar', 'Sistema de Tópicos IPD', null);
-                            }
+                        rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarProcedimiento();
+                            $('#txtdescripcion').val(''); 
+                        } else {
+                            jAlert('info', 'Ocurrió un error al guardar', 'Sistema de Tópicos IPD', null);
                         }
-                    });
+                    }
+                });
+
+            }else{
+                showAlertMessage('#alerta-error', "Debe rellenar los campos vacíos.");
+            }
+
+                    
         }
         
         function ListarProcedimiento(){
@@ -308,24 +322,32 @@
             var rsp;
             var tprocedimiento=$('#txttprocedimiento').val();
             console.log(tprocedimiento);
-            var formURL = "{{path('mante_guardar_tprocedimiento')}}";
-            $.ajax(
+            
+            if( tprocedimiento != ""){
+
+                var formURL = "{{path('mante_guardar_tprocedimiento')}}";
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {tprocedimiento:tprocedimiento},
+                    success: function (data, textStatus, jqXHR)
                     {
-                        url: formURL,
-                        type: "POST",
-                        data: {tprocedimiento:tprocedimiento},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                             rsp = JSON.parse(data);
-                            if (rsp.result) {
-                                ListarTipoProcedimiento();
-                                ListaTblTipoProcedimiento();
-                                $('#txttprocedimiento').val('');    
-                            } else {
-                                jAlert('info', 'Ocurrió error al guardar', 'Sistema de Tópicos IPD', null);
-                            }
+                         rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarTipoProcedimiento();
+                            ListaTblTipoProcedimiento();
+                            $('#txttprocedimiento').val('');    
+                        } else {
+                            jAlert('info', 'Ocurrió error al guardar', 'Sistema de Tópicos IPD', null);
                         }
-                    });
+                    }
+                });
+
+            }else{
+                showAlertMessage('#alerta-errorTipo', "Debe ingresar alguna descripcion");
+            }
+
+         
         }
         
          function DeleteTprocedimiento(codtprocedimiento){
@@ -352,6 +374,20 @@
         function VerTipoProcedimiento() {
             ListaTblTipoProcedimiento();
             $('#Modaltprocedimiento').modal('toggle');
+        }
+
+        /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+
         }
 
     </script>

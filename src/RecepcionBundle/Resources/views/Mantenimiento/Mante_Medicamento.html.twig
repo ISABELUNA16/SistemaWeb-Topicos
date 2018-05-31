@@ -74,6 +74,9 @@
                             <!-- end PROJECT HEAD -->
                             <div class="portlet-body">
                                 <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                         <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
+                                    </div>
                                     <div class="col-md-12 col-sm-7" style="border-bottom: 3px solid #cb2f1d;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
@@ -127,7 +130,7 @@
                         <div class="modal-body">
                             <div class="portlet-body">
                                 <div class="tab-content">
-                                    
+                                     <div id="alerta-errorTipo" class="alert alert-danger collapse text-center"></div>
                                     <div class="form">
                                         <div class="form-group">
                                             <div class="col-md-9">
@@ -209,7 +212,7 @@
             Layout.init(); // init layout
             Demo.init(); // init demo(theme settings page)
             Todo.init(); // init todo page
-          //  ListarTipoMedicamento();
+            ListarTipoMedicamento();
             ListarMedicamentos();
         });
         
@@ -251,10 +254,10 @@
             var rsp;
             var descripcion=$('#txtdescripcion').val();
             var codigotipo=$('#cbotipomedicamento').val();
-         
-            var formURL = "{{path('mante_guardar_medicamento')}}";
-            $.ajax(
-                    {
+            
+            if( descripcion != "" &&  codigotipo != "" ){
+                var formURL = "{{path('mante_guardar_medicamento')}}";
+                $.ajax({
                         url: formURL,
                         type: "POST",
                         data: {descripcion:descripcion, codigotipo:codigotipo},
@@ -269,6 +272,40 @@
                             }
                         }
                     });
+            }else{
+
+                 showAlertMessage('#alerta-error', "Debe rellenar los campos vacíos.");
+            }
+
+          
+        }
+
+        function GuardarTmedicamento(){
+            var rsp;
+            var tmedicamento=$('#txttmedicamento').val();
+
+            if(tmedicamento != ""){
+                var formURL = "{{path('mante_guardar_tmedicamento')}}";
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {tmedicamento:tmedicamento},
+                    success: function (data, textStatus, jqXHR)
+                    {
+                         rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarTipoMedicamento();
+                            ListaTblTipoMedicamento();
+                            $('#txttmedicamento').val('');    
+                        } else {
+                            jAlert('info', 'Ocurrió un error al guardar.', 'Sistema de Tópicos IPD', null);
+                        }
+                    }
+                });
+            }else{
+                showAlertMessage('#alerta-errorTipo', "Debe ingresar alguna descripcion");
+            }
+           
         }
         
         function ListarMedicamentos(){
@@ -326,7 +363,19 @@
             $('#Modaltmedicamento').modal('toggle');
         }
         
-        
+         /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+
+        }
 
     </script>
 {% endblock %}

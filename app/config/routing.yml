@@ -13,10 +13,6 @@ modelo:
     type:     annotation
     prefix:   /
 
-login:
-    path:     /login
-    defaults: { _controller: AccesoBundle:Acceso:login }
-
 login_check:
     path: /login_check
 

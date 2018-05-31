@@ -23,7 +23,7 @@ class MantenimientoController extends Controller {
     }
     
     /**
-     * @Route("/lstTipoMedicamento", name="mante_tdiagnostico")
+     * @Route("/lstTipoDiagnostico", name="mante_tdiagnostico")
      * @Method("POST") 
      */
     public function ListaDiagnosticoAction() {
@@ -34,7 +34,7 @@ class MantenimientoController extends Controller {
     }
     
     /**
-     * @Route("/lstTblTipoMedicamento", name="mante_tbl_tdiagnostico")
+     * @Route("/lstTblTipoDiagnostico", name="mante_tbl_tdiagnostico")
      * @Method("POST") 
      */
     public function ListaTblDiagnosticoAction() {

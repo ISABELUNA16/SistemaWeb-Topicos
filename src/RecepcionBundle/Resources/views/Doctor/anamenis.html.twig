@@ -233,10 +233,11 @@
 
                             console.log("retorna bien");
                             if(rsp.result){
-
                                 ListarCantidades('{{codatencion}}');
+                                lstAanamnesis('{{codatencion}}');
                                 $('#anamnesisSelect').val("0");
                                 $('#observacionAnam').empty();
+                                $('#guardarAnam').hide();
                                 
                                 jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null); 
 

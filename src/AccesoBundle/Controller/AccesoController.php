@@ -26,9 +26,7 @@ class AccesoController extends Controller {
                 'last_username' => $lastUsername,
                 'error' => $error,
             ));
-       
     }
-
 
     /**
      * @Route("/panel", name="panel_principal")
@@ -37,25 +35,6 @@ class AccesoController extends Controller {
     {    
         return $this->render('RecepcionBundle:Principal:panelPrincipal.html.twig');
      
-    }
-
-
-    /**
-     * @Route("/cerrar", name="acceso_cerrar")
-     */
-    public function cerrarSesionAction() {
-        session_destroy();//DESTRUIR LAS SESSIONES
-        return $this->redirectToRoute('acceso_login');
-    }
-    
-    private function ValidarSession(){
-        $sesion_creada=true;//VARIABLE INICIALIZADA CON TRUE 
-        $session = new Session();//INICIAR SESSION
-        $UserSession=$session->get('usuario');//OBTENER SESSION
-        if(empty($UserSession)){
-            $sesion_creada=false;
-        }
-        return $sesion_creada;//RETORNA DE VARIABLE
     }
 
 }

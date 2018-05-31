@@ -116,6 +116,7 @@ class MantMedicamentoController extends Controller {
         return $this->render('RecepcionBundle:Mantenimiento:tbl_tmedicamento.html.twig',['Tmedicamento'=>$Tmedicamento]);
     } 
 
+
     /**
      * @Route("/guardarTmedicamento", name="mante_guardar_tmedicamento")
      * @Method("POST")
@@ -125,7 +126,7 @@ class MantMedicamentoController extends Controller {
 
         $usuario = $this->getUser()->getCodUser(); 
         $tmedicamento = $request->request->get('tmedicamento');
-        $em = $this->getDoctrine()->getManager();//CONEXION A BASE DE DATOS TOPICO
+        $em = $this->getDoctrine()->getManager();
 
         $Tmed = new Tmedicamento();
         $Tmed->setTmedDescripcion($tmedicamento);

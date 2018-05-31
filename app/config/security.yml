@@ -37,8 +37,8 @@ security:
 
             http_basic: ~
             logout:
-                path: /security_logout
-                target: /
+                path: /logout
+                target: /login
 
 
         main:
@@ -52,5 +52,6 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
 
-   # access_control:
-   #     - {path: ^/doctor, roles: ROLE_DOCTOR}
+    access_control:
+        - {path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^(/doctor|/recepcion|/|/mantenimiento|/), roles: [ROLE_DOCTOR,ROLE_RECEPCIONISTA]}

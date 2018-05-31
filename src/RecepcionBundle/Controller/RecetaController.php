@@ -82,7 +82,7 @@ class RecetaController extends Controller {
             $Amedicamento->setAmedTdosis($tdosis);
             $Amedicamento->setAmedDuracion($duracion);
             $Amedicamento->setAmedTduracion($tduracion);
-            $Amedicamento->setCodUser($usuario['codigo']);
+            $Amedicamento->setCodUser($usuario);
             $Amedicamento->setAmedFegReg(new \DateTime);
             $Amedicamento->setAmedEstado(1);
             $em->persist($Amedicamento);

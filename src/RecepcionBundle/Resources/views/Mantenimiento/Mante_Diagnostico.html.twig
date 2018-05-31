@@ -76,7 +76,11 @@
                             <!-- end PROJECT HEAD -->
                             <div class="portlet-body">
                                 <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                         <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
+                                    </div>
                                     <div class="col-md-12 col-sm-7" style="border-bottom: 3px solid #cb2f1d;">
+                                       
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
                                             <div class="form">
@@ -134,6 +138,7 @@
                         <div class="modal-body">
                             <div class="portlet-body">
                                 <div class="tab-content">
+                                    <div id="alerta-errorTipo" class="alert alert-danger collapse text-center"></div>
                                     
                                     <div class="form">
                                         <div class="form-group">
@@ -223,21 +228,20 @@
         function BorrarDiagnostico(codigo){
             var rsp;
             var formURL = "{{path('mante_borrar_diagnostico')}}";
-            $.ajax(
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {codDiagnostico:codigo},
+                    success: function (data, textStatus, jqXHR)
                     {
-                        url: formURL,
-                        type: "POST",
-                        data: {codDiagnostico:codigo},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                             rsp = JSON.parse(data);
-                            if (rsp.result) {
-                                ListarDiagnotico();
-                            } else {
-                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
-                            }
+                         rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarDiagnotico();
+                        } else {
+                            jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
                         }
-                    });
+                    }
+                });
         }
        
         function GuardarDiagnostico(){
@@ -246,25 +250,31 @@
             var codigo=$('#txtcodigo').val();
             var codigotipo=$('#cbotipodiagnostico').val();
             
-            var formURL = "{{path('mante_guardar_diagnostico')}}";
-            $.ajax(
+            if( descripcion != "" &&  codigo != "" && codigotipo !="" ){
+
+                var formURL = "{{path('mante_guardar_diagnostico')}}";
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {descripcion:descripcion,codigo:codigo,codigotipo:codigotipo},
+                    success: function (data, textStatus, jqXHR)
                     {
-                        url: formURL,
-                        type: "POST",
-                        data: {descripcion:descripcion,codigo:codigo,codigotipo:codigotipo},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                             rsp = JSON.parse(data);
-                            if (rsp.result) {
-                                ListarDiagnotico();
-                                $('#txtdescripcion').val(''); 
-                                $('#txtcodigo').val('');
-                                $('#cbotipodiagnostico').val(0);
-                            } else {
-                                jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
-                            }
+                         rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarDiagnotico();
+                            $('#txtdescripcion').val(''); 
+                            $('#txtcodigo').val('');
+                            $('#cbotipodiagnostico').val(0);
+                        } else {
+                            jAlert('info', 'Ocurrio error a guardar', 'Sistema de Topicos IPD', null);
                         }
-                    });
+                    }
+                });
+
+            }else{
+                showAlertMessage('#alerta-error', "Debe rellenar los campos vacíos.");
+            }
+               
         }
         
         function ListarDiagnotico(){
@@ -316,23 +326,29 @@
         function GuardarTdiagnostico(){
             var rsp;
             var tdiagnostico=$('#txttdiagnostico').val();
-            var formURL = "{{path('mante_guardar_tdiagnostico')}}";
-            $.ajax({
-                        url: formURL,
-                        type: "POST",
-                        data: {tdiagnostico:tdiagnostico},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                             rsp = JSON.parse(data);
-                            if (rsp.result) {
-                                ListarTipoDiagnosticos();
-                                ListaTblTipoDiagnostico();
-                                $('#txttdiagnostico').val('');    
-                            } else {
-                                jAlert('info', 'Ocurrió un error al guardar.', 'Sistema de Tópicos IPD', null);
-                            }
+
+            if( tdiagnostico != ""){
+                var formURL = "{{path('mante_guardar_tdiagnostico')}}";
+                $.ajax({
+                    url: formURL,
+                    type: "POST",
+                    data: {tdiagnostico:tdiagnostico},
+                    success: function (data, textStatus, jqXHR)
+                    {
+                         rsp = JSON.parse(data);
+                        if (rsp.result) {
+                            ListarTipoDiagnosticos();
+                            ListaTblTipoDiagnostico();
+                            $('#txttdiagnostico').val('');    
+                        } else {
+                            jAlert('info', 'Ocurrió un error al guardar.', 'Sistema de Tópicos IPD', null);
                         }
-                    });
+                    }
+                });
+            }else{
+                 showAlertMessage('#alerta-errorTipo', "Debe ingresar alguna descripción.");
+            }
+         
         }
         
         function DeleteTdiagnostico(codtdiagnostico){
@@ -360,6 +376,21 @@
             ListaTblTipoDiagnostico();
             $('#Modaltdiagnostico').modal('toggle');
         }
+
+        /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+
+        }
+
 
     </script>
 {% endblock %}
