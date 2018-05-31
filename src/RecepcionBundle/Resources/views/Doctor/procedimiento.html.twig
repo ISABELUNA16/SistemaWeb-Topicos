@@ -84,6 +84,9 @@
                             <!-- end PROJECT HEAD -->
                             <div class="portlet-body">
                                 <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                        <div id="alerta-errorGuardar" class="alert alert-danger collapse text-center"></div>
+                                    </div>
                                     <div class="col-md-12 col-sm-7" style="    border-bottom: 1px solid #eee;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
@@ -177,6 +180,20 @@
             $('.js-example-basic-single').select2();
         });
         
+        /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+
+        }
+
         
         function Procedimiento(codTprocedimiento) {
             var formURL = "{{path('doctor_lista_tprocedimiento')}}";
@@ -210,30 +227,45 @@
         function GuardarProcedimiento() {
             var codprocedimiento;
             codprocedimiento=$('#select2').val();
-            jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function (callback) {
-            if (callback) {
-            var formURL = "{{path('doctor_guardar_procedimiento')}}";
-            $.ajax(
-                    {
-                        url: formURL,
-                        type: "POST",
-                        data: {codprocedimiento: codprocedimiento,codatencion:{{codatencion}}},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            rsp = JSON.parse(data);
-                            if(rsp.result){
-                                lstAprocedimiento('{{codatencion}}');
-                                ListarCantidades('{{codatencion}}');
-{#                                $('#select2').html('<option value="0">[Seleccionar]</option>');#}
-                            }else{
-                                jAlert('info', rsp.mensaje, 'Sistema de Topico - IPD', null);
+            codprocedimientotipo = $('#select2tipo').val();
+
+            if( codprocedimiento == "0" ||  codprocedimientotipo == "0"){
+
+                showAlertMessage('#alerta-errorGuardar', "Debe seleccionar ambas opciones.");
+            }else{
+
+                jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
+                if (callback) {
+                var formURL = "{{path('doctor_guardar_procedimiento')}}";
+                $.ajax({
+                            url: formURL,
+                            type: "POST",
+                            data: {codprocedimiento: codprocedimiento, codatencion:{{codatencion}}},
+                            success: function (data, textStatus, jqXHR)
+                            {
+                                rsp = JSON.parse(data);
+                               
+                                if(rsp.result){
+                                    lstAprocedimiento('{{codatencion}}');
+                                    ListarCantidades('{{codatencion}}');
+                                  $('#select2').html('<option value="0">[Seleccionar]</option>');
+                                  $('#select2tipo').html('<option value="0">[Seleccionar]</option>');
+                               
+                                }else{
+                               
+                                    jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
+                               
+                                }
                             }
-                        }
-                    });
-                } else {
-                   return false;
-               }
-            });       
+                        });
+                    } else {
+                       return false;
+                   }
+                });     
+
+            }
+
+             
         }
 
         function ListarCantidades(codatencion) {
@@ -260,7 +292,30 @@
                             }
                         }
                     });
-        }  
+        } 
+
+
+
+        function Eliminaraprocedimiento(codaprocedimiento){
+            var rsp;
+            var formURL = '{{path('doctor_delete_aprocedimiento')}}';
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codaprocedimiento:codaprocedimiento},
+                success: function (data, textStatus, jqXHR)
+                {
+                    rsp = JSON.parse(data);
+                    if(rsp.result){
+                         ListarCantidades('{{codatencion}}');
+                         lstAprocedimiento('{{codatencion}}');
+                    }else{
+                         jAlert('info', 'Ocurrió error al eliminar', 'Sistema de Tópicos IPD', null);
+                    }
+                }
+            });
+        }
+
         
          function FinalizarAtencion(){
             var rsp;

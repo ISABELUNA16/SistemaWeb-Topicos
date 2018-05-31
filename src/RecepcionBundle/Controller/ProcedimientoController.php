@@ -103,5 +103,27 @@ class ProcedimientoController extends Controller {
         exit;
     }
 
+    /**
+     * @Route("/deleteaprocedimiento", name="doctor_delete_aprocedimiento")
+     * @Method("POST")
+     */
+    public function deleteAdiagnosticoAction(Request $request) {
+        
+        $codAprocedimiento = $request->request->get('codaprocedimiento');
+        $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+        $Aprocedimiento = $em->getRepository('ModeloBundle:AtencionProcedimiento')->find(array('codAprocedimiento' => $codAprocedimiento)); //DATOS ANTECEDENTE POR ID 
+       
+        if ($Aprocedimiento) {
+            $em->remove($Aprocedimiento);
+            $em->flush();
+            $rpta = ['result' => true];
+       
+        } else {
+            $rpta = ['result' => false];
+        }
+        echo json_encode($rpta, JSON_PRETTY_PRINT);
+        exit;
+    }
+
 
 }
