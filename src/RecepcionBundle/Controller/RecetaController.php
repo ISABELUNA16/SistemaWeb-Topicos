@@ -28,10 +28,28 @@ class RecetaController extends Controller {
         } else {
             $Persona = $em->getRepository('ModeloBundle:Paciente')->Data_paciente_by_Codigo($Atencion->getpercodigo()); //DATOS PACIENTE
         }
-        $medicamento = $em->getRepository('ModeloBundle:Medicamento')->findAll();
+        
+        $Tmedicamento = $em->getRepository('ModeloBundle:Tmedicamento')->findAll();
         $NomPaciente = $Persona['nombres'] . ' ' . $Persona['apaterno'] . ' ' . $Persona['amaterno'];
-        return $this->render('RecepcionBundle:Doctor:receta.html.twig', ['Paciente' => $NomPaciente, 'medicamento' => $medicamento, 'codatencion' => $codatencion]);
+        return $this->render('RecepcionBundle:Doctor:receta.html.twig', ['Paciente' => $NomPaciente, 'tmedicamento' => $Tmedicamento, 'codatencion' => $codatencion]);
     }
+
+
+    /**
+     * @Route("/lstmedicamentos", name="doctor_lista_tmedicamentos")
+     * @Method("POST")
+     */
+    public function LstMedicamentoAction(Request $request) {
+      
+        $codTmedicamento = $request->request->get('codTmedicamento');
+
+        $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+        $Medicamento = $em->getRepository('ModeloBundle:Medicamento')->findBy(array('codTmedicamento' => $codTmedicamento)); 
+        echo $this->renderView('RecepcionBundle:Doctor:cbo_medicamento.html.twig', ['lstMedicamento' => $Medicamento]);
+        exit;
+    }
+
+
 
     /**
      * @Route("/lstamedicamento", name="doctor_lista_amedicamento")
@@ -130,6 +148,28 @@ class RecetaController extends Controller {
         $Amedicamento = $em->getRepository('ModeloBundle:AtencionMedicamento')->Data_Lista_Amedicamento($codatencion);
 
         return $this->render('RecepcionBundle:Historial:imprimir.html.php', ['Nomdoctor'=>$Nomdoctor,'Nompaciente'=>  $Nompaciente,'Diagnostico' => $Adiagnostico, 'Procedimiento' => $Aprocedimiento, 'Receta' => $Amedicamento]);
+    }
+
+    /**
+     * @Route("/deleteamedicamento", name="doctor_delete_amedicamento")
+     * @Method("POST")
+     */
+    public function deleteAmedicamentoAction(Request $request) {
+        
+        $codamedicamento = $request->request->get('codamedicamento');
+        $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+        $Amedicamento = $em->getRepository('ModeloBundle:AtencionMedicamento')->find(array('codAmedicamento' => $codamedicamento)); //DATOS ANTECEDENTE POR ID 
+       
+        if ($Amedicamento) {
+            $em->remove($Amedicamento);
+            $em->flush();
+            $rpta = ['result' => true];
+       
+        } else {
+            $rpta = ['result' => false];
+        }
+        echo json_encode($rpta, JSON_PRETTY_PRINT);
+        exit;
     }
 
 }

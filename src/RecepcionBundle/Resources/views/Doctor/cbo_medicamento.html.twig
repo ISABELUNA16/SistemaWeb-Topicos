@@ -1,0 +1,4 @@
+<option value="0">[Seleccionar]</option>
+{% for cbo in lstMedicamento %}
+    <option value="{{cbo.codMedicamento}}">{{ cbo.medDescripcion }}</option>
+{% endfor %}

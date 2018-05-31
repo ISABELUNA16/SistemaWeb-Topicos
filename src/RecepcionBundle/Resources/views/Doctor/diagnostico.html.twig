@@ -98,9 +98,9 @@
                                                         <label class="control-label">Tipo de Diagnóstico</label><br>
                                                         <select class="form-control" name="select2tipo" id="select2tipo" onchange="Diagnostico(this.value)">
                                                             <option value="0">[Seleccionar]</option>
-                                                            {%for cbo in tdiagnostico%}
+                                                            {% for cbo in tdiagnostico %}
                                                                 <option value="{{cbo.codTdiagnostico}}">{{cbo.tdiagDescripcion}}</option>
-                                                            {%endfor%}
+                                                            {% endfor %}
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6">
@@ -266,8 +266,9 @@
                                     if(rsp.result){
                                         ListarCantidades('{{codatencion}}');
                                         lstAdiagnotico('{{codatencion}}');
-                                        $('#select2').html('<option value="0">[Seleccionar]</option>');
-                                        $('#select2tipo').html('<option value="0">[Seleccionar]</option>');
+                                        $('#select2').val(0);
+                                        $('#select2tipo').val(0);
+
                                     }else{
                                         jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
                                     }

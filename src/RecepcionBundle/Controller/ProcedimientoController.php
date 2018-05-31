@@ -107,7 +107,7 @@ class ProcedimientoController extends Controller {
      * @Route("/deleteaprocedimiento", name="doctor_delete_aprocedimiento")
      * @Method("POST")
      */
-    public function deleteAdiagnosticoAction(Request $request) {
+    public function deleteAprocedimienntoAction(Request $request) {
         
         $codAprocedimiento = $request->request->get('codaprocedimiento');
         $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO

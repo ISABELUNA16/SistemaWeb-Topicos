@@ -1,0 +1,74 @@
+<?php
+
+namespace ModeloBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AtencionAnamnesisPaciente
+ *
+ * @ORM\Table(name="Atencion_anamnesis_paciente")
+ * @ORM\Entity(repositoryClass="ModeloBundle\Repository\AtencionAnamnesisPacienteRepository")
+ */
+class AtencionAnamnesisPaciente
+{
+   
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_aanamnesispac", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codAanamnesisPac;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_atencion", type="integer", nullable=true)
+     */
+    private $codAtencion;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="aanamnesispac_te", type="string", length=250, nullable=true)
+     */
+    private $aanamnpacTe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="aanamnesispac_inicio", type="string", length=250, nullable=true)
+     */
+    private $aanamnpacInicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="aanamnesispac_curso", type="string", length=400, nullable=true)
+     */
+    private $aanampacCurso;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cod_user", type="integer", nullable=true)
+     */
+    private $codUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="aanamnesispac_feg_reg", type="datetime", nullable=true)
+     */
+    private $aanampacFegReg;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="aanamnesispac_estado", type="integer", nullable=true)
+     */
+    private $aanampacEstado;
+
+}

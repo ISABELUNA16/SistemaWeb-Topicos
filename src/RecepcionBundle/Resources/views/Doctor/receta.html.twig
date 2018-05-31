@@ -17,12 +17,6 @@
                 <div class="todo-ui">
                     <div class="todo-sidebar">
                         <div class="portlet light ">
-                            {#<div class="portlet-title">
-                                <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
-                                    <span class="caption-subject font-red bold uppercase">ANTECENDENTE </span>
-                                    <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">Click para ver o ocultar el menu</span>
-                                </div>
-                            </div>#}
                             <style>
                                 .listbadge{
                                     color:#697882;
@@ -89,28 +83,42 @@
                             </div>
                             <div class="portlet-body">
                                 <div class="row">
+                                    
+                                    <div id="alert-error" class="alert alert-warning alert-dismissible text-center" role="alert"></div>
+                    
                                     <div class="col-md-12 col-sm-7" style="border-bottom: 1px solid #eee;">
                                         <form action="#" class="form-horizontal">
                                             <div class="form">
                                                 <div class="form-group">
-                                                    <div class="col-md-10">
-                                                        <label class="control-label">Medicamentos :</label>
-                                                        <select class="js-example-basic-single col-md-10" name="select2" id="select2" >
+                                                    <div class="col-md-4">
+                                                        <label class="control-label">Tipo de Medicamento</label><br>
+                                                        <select class="form-control" name="select2tipo" id="select2tipo" onchange="Medicamento(this.value)">
                                                             <option value="0">[Seleccionar]</option>
-                                                            {%for cbo in medicamento%}
-                                                                <option value="{{cbo.codMedicamento}}">{{cbo.medDescripcion}}</option>
+                                                            {%for cbo in tmedicamento%}
+                                                                <option value="{{cbo.codTmedicamento}}">{{cbo.tmedDescripcion}}</option>
                                                             {%endfor%}
                                                         </select>
                                                     </div>
+                                                    <div class="col-md-6">
+                                                        <label class="control-label">Medicamento</label>
+                                                        <select class="form-control" name="select2" id="select2">
+                                                            <option value="0">[Seleccionar]</option>
+                                                        </select>
+                                                    </div>
+
                                                     <div class="col-md-2">
-                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder=" % concentración " id="txtconcentracion" name="txtconcentracion">
+                                                         <label class="control-label"> Concentración </label>
+                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="%" id="txtconcentracion" name="txtconcentracion"/>
                                                     </div>    
+                                                    
+                                                </div>
+                                                <div class="form-group">
                                                     <div class="col-md-2" style="padding-top: 10px;">
-                                                        <label class="control-label">Dosis :</label>
+                                                        <label class="control-label">Dosis </label>
                                                         <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Dosis" id="txtdosis" name="txtdosis"> 
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
-                                                        <label class="control-label" style="color: white">tdosis :</label>
+                                                        <label class="control-label" style="color: white">tdosis </label>
                                                         <select class="form-control" id="cbotdosis" name="cbotdosis">
                                                             <option value="0">[Seleccionar]</option>
                                                             <option value="1">horas</option>
@@ -118,7 +126,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
-                                                        <label class="control-label" >Duracion :</label>
+                                                        <label class="control-label" >Duración </label>
                                                         <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Duración" id="txtduracion" name="txtduracion"> 
                                                     </div> 
                                                     <div class="col-md-2" style="padding-top: 10px;">
@@ -131,7 +139,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
-                                                        <label class="control-label">Unidad :</label>
+                                                        <label class="control-label">Unidad </label>
                                                         <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Unidad " id="txtunidad" name="txtunidad"> 
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
@@ -220,25 +228,53 @@
             lstAmedicamento('{{codatencion}}');
             ListarCantidades('{{codatencion}}');
             $('.js-example-basic-single').select2();
+            $("#alert-error").hide();
         });
         
-        function lstAmedicamento(codatencion) {
-            $('#viewAmedicamento').html("<div class='col-md-12' style='padding-bottom: 10px;text-align:center'><img src='{{asset('bundles/public/img/cargando.gif')}}' /></div>");
-            var formURL = "{{path('doctor_lista_amedicamento')}}";
-            $.ajax(
-                    {
+        /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+        }
+
+         function Medicamento(codTmedicamento) {
+            var formURL = "{{path('doctor_lista_tmedicamentos')}}";
+            $.ajax({
                         url: formURL,
                         type: "POST",
-                        data: {codatencion: codatencion},
+                        data: {codTmedicamento: codTmedicamento},
                         success: function (data, textStatus, jqXHR)
                         {
-                            $('#viewAmedicamento').html(data);
+                            $('#select2').html(data);
                         }
                     });
         }
+
+        function lstAmedicamento(codatencion) {
+            $('#viewAmedicamento').html("<div class='col-md-12' style='padding-bottom: 10px;text-align:center'><img src='{{asset('bundles/public/img/cargando.gif')}}' /></div>");
+            var formURL = "{{path('doctor_lista_amedicamento')}}";
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codatencion: codatencion},
+                success: function (data, textStatus, jqXHR)
+                {
+                    $('#viewAmedicamento').html(data);
+                }
+            });
+        }
         
         function GuardarReceta() {
-            var codmedicamento,concentracion,unidad,dosis,tdosis,duracion,tduracion,rsp;
+            var codmedicamento,codmedicamentotipo,concentracion,unidad,dosis,tdosis,duracion,tduracion,rsp;
+
+            codmedicamentotipo = $('#select2tipo').val();
             codmedicamento=$('#select2').val();
             concentracion =$('#txtconcentracion').val();
             unidad=$('#txtunidad').val();
@@ -246,37 +282,65 @@
             tdosis=$('#cbotdosis').val();
             duracion=$('#txtduracion').val();
             tduracion=$('#cbotduracion').val();
-            jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
-            if (callback) {
-            var formURL = "{{path('doctor_guardar_medicamento')}}";
-            $.ajax(
-                    {
-                        url: formURL,
-                        type: "POST",
-                        data: {codmedicamento: codmedicamento,concentracion:concentracion,unidad:unidad,dosis:dosis,tdosis:tdosis,duracion:duracion,tduracion:tduracion,codatencion:{{codatencion}}},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            rsp = JSON.parse(data);
-                            if(rsp.result){
-                                lstAmedicamento('{{codatencion}}');
-                                ListarCantidades('{{codatencion}}');
-                                $('#txtconcentracion').val('');
-                                $('#txtunidad').val('');
-                                $('#txtdosis').val('');
-                                $('#cbotdosis').val(0);
-                                $('#txtduracion').val('');
-                                $('#cbotduracion').val(0);
-                            }else{
-                                jAlert('info', rsp.mensaje, 'Sistema de Topico - IPD', null);
+
+            if( codmedicamentotipo == "0" || codmedicamento == "0" || concentracion == "" || unidad == "" || dosis == "" || tdosis == "" || duracion == "" || tduracion == "" ){
+
+                showAlertMessage('#alert-error', "Advertencia: Rellene todos los campos solicitados. ");
+            }else{
+
+                jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
+                if (callback) {
+                var formURL = "{{path('doctor_guardar_medicamento')}}";
+                $.ajax({
+                            url: formURL,
+                            type: "POST",
+                            data: {codmedicamento: codmedicamento,concentracion:concentracion,unidad:unidad,dosis:dosis,tdosis:tdosis,duracion:duracion,tduracion:tduracion,codatencion:{{codatencion}}},
+                            success: function (data, textStatus, jqXHR)
+                            {
+                                rsp = JSON.parse(data);
+                                if(rsp.result){
+                                    lstAmedicamento('{{codatencion}}');
+                                    ListarCantidades('{{codatencion}}');
+                                    $('#txtconcentracion').val('');
+                                    $('#txtunidad').val('');
+                                    $('#txtdosis').val('');
+                                    $('#cbotdosis').val(0);
+                                    $('#txtduracion').val('');
+                                    $('#cbotduracion').val(0);
+                                    $('#select2').html('<option value="0">[Seleccionar]</option>');
+                                    $('#select2tipo').html('<option value="0">[Seleccionar]</option>');
+
+                                }else{
+                                    jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
+                                }
                             }
-                        }
-                    });
-                } else {
-                   return false;
-               }
-            });       
+                        });
+                    } else {
+                       return false;
+                   }
+                });
+            }
         }
         
+        function Eliminaramedicamento(codamedicamento){
+            var rsp;
+            var formURL = '{{path('doctor_delete_amedicamento')}}';
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codamedicamento:codamedicamento},
+                success: function (data, textStatus, jqXHR)
+                {
+                    rsp = JSON.parse(data);
+                    if(rsp.result){
+                        lstAmedicamento('{{codatencion}}');
+                        ListarCantidades('{{codatencion}}');
+                    }else{
+                         jAlert('info', 'Ocurrió error al eliminar', 'Sistema de Tópicos IPD', null);
+                    }
+                }
+            });
+        }
         
         function ListarCantidades(codatencion) {
             var rsp;
