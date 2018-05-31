@@ -42,6 +42,7 @@ class DiagnosticoController extends Controller {
         
         $usuario = $this->getUser()->getCodUser();
         $codDiagnostico = $request->request->get('coddiagnostico');
+        $codDiagnosticoTipo = $request->request->get('coddiagnosticotipo');
         $codAtencion = $request->request->get('codatencion');
 
         $em = $this->getDoctrine()->getManager();
@@ -52,7 +53,7 @@ class DiagnosticoController extends Controller {
             $Adiagnostico = new AtencionDiagnostico();
             $Adiagnostico->setCodAtencion($codAtencion);
             $Adiagnostico->setCodDiagnostico($codDiagnostico);
-            $Adiagnostico->setAdiagTipo(0);
+            $Adiagnostico->setAdiagTipo($codDiagnosticoTipo);
             $Adiagnostico->setCodUser($usuario);
             $Adiagnostico->setAdiagFegReg(new \DateTime);
             $Adiagnostico->setAdiagEstado(1);

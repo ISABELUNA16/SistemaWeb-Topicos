@@ -84,9 +84,14 @@
                             <!-- end PROJECT HEAD -->
                             <div class="portlet-body">
                                 <div class="row">
+                                    <div class="col-md-5 col-sm-5">
+                                        <div id="alerta-errorGuardar" class="alert alert-danger collapse text-center"></div>
+                                    </div>
                                     <div class="col-md-12 col-sm-7" style="    border-bottom: 1px solid #eee;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
+
+                                            
                                             <div class="form">
                                                 <div class="form-group">
                                                     <div class="col-md-4">
@@ -174,6 +179,20 @@
             $('.js-example-basic-single').select2();
         });
         
+          /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+
+        }
+
         function CambiarTipo(tipo,codigo){
             var formURL = "{{path('doctor_tipo_cambio_diagnostico')}}";
             $.ajax(
@@ -226,31 +245,42 @@
            
             var coddiagnostico,rsp;
             coddiagnostico=$('#select2').val();
+            coddiagnosticotipo = $('#select2tipo').val();
+           
+            if( coddiagnostico == "0" || coddiagnosticotipo == "0"){
 
-            jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function(callback) {
-                if (callback) {
-                    var formURL = "{{path('doctor_guardar_diagnostico')}}";
-                    $.ajax({
-                        url: formURL,
-                        type: "POST",
-                        data: {coddiagnostico: coddiagnostico,codatencion:{{codatencion}}},
-                        success: function (data, textStatus, jqXHR)
-                        {
-                            rsp = JSON.parse(data);
-                            if(rsp.result){
-                                ListarCantidades('{{codatencion}}');
-                                lstAdiagnotico('{{codatencion}}');
-                                $('#select2').html('<option value="0">[Seleccionar]</option>');
-                            }else{
-                                jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
-                            }
-                        }
-                    });
-                } else {
-                   return false;
-                }
-            });      
+                showAlertMessage('#alerta-errorGuardar', "Debe seleccionar ambas opciones.");
+            }else{
+                
+                jConfirm("¿Esta seguro de continuar?", "Sistema de Topico - IPD", function(callback) {
+                    if (callback) {
+
+                            var formURL = "{{path('doctor_guardar_diagnostico')}}";
+                            $.ajax({
+                                url: formURL,
+                                type: "POST",
+                                data: {coddiagnostico: coddiagnostico, coddiagnosticotipo: coddiagnosticotipo, codatencion:{{codatencion}}},
+                                success: function (data, textStatus, jqXHR)
+                                {
+                                    rsp = JSON.parse(data);
+                                    if(rsp.result){
+                                        ListarCantidades('{{codatencion}}');
+                                        lstAdiagnotico('{{codatencion}}');
+                                        $('#select2').html('<option value="0">[Seleccionar]</option>');
+                                        $('#select2tipo').html('<option value="0">[Seleccionar]</option>');
+                                    }else{
+                                        jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
+                                    }
+                                }
+                            });            
+                    } else {
+                       return false;
+                    }
+                });  
+
+            }    
         }
+
 
         function Eliminaradiagnostico(codadiagnostico){
             var rsp;
@@ -317,6 +347,9 @@
                         }
                     });
         }
+
+       
+
     </script>
 {% endblock %}
 

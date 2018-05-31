@@ -12,15 +12,18 @@ class AtencionDiagnosticoRepository extends \Doctrine\ORM\EntityRepository {
                         t1.[adiag_tipo] AS tipo ,
                         t1.[adiag_feg_reg] AS fecha ,
                         t1.[adiag_estado] AS estado ,
+                        t3.tdiag_descripcion AS tipoDescripcion,
                         per.cNombres AS nom ,
                         per.cApePat AS ap ,
                         per.cApeMat AS am
                 FROM    Atencion_diagnostico AS t1
                         INNER JOIN Diagnostico AS t2 ON t1.cod_diagnostico = t2.cod_diagnostico
+                        INNER JOIN Tdiagnostico AS t3 ON t2.cod_tdiagnostico = t3.cod_tdiagnostico
                         INNER JOIN dbo.Usuario AS usu ON usu.cod_user = t1.cod_user
                         INNER JOIN presupuesto.dbo.Trabajador AS per ON per.nCodTra = usu.percodigo
                 WHERE   t1.[cod_atencion] = $codAtencion
                         AND adiag_estado = 1;";
+
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();
         $datos = $stmt->fetchAll();
