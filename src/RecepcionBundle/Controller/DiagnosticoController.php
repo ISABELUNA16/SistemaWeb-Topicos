@@ -136,12 +136,13 @@ class DiagnosticoController extends Controller {
         $ItemsDiag = $em->getRepository('ModeloBundle:AtencionDiagnostico')->findby(array('codAtencion'=>$codatencion,'adiagEstado'=>1));
         $ItemsProc = $em->getRepository('ModeloBundle:AtencionProcedimiento')->findby(array('codAtencion'=>$codatencion,'aprocEstado'=>1));
         $ItemsRec = $em->getRepository('ModeloBundle:AtencionMedicamento')->findby(array('codAtencion'=>$codatencion,'amedEstado'=>1));
+        $ItemsAnam = $em->getRepository('ModeloBundle:AtencionAnamnesis')->findby(array('codAtencion'=>$codatencion,'aanamEstado'=>1));
         $ItemsAnamenis = $em->getRepository('ModeloBundle:Atencion')->findOneBy(array('codAtencion'=>$codatencion));
         $countana=0;
         if(!empty($ItemsAnamenis->getatenAnamenis())){
             $countana=1;
         }
-        $rpta = ['ItemsDiag' => count($ItemsDiag), 'ItemsProc' => count($ItemsProc), 'ItemsRec' => count($ItemsRec),'anamenis'=>$countana];
+        $rpta = ['ItemsDiag' => count($ItemsDiag), 'ItemsProc' => count($ItemsProc), 'ItemsRec' => count($ItemsRec),'ItemsAnam' => count($ItemsAnam),'anamenis'=>$countana];
         echo json_encode($rpta, JSON_PRETTY_PRINT);
         exit;
     }

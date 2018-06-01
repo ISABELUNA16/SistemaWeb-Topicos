@@ -179,5 +179,56 @@ class AnamenisController extends Controller {
         exit;
     }
 
+     /**
+     * @Route("/deleteaanampac", name="doctor_delete_aanampac")
+     * @Method("POST")
+     */
+    public function deleteAanampacAction(Request $request) {
+        
+        $codAanampac = $request->request->get('codaanampac');
+        $em = $this->getDoctrine()->getManager(); 
+
+        $AanamPaciente = $em->getRepository('ModeloBundle:AtencionAnamnesisPaciente')->find(array('codAanamnesisPac' => $codAanampac)); 
+        //DATOS ANTECEDENTE POR ID 
+        
+        if ($AanamPaciente) {
+            $em->remove($AanamPaciente);
+            $em->flush();
+            $rpta = ['result' => true];
+        
+        } else {
+            $rpta = ['result' => false];
+
+        }
+        echo json_encode($rpta, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    /**
+     * @Route("/deleteaanam", name="doctor_delete_aanam")
+     * @Method("POST")
+     */
+    public function deleteAanamAction(Request $request) {
+        
+        $codAanam = $request->request->get('codaanam');
+        $em = $this->getDoctrine()->getManager(); 
+
+        $Aanam = $em->getRepository('ModeloBundle:AtencionAnamnesis')->find(array('codAanamnesis' => $codAanam)); 
+        //DATOS ANTECEDENTE POR ID 
+        
+        if ($Aanam) {
+            $em->remove($Aanam);
+            $em->flush();
+            $rpta = ['result' => true];
+        
+        } else {
+            $rpta = ['result' => false];
+
+        }
+        echo json_encode($rpta, JSON_PRETTY_PRINT);
+        exit;
+    }
+    
+
 
 }

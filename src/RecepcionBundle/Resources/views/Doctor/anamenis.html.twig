@@ -302,14 +302,12 @@
                         success: function (data, textStatus, jqXHR)
                         {
                             rsp = JSON.parse(data);
-
-                            console.log("retorna bien");
                             if(rsp.result){
                                 ListarCantidades('{{codatencion}}');
                                 lstAanamnesis('{{codatencion}}');
                                 $('#anamnesisSelect').val("0");
-                                $('#observacionAnam').empty();
                                 $('#guardarAnam').hide();
+                                $("#observacionAnam").hide();
                                 
                                 jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null); 
 
@@ -346,15 +344,10 @@
                             {
                                 rsp = JSON.parse(data);
                                 if(rsp.result){
-                                    
-                                    $('#txtTE').empty();
-                                    $('#txtInicio').empty();
-                                    $('#txtCurso').empty();
-                                    
+                                
                                     lstAanamnesisPaciente('{{codatencion}}');
                                     ListarCantidades('{{codatencion}}');
-                                    lstAanamnesis('{{codatencion}}');                                    
-                                  
+
                                     jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null); 
                                 }else{
                                     jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
@@ -387,7 +380,7 @@
                             $('#item1').html(rsp.ItemsDiag);
                             $('#item2').html(rsp.ItemsProc);
                             $('#item3').html(rsp.ItemsRec);
-                            $('#item4').html(rsp.anamenis);
+                            $('#item4').html(rsp.ItemsAnam);
                             
                             if(rsp.ItemsDiag>0 && rsp.ItemsRec>0){
                                 $('#btnfinalizar').show();
@@ -397,6 +390,52 @@
                         }
                     });
         }
+
+        function EliminaraanamPac(codaanampac){
+            var rsp;
+            var formURL = '{{path('doctor_delete_aanampac')}}';
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codaanampac:codaanampac},
+                success: function (data, textStatus, jqXHR)
+                {
+                    rsp = JSON.parse(data);
+                    
+                    if(rsp.result){
+                         
+                         lstAanamnesisPaciente('{{codatencion}}');
+
+                    }else{
+                         jAlert('info', 'Ocurrió un error al eliminar', 'Sistema de Tópicos IPD', null);
+                    }
+                }
+            });
+        }
+
+        function Eliminaraanam(codaanam){
+            var rsp;
+            var formURL = '{{path('doctor_delete_aanam')}}';
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codaanam:codaanam},
+                success: function (data, textStatus, jqXHR)
+                {
+                    rsp = JSON.parse(data);
+                    
+                    if(rsp.result){
+                         
+                         ListarCantidades('{{codatencion}}');
+                         lstAanamnesis('{{codatencion}}');
+
+                    }else{
+                         jAlert('info', 'Ocurrió un error al eliminar', 'Sistema de Tópicos IPD', null);
+                    }
+                }
+            });
+        }
+
 
         function FinalizarAtencion(){
             var rsp;

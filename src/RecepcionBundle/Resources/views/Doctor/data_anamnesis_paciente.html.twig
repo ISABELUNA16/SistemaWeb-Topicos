@@ -20,7 +20,7 @@
                         </div>
                         <div class="mt-action-buttons ">
                             <div class="btn-group btn-group-circle">
-                                <button class="btn btn-xs red btn-circle" style="margin-left: 0px;margin-right: 0px;" onclick=""><i class="fa fa fa-trash"></i></button>
+                                <button class="btn btn-xs red btn-circle" style="margin-left: 0px;margin-right: 0px;" onclick="EliminaraanamPac('{{lst.codigo}}');"><i class="fa fa fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
@@ -49,13 +49,16 @@
             $('#btnAnamPac').attr("disabled", false);
 
         }else{
-            
+
+            $("#txtTE").attr('value','');
+            $("#txtInicio").attr('value','');
+            $("#txtCurso").attr('value','');
             $("#txtTE").attr('disabled', 'disabled');
             $("#txtInicio").attr('disabled', 'disabled');
             $("#txtCurso").attr('disabled', 'disabled');
             $('#btnAnamPac').attr("disabled", true);
         }
-        console.log(cant);
+
     }
     
 </script>
