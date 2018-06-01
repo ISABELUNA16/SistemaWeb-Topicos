@@ -108,14 +108,14 @@
 
                                                     <div class="col-md-2">
                                                          <label class="control-label"> Concentración </label>
-                                                        <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="%" id="txtconcentracion" name="txtconcentracion"/>
+                                                        <input type="text" class="form-control" placeholder="%" id="txtconcentracion" name="txtconcentracion"/>
                                                     </div>    
                                                     
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label">Dosis </label>
-                                                        <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Dosis" id="txtdosis" name="txtdosis"> 
+                                                        <input type="number" class="form-control" placeholder="Dosis" id="txtdosis" name="txtdosis"> 
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label" style="color: white">tdosis </label>
@@ -127,7 +127,7 @@
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label" >Duración </label>
-                                                        <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Duración" id="txtduracion" name="txtduracion"> 
+                                                        <input type="number" class="form-control " placeholder="Duración" id="txtduracion" name="txtduracion"> 
                                                     </div> 
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label"  style="color: white">tduracion :</label>
@@ -140,7 +140,7 @@
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label">Unidad </label>
-                                                        <input type="number" class="form-control todo-taskbody-tasktitle" placeholder="Unidad " id="txtunidad" name="txtunidad"> 
+                                                        <input type="number" class="form-control" placeholder="Unidad " id="txtunidad" name="txtunidad"> 
                                                     </div>
                                                     <div class="col-md-2" style="padding-top: 10px;">
                                                         <label class="control-label" style="color: white">Diagnóstico</label>
@@ -307,8 +307,8 @@
                                     $('#cbotdosis').val(0);
                                     $('#txtduracion').val('');
                                     $('#cbotduracion').val(0);
-                                    $('#select2').html('<option value="0">[Seleccionar]</option>');
-                                    $('#select2tipo').html('<option value="0">[Seleccionar]</option>');
+                                    $("#select2").val('');
+                                    $('#select2tipo').val(0);
 
                                 }else{
                                     jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);

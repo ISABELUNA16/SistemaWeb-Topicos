@@ -82,21 +82,66 @@
                                 </div>
                             </div>
                             <!-- end PROJECT HEAD -->
-                           
-
                              <div class="portlet-body">
                                 <div class="row">
-                                    <div class="col-md-8">
-                                        <div id="alert-anamnesis" class="alert alert-warning alert-dismissible text-center" role="alert"></div>
+                                    <div id="alert-anamnesisPac" class="alert alert-warning alert-dismissible text-center" role="alert"></div>
+                                    <div class="col-md-12 col-sm-7" style="border-bottom:1px solid #eee;">
+                                        <form action="#" class="form-horizontal">
+                                            <div class="form">
+                                                <div class="form-group">
+                                                    <div class="col-md-1" style="padding-top: 10px;">
+                                                        <label class="control-label" style="color:grey">TE </label>
+                                                        <input type="text" class="form-control" id="txtTE" name="txtTE" focus()> 
+                                                    </div>
+                                                    <div class="col-md-2" style="padding-top: 10px;">
+                                                        <label class="control-label" style="color:grey">INICIO </label>
+                                                        <input type="text" class="form-control" id="txtInicio" name="txtInicio"> 
+                                                    </div>
+                                                    <div class="col-md-7" style="padding-top: 10px;">
+                                                        <label class="control-label" style="color:grey">CURSO </label>
+                                                        <input type="text" class="form-control" id="txtCurso" name="txtCurso"> 
+                                                    </div>
+                                                    <div class="col-md-2" id="guardarAnamPac">
+                                                        <br><br>
+                                                        <button class="btn  btn-sm red" type="button" id="btnAnamPac" onclick="GuardarAnamnesisPaciente();">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
+                                    <hr>
+                                    <div class="col-lg-12 col-xs-12 col-sm-12">
+                                        <div class="tab-content" id="viewanamnesisPaciente">
+                                        </div>  
+                                    </div>
+                                    <hr>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <div class="col-md-12 col-sm-7" style="border-bottom: 1px solid #eee;">
+                     <div class="todo-content">
+                        <div class="portlet light ">
+                             <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-helper">ANAMNESIS :</span> &nbsp;
+                                    <span class="caption-subject font-red bold uppercase">ESPECIFICACIONES</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+
+                                    <div id="alert-anamnesis" class="alert alert-warning alert-dismissible text-center" role="alert"></div>
+                                    
+                                     <div class="col-md-12 col-sm-7" style="border-bottom: 1px solid #eee;">
                                         <form action="#" class="form-horizontal">
                                             <!-- TASK HEAD -->
                                             <div class="form">
                                                 <div class="form-group">
+                                                    <br>
                                                     <div class="col-md-5">
-                                                        <label class="control-label" style="color:grey">Aparatos - Sistemas </label><br>
+                                                        <label class="control-label" style="color:grey">APARATOS - SISTEMAS </label><br>
                                                         <select class="form-control" name="anamnesisSelect" id="anamnesisSelect" onchange="validar(this.value)">
                                                             <option value="0"> -- [Seleccionar] -- </option>
                                                             {%for cbo in anamnesis %}
@@ -112,22 +157,22 @@
                                                     <div class="col-md-2" id="guardarAnam">
                                                         <label class="control-label" style="color: white">anamnesis</label>
 
-                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarAnamnesis();">Guardar</button>
+                                                        <button class="btn  btn-sm red" type="button" onclick="GuardarAnamnesis();">Agregar</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
 
                                     </div>
+                                    
                                     <div class="col-lg-12 col-xs-12 col-sm-12">
                                         <div class="tab-content" id="viewanamnesis">
-                                            {#VIEW#}
-
-                                            {#FIN#}
+                                        
                                         </div>  
                                     </div>
                                 </div>
                             </div>
+                            <!-- PROJECT HEAD -->
                         </div>
                     </div>
                     <!-- END TODO CONTENT -->
@@ -175,12 +220,26 @@
             Todo.init(); // init todo page
             ListarCantidades('{{codatencion}}');
             lstAanamnesis('{{codatencion}}');
+            lstAanamnesisPaciente('{{codatencion}}');
              $("#observacionAnam").hide();
              $("#guardarAnam").hide();
              $("#alert-anamnesis").hide();
+             $("#alert-anamnesisPac").hide();
         });
         
-        
+        /* MOSTRAR MENSAJE DE ALERTA */
+        function showAlertMessage(alert, mensaje){
+            $(alert).text(mensaje).show('fade');
+            setTimeout(function(){
+                hideAlertMessage(alert);    
+            }, 2000);
+        }
+
+        /* COULTAR ALERTA*/
+        function hideAlertMessage(alert){
+            $(alert).hide('fade');
+        }
+
         function validar(val){
             console.log(val);
             if( val == "0"){
@@ -209,6 +268,20 @@
                     });
         }
 
+        function lstAanamnesisPaciente(codatencion) {
+            $('#viewanamnesisPaciente').html("<div class='col-md-12' style='padding-bottom: 10px;text-align:center'><img src='{{asset('bundles/public/img/cargando.gif')}}' /></div>");
+            var formURL = "{{path('doctor_lista_aanamnesisPaciente')}}";
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: {codatencion: codatencion},
+                success: function (data, textStatus, jqXHR)
+                {
+                    $('#viewanamnesisPaciente').html(data);  
+                }
+            });
+        }
+
 
 
         function GuardarAnamnesis() {
@@ -220,9 +293,8 @@
 
             jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
             
-            if (callback)
-            {
-                var formURL = "{{path('doctor_guardar_AtencionAnamnesis')}}";
+                if (callback){
+                    var formURL = "{{path('doctor_guardar_AtencionAnamnesis')}}";
                     $.ajax({
                         url: formURL,
                         type: "POST",
@@ -249,11 +321,57 @@
                     });
                 } else {
                    return false;
-               }
+                }
             });       
         }
 
-        
+        function GuardarAnamnesisPaciente() {
+            
+            var rsp;
+            var TE = $('#txtTE').val();
+            var Inicio = $('#txtInicio').val();
+            var Curso = $('#txtCurso').val();
+
+            if(TE != "" && Inicio != "" && Curso != ""){
+
+                jConfirm("¿Está seguro de continuar?", "Sistema de Tópico - IPD", function (callback) {
+                
+                    if (callback){
+                        var formURL = "{{path('doctor_guardar_AtencionAnamnesisPaciente')}}";
+                        $.ajax({
+                            url: formURL,
+                            type: "POST",
+                            data: {te: TE, inicio: Inicio, curso: Curso ,codatencion:{{codatencion}}},
+                            success: function (data, textStatus, jqXHR)
+                            {
+                                rsp = JSON.parse(data);
+                                if(rsp.result){
+                                    
+                                    $('#txtTE').empty();
+                                    $('#txtInicio').empty();
+                                    $('#txtCurso').empty();
+                                    
+                                    lstAanamnesisPaciente('{{codatencion}}');
+                                    ListarCantidades('{{codatencion}}');
+                                    lstAanamnesis('{{codatencion}}');                                    
+                                  
+                                    jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null); 
+                                }else{
+                                    jAlert('info', rsp.mensaje, 'Sistema de Tópico - IPD', null);
+                                }
+                            }
+                        });
+                    } else {
+                       return false;
+                    }
+                });       
+
+            }else{
+
+                 showAlertMessage('#alert-anamnesisPac', "Evitar dejar los campos vacíos. ");
+            }
+          
+        }
 
         function ListarCantidades(codatencion) {
             var rsp;
@@ -299,21 +417,6 @@
                         }
                     });
         }
-
-
-    /* MOSTRAR MENSAJE DE ALERTA */
-    function showAlertMessage(alert, mensaje){
-        $(alert).text(mensaje).show('fade');
-        setTimeout(function(){
-            hideAlertMessage(alert);    
-        }, 2000);
-    }
-
-    /* COULTAR ALERTA*/
-    function hideAlertMessage(alert){
-        $(alert).hide('fade');
-
-    }
 
 
     </script>

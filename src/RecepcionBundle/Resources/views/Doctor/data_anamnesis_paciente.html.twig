@@ -1,16 +1,18 @@
-{%if result%} 
-    {%for lst in lstAanamnesis%}
+{% set cant = cont %}
+{% if result %} 
+    {% for lst in lstAanamnesisPac %}
         <div class="mt-actions">
             <div class="mt-action">
                 <div class="mt-action-body">
                     <div class="mt-action-row">
                         <div class="mt-action-info ">
                             <div class="mt-action-icon ">
-                                <i class="fa fa-stethoscope"></i>
+                                <i class="fa fa-user-md"></i>
                             </div>
                             <div class="mt-action-details ">
                                 <span class="mt-action-author">Doctor : {{lst.nom}} {{lst.ap}}</span>
-                                <p class="mt-action-desc">{{lst.tipo}} | {{lst.observacion}}</p>
+                                <p class="mt-action-desc">TE: {{lst.TE}} | Inicio: {{lst.inicio}} </p>
+                                <p class="mt-action-desc">Curso: {{lst.curso}} </p>
                             </div>
                         </div>
                         <div class="mt-action-datetime ">
@@ -25,24 +27,35 @@
                 </div>
             </div>
         </div>
-    {%endfor%}
-{%else%}
+    {% endfor %}
+{% else %}
     <div class="col-md-6 col-md-offset-4"> 
-        <div class="mt-actions">
-            <div class="mt-action">
-                <div class="mt-action-img">
-                    <img src="{{asset('bundles/public/img/icon/alert.png')}}" style="width: 100%;" > </div>
-                <div class="mt-action-body">
-                    <div class="mt-action-row">
-                        <div class="mt-action-info">
-                            <div class="mt-action-details ">
-                                <span class="mt-action-author" style="color: white">Mensaje</span>
-                                <p class="mt-action-desc">Sin registros existentes</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
-{%endif%}
+{% endif %}
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+     disabled('{{cant}}');   
+    });
+
+    function disabled(cant){
+        
+        if(cant == 0 ){
+
+            $("#txtTE").attr('disabled', false);
+            $("#txtInicio").attr('disabled', false);
+            $("#txtCurso").attr('disabled', false);
+            $('#btnAnamPac').attr("disabled", false);
+
+        }else{
+            
+            $("#txtTE").attr('disabled', 'disabled');
+            $("#txtInicio").attr('disabled', 'disabled');
+            $("#txtCurso").attr('disabled', 'disabled');
+            $('#btnAnamPac').attr("disabled", true);
+        }
+        console.log(cant);
+    }
+    
+</script>

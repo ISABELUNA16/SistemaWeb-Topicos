@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ModeloBundle\Entity\AtencionDiagnostico;
 use ModeloBundle\Entity\AtencionProcedimiento;
 use ModeloBundle\Entity\AtencionAnamnesis;
+use ModeloBundle\Entity\AtencionAnamnesisPaciente;
 use ModeloBundle\Entity\Atencion;
 
 class AnamenisController extends Controller {
@@ -91,6 +92,52 @@ class AnamenisController extends Controller {
     }
 
      /**
+     * @Route("/guardaranamnesispaciente", name="doctor_guardar_AtencionAnamnesisPaciente")
+     * @Method("POST")
+     */
+    public function GuardarAnamnesisPacienteAction(Request $request) {
+        
+        $usuario = $this->getUser()->getCodUser();
+        $te = $request->request->get('te');
+        $inicio = $request->request->get('inicio');
+        $curso = $request->request->get('curso');
+        $codAtencion = $request->request->get('codatencion');
+        
+        $em = $this->getDoctrine()->getManager(); 
+
+        if( !empty($te) &&  !empty($inicio) && !empty($curso) && !empty($codAtencion)){
+
+            $AnamnesisPac = new AtencionAnamnesisPaciente();
+            $AnamnesisPac->setCodAtencion($codAtencion);
+            $AnamnesisPac->setAanamnpacTe($te);
+            $AnamnesisPac->setAanamnpacInicio($inicio);
+            $AnamnesisPac->setAanampacCurso($curso);
+            $AnamnesisPac->setCodUser($usuario);
+            $AnamnesisPac->setAanampacFegReg(new \DateTime);
+            $AnamnesisPac->setAanampacEstado(1);
+            $em->persist($AnamnesisPac);
+            $em->flush();
+
+            if (!$AnamnesisPac->getCodAanamnesisPac()) {
+
+                $rpta = ['result' => false, 'mensaje' => 'Ocurrio un problema al registrar, intentelo nuevamente'];
+            } else {
+
+                $rpta = ['result' => true, 'mensaje' => 'Se registro correctamente.'];
+            }
+        
+        }else{
+
+            $rpta = ['result' => false, 'mensaje' => 'Los campos no deben estar vacios.'];
+        }
+
+        echo json_encode($rpta, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+
+
+     /**
      * @Route("/lstaanamnesis", name="doctor_lista_aanamnesis")
      * @Method("POST")
      */
@@ -106,6 +153,29 @@ class AnamenisController extends Controller {
             $result = false;
         }
         echo $this->renderView('RecepcionBundle:Doctor:data_anamnesis.html.twig', ['lstAanamnesis' => $Aanamnesis, 'result' => $result]);
+        exit;
+    }
+
+    /**
+     * @Route("/lstaanamnesispaciente", name="doctor_lista_aanamnesisPaciente")
+     * @Method("POST")
+     */
+    public function LstAanamnesisPacienteAction(Request $request) {
+        
+        $codatencion = $request->request->get('codatencion');
+
+        $em = $this->getDoctrine()->getManager(); //CONEXION A BASE DE DATOS TOPICO
+        $AanamnesisPac = $em->getRepository('ModeloBundle:AtencionAnamnesisPaciente')->Data_Lista_AanamnesisPaciente($codatencion); //DATOS LISTA ATENCIONES MEDICAS
+        $cantidad = $em ->getRepository('ModeloBundle:AtencionAnamnesisPaciente')->cantAnam($codatencion);
+        $cantAnam = $cantidad[0]['cantidad'];
+        
+        $result = true;
+
+        if (!$AanamnesisPac) {
+            $result = false;
+        }
+
+        echo $this->renderView('RecepcionBundle:Doctor:data_anamnesis_paciente.html.twig', ['lstAanamnesisPac' => $AanamnesisPac, 'result' => $result, 'cont' => $cantAnam]);
         exit;
     }
 
