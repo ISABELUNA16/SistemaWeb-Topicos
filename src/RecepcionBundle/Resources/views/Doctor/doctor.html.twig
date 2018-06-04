@@ -439,10 +439,12 @@
         }
         
         function VerHistorial(fecha,codatencion){
+          
+            $('#hfechaR').html('Lista de registros : <br> '+fecha);
             $('#hfechaD').html('Lista de registros : <br> '+fecha);
             $('#hfechaP').html('Lista de registros : <br> '+fecha);
-            $('#hfechaR').html('Lista de registros : <br> '+fecha);
             $('#hfechaA').html('Lista de registros : <br> '+fecha);
+          
             $.ajax(
                   {
                       url: '{{path('historial_view_lista')}}',
@@ -458,19 +460,19 @@
         
         function CambiarVistaHistorial(tipovista){
             if(tipovista===1){
-                $('#lstdiagnostico').show();
+                $('#lstreceta').show();
+                $('#lstdiagnostico').hide();
                 $('#lstprocedimiento').hide();
-                $('#lstreceta').hide();
                 $('#lstanamnesis').hide();
             }else if(tipovista===2){
-                $('#lstdiagnostico').hide();
-                $('#lstprocedimiento').show();
                 $('#lstreceta').hide();
+                $('#lstdiagnostico').show();
+                $('#lstprocedimiento').hide();
                 $('#lstanamnesis').hide();
             }else if(tipovista===3){
+                $('#lstreceta').hide();
                 $('#lstdiagnostico').hide();
-                $('#lstprocedimiento').hide();
-                $('#lstreceta').show();
+                $('#lstprocedimiento').show();
                 $('#lstanamnesis').hide();
             }else if(tipovista===4){
                 $('#lstdiagnostico').hide();

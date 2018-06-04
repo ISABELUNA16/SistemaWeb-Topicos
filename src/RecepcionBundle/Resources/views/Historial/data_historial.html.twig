@@ -1,3 +1,58 @@
+<div id="lstreceta" style="display: none">
+    {% if resultM %} 
+       <div class="tab-content"> 
+            <div class="mt-actions">
+                <p class="font-dark bold uppercase" style="margin-top: 10px;margin-bottom: 5px;border-bottom: 1px solid #eeeeee;">LISTA DE MEDICAMENTOS</p>
+                {% for lst in lstAmedicamento %}
+                <div class="mt-action">
+                    <div class="mt-action-body" style="padding-top: 5px;">
+                        <div class="mt-action-row">
+                            <div class="mt-action-info ">
+                                <div class="mt-action-icon ">
+                                    <i class="fa fa-eyedropper"></i>
+                                </div>
+                                <div class="mt-action-details ">
+                                    <span class="mt-action-author" style="font-size: 12px;">{{lst.descripcion}}</span>
+                                    <p class="mt-action-desc" style="margin-top: 0px;">{{lst.concentracion}} g</p>
+                                </div>
+                            </div>
+                            <div class="mt-action-datetime">
+                                <span class="mt-action-date"></i>{{lst.unidad}} Unid.</span>
+                            </div>
+                            <div class="mt-action-datetime">
+                                <span class="mt-action-date"></i>Cad. {{lst.dosis}} {{lst.tdosis}}</span>
+                            </div>
+                            <div class="mt-action-datetime">
+                                <span class="mt-action-date">{{lst.duracion}} {{lst.tduracion}}</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            {%endfor%}         
+            </div>
+        </div>
+{% else %}
+    <div class="col-md-8 col-md-offset-3">
+        <div class="mt-actions">
+            <div class="mt-action">
+                <div class="mt-action-img">
+                    <img src="{{asset('bundles/public/img/icon/alert.png')}}" style="width: 100%;" > </div>
+                <div class="mt-action-body">
+                    <div class="mt-action-row">
+                        <div class="mt-action-info">
+                            <div class="mt-action-details ">
+                                <p class="mt-action-desc">Sin registros de Receta existentes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+</div>
+
 <div id="lstdiagnostico" style="display: none">
     {% if resultD %} 
             <div class="tab-content"> 
@@ -106,60 +161,7 @@
     </div>
 {%endif%}
 </div>
-<div id="lstreceta" style="display: none">
-    {%if resultM%} 
-       <div class="tab-content"> 
-            <div class="mt-actions">
-                <p class="font-dark bold uppercase" style="margin-top: 10px;margin-bottom: 5px;border-bottom: 1px solid #eeeeee;">LISTA DE MEDICAMENTOS</p>
-                {%for lst in lstAmedicamento%}
-                <div class="mt-action">
-                    <div class="mt-action-body" style="padding-top: 5px;">
-                        <div class="mt-action-row">
-                            <div class="mt-action-info ">
-                                <div class="mt-action-icon ">
-                                    <i class="fa fa-eyedropper"></i>
-                                </div>
-                                <div class="mt-action-details ">
-                                    <span class="mt-action-author" style="font-size: 12px;">{{lst.descripcion}}</span>
-                                    <p class="mt-action-desc" style="margin-top: 0px;">{{lst.concentracion}} g</p>
-                                </div>
-                            </div>
-                            <div class="mt-action-datetime">
-                                <span class="mt-action-date"></i>{{lst.unidad}} Unid.</span>
-                            </div>
-                            <div class="mt-action-datetime">
-                                <span class="mt-action-date"></i>Cad. {{lst.dosis}} {{lst.tdosis}}</span>
-                            </div>
-                            <div class="mt-action-datetime">
-                                <span class="mt-action-date">{{lst.duracion}} {{lst.tduracion}}</span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            {%endfor%}         
-            </div>
-        </div>
-{%else%}
-    <div class="col-md-8 col-md-offset-3">
-        <div class="mt-actions">
-            <div class="mt-action">
-                <div class="mt-action-img">
-                    <img src="{{asset('bundles/public/img/icon/alert.png')}}" style="width: 100%;" > </div>
-                <div class="mt-action-body">
-                    <div class="mt-action-row">
-                        <div class="mt-action-info">
-                            <div class="mt-action-details ">
-                                <p class="mt-action-desc">Sin registros de Receta existentes</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{%endif%}
-</div>
+
 
 <div id="lstanamnesis" style="display: none">
     {% if resultA %} 
@@ -196,7 +198,7 @@
                         <div class="mt-action-row">
                             <div class="mt-action-info">
                                 <div class="mt-action-details ">
-                                    <p class="mt-action-desc">Sin registros de Receta existentes</p>
+                                    <p class="mt-action-desc">Sin registros de Anamnesis existentes</p>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ ob_start();
                     <p><strong>TÓPICO DE ATENCIÓN MÉDICA</strong></p>
                     <p><strong>RECETARIO</strong></p></center>
                 </div>
-                <div class="col-xs-3" style="text-align: center"><strong>Fecha : hoy</strong><br>Unidad de Personal</div>
+                <div class="col-xs-3" style="text-align: center"><strong>Fecha : <?php echo $fecha ?> </strong><br>Unidad de Personal</div>
             </div>
             <br>
             <div class="row"  style="border-bottom: 1px solid #f3f2f2;">

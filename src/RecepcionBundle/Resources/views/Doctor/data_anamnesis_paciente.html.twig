@@ -35,12 +35,13 @@
 {% endif %}
 
 <script type="text/javascript">
+
     jQuery(document).ready(function () {
-     disabled('{{cant}}');   
+        disabled('{{cant}}');   
     });
 
     function disabled(cant){
-        
+    
         if(cant == 0 ){
 
             $("#txtTE").attr('disabled', false);

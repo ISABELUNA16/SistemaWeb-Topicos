@@ -82,7 +82,7 @@ class Usuario implements UserInterface
     /*Implementación para el logueo*/
 
     public function getUsername(){
-        return $this->userName;
+        return $this->username;
     }
 
     public function getSalt(){

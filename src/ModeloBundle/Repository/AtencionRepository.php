@@ -3,6 +3,18 @@
 namespace ModeloBundle\Repository;
 
 class AtencionRepository extends \Doctrine\ORM\EntityRepository {
+    
+    public function fechaAtencion($codatencion){
+        
+        $sql = " SELECT CONVERT(VARCHAR(10), ate_fec_reg , 103) as fecha FROM Atencion where cod_atencion = '$codatencion';";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        $fecha = $stmt->fetchAll();
+        return $fecha;
+
+    } 
+
+
     //  FUNCION PARA LA LISTA DE ATENCIONES REGISTRADAS
     public function Data_Lista_Atenciones() {
         $sql = "SELECT  cod_atencion AS codigo ,

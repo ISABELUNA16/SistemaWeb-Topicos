@@ -86,14 +86,25 @@
                     <div class="top-menu">
                         <ul class="nav navbar-nav pull-right">
                             <li class="dropdown dropdown-user dropdown-dark">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" class="img-circle"  src="{{asset('bundles/public/img/usersimple.png')}}">
-                                    <span class="username username-hide-mobile"> {{app.user.username}} </span>
-                                  
+                                    <span class="username username-hide-mobile">
+                                        {% set nombres = app.session.get('nombres') %}
+                                        {% set dni = app.session.get('dni')%}
+                                        {{ nombres['apaterno'] }} {{ nombres['amaterno'] }}, {{ nombres['nombres'] }} 
+                                    </span>
                                 </a>
                             </li>
                             <li class="droddown dropdown-separator">
                                 <span class="separator"></span>
+                            </li>
+                            <li class="dropdown dropdown-user dropdown-dark">
+                                <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <span class="username username-hide-mobile">
+                                        PERFIL : {{ nombres['perfil'] }}
+                                    </span>
+                                </a>
+                                
                             </li>
                             <li class="dropdown dropdown-extended quick-sidebar-toggler  dropdown-dark" >                                    
                                 <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="display: initial;">
@@ -180,7 +191,7 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
     <div class="container text-center" >
-        2018 &copy; Instituto Peruano del Deporte
+        2018 &copy; Instituto Peruano del Deporte | Todos los derechos reservados. 
     </div>
 </div>
 <div class="scroll-to-top">

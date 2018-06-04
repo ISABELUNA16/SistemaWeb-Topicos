@@ -5,23 +5,23 @@
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Peso</label>
-        <input type="text" placeholder="Peso en kg." class="form-control" id="txtpeso" name="txtpeso">
+        <input type="number" placeholder="PESO EN  KG." class="form-control" id="txtpeso" name="txtpeso">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Talla</label>
-        <input type="text" placeholder="Talla en cm." class="form-control" id="txttalla" name="txttalla">
+        <input type="number" placeholder="TALLA EN CM." class="form-control" id="txttalla" name="txttalla">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Índice de Masa Corporal</label>
-        <input type="text" placeholder="Masa corporal" class="form-control" id="txtmasa" name="txtmasa" disabled>
+        <input type="number" placeholder="MASA CORPORAL" class="form-control" id="txtmasa" name="txtmasa" disabled>
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Perímetro Abdominal</label>
-        <input type="text" placeholder="Perímetro abdominal" class="form-control" id="txtperimetro" name="txtperimetro">
+        <input type="number" placeholder="PERIMETRO " class="form-control" id="txtperimetro" name="txtperimetro">
     </div>
     <div class="col-md-8" style="padding-bottom: 10px;">
         <label class="control-label">Estado Nutricional</label>
-        <input type="text" placeholder="Estado nutricional" class="form-control" id="txtnutricion" name="txtnutricion" disabled>
+        <input type="number" placeholder="ESTADO NUTRICIONAL" class="form-control" id="txtnutricion" name="txtnutricion" disabled>
     </div>
     <hr>
     <div class="col-md-12" style="padding-bottom: 10px;padding-bottom: 10px;text-align: center;">
@@ -35,23 +35,40 @@
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Peso</label>
-        <input type="text" placeholder="Peso en kg." class="form-control" id="txtpeso" name="txtpeso" disabled value="{{LstAntropometria.atePeso}}">
+        <input type="number" placeholder="PESO EN KG." class="form-control" id="txtpeso" name="txtpeso" disabled value="{{LstAntropometria.atePeso}}">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Talla</label>
-        <input type="text" placeholder="Talla en cm." class="form-control" id="txttalla" name="txttalla" disabled value="{{LstAntropometria.ateTalla}}">
+        <input type="number" placeholder="TALLA EN CM." class="form-control" id="txttalla" name="txttalla" disabled value="{{LstAntropometria.ateTalla}}">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;" >
         <label class="control-label">Índice de Masa Corporal</label>
-        <input type="text" placeholder="Masa corporal." class="form-control" id="txtmasa" name="txtmasa" disabled value="{{LstAntropometria.ateIndiceMasa}}">
+        <input type="number" placeholder="MASA CORPORAL." class="form-control" id="txtmasa" name="txtmasa" disabled value="{{LstAntropometria.ateIndiceMasa}}">
     </div>
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label class="control-label">Perímetro Abdominal</label>
-        <input type="text" placeholder="Perímetro abdominal." class="form-control" id="txtperimetro" name="txtperimetro" disabled value="{{LstAntropometria.atePerAbdominal}}">
+        <input type="number" placeholder="PERIMETRO." class="form-control" id="txtperimetro" name="txtperimetro" disabled value="{{LstAntropometria.atePerAbdominal}}">
     </div>
     <div class="col-md-8" style="padding-bottom: 10px;">
         <label class="control-label">Estado Nutricional</label>
-        <input type="text" placeholder="Estado nutrcional." class="form-control" id="txtnutricion" name="txtnutricion" disabled value="{{LstAntropometria.ateEstNutricional}}">
+        <input type="number" placeholder="ESTADO NUTRICIONAL." class="form-control" id="txtnutricion" name="txtnutricion" disabled value="{{LstAntropometria.ateEstNutricional}}">
     </div>
 
 {%endif%}    
+
+<script type="text/javascript">
+    
+    jQuery('#txtpeso, #txttalla, #txtperimetro').on('keypress', function (e) {
+
+        if (e.keyCode == 101 || e.keyCode == 45 || e.keyCode == 43 || e.keyCode == 44 || e.keyCode == 47 || e.keyCode == 69 ) {
+            return false;
+        }
+        soloNumeros(e.keyCode);
+    });
+    
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+            return (key >= 48 && key <= 57)
+    }
+    
+</script>

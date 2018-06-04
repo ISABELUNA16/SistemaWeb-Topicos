@@ -1,29 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block page_head %}
-    <div class="page-head">
-        <div class="container">
-            <!-- BEGIN PAGE TITLE -->
-            <div class="page-title">
-                <h4><strong style=" font: message-box; font-weigth:bold">Herramientas </strong> <small> >> Menú principal </small></h4>
-            </div>               
-        </div>
-    </div>
+{% endblock %}
+{% block breadcrumb %}
+    <ul class="page-breadcrumb breadcrumb">
+        <li class="active"><strong>HERRAMIENTAS </strong><small> Menú principal </small> </li> <i class="fa fa-circle"></i> 
+    </ul>
 {% endblock %}
 
 {% block body_content %}
-    
+
     <section class="proceso-inscripcion">
          <div class="container text-center" style="margin-top: 10px; margin-bottom: 30px;">
             
             <div class="row text-center">
-                <div id="option-recepcion" class="col col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center">
-                    <a href="{{path('recepcion_home')}}">
-                        <div class="card">
-                            <img src="{{asset('bundles/public/img/icon/recepcionista.png')}}" width="120" height="120">
-                            <p class="title-card">Recepción</p>
-                        </div>
-                    </a>
-                </div>
+            
+            {% if  is_granted('ROLE_DOCTOR') %}   
+
                 <div id="option-doctor" class="col col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center">
                     <a href="{{path('doctor_home')}}">
                         <div class="card">
@@ -32,6 +24,7 @@
                         </div>
                     </a>
                 </div>
+
                 <div id="option-recepcion" class="col col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center">
                     <a href="{{path('mantenimiento_diagnostico')}}">
                         <div class="card">
@@ -40,6 +33,27 @@
                         </div>
                     </a>
                 </div>
+            {% else %}
+            
+                <div id="option-recepcion" class="col col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center">
+                    <a href="{{path('recepcion_home')}}">
+                        <div class="card">
+                            <img src="{{asset('bundles/public/img/icon/recepcionista.png')}}" width="120" height="120">
+                            <p class="title-card">Recepción</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div id="option-recepcion" class="col col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center">
+                    <a href="{{path('mantenimiento_diagnostico')}}">
+                        <div class="card">
+                            <img src="{{asset('bundles/public/img/icon/mantenimiento.png')}}" width="120" height="120">
+                            <p class="title-card">Mantenimiento</p>
+                        </div>
+                    </a>
+                </div>
+
+            {% endif %}
             </div>
         </div>
     </section>

@@ -12,7 +12,7 @@
 {% block body_content %}
     <div class="page-content-inner">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12">               
                 <!-- BEGIN PROFILE CONTENT -->
                 <div class="profile-content" style="-webkit-box-shadow: 8px 8px 5px -7px rgba(0,0,0,0.75);-moz-box-shadow: 8px 8px 5px -7px rgba(0,0,0,0.75);box-shadow: 8px 8px 5px -7px rgba(0,0,0,0.75);">
                     <div class="portlet light " style="margin-bottom: 0px;">
@@ -126,7 +126,7 @@
                             <div class="modal-body">
                                 <div class="portlet-title tabbable-line">
                                     <ul class="nav nav-tabs">
-                                        <li   class="active" >
+                                        <li class="active" >
                                             <a id="tab1" href="#tab_1_1" data-toggle="tab">ANTROPOMETRIA</a>
                                         </li>
                                         <li >
@@ -259,8 +259,6 @@
         ListarAtenciones();
         document.getElementById("txtdni").setAttribute("maxlength", "8");
     });
-
-
 
     function CargarProvincias(dep,val,op){
          $.ajax(

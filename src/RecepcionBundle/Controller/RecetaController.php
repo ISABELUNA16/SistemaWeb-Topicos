@@ -141,13 +141,15 @@ class RecetaController extends Controller {
         }
         $Nompaciente = $Persona['nombres'] . ' ' . $Persona['apaterno'] . ' ' . $Persona['amaterno'];
         $Nomdoctor = $Doctor['nombres'] . ' ' . $Doctor['apaterno'] . ' ' . $Doctor['amaterno'];
-        
+        $fecha = $Atencion->getAteFecReg();
         
         $Adiagnostico = $em->getRepository('ModeloBundle:AtencionDiagnostico')->Data_Lista_Adiagnosticos($codatencion); //DATOS LISTA ATENCIONES MEDICAS
         $Aprocedimiento = $em->getRepository('ModeloBundle:AtencionProcedimiento')->Data_Lista_Aprocedimiento($codatencion);
         $Amedicamento = $em->getRepository('ModeloBundle:AtencionMedicamento')->Data_Lista_Amedicamento($codatencion);
+        $fechaAten = $em->getRepository('ModeloBundle:Atencion')->fechaAtencion($codatencion);
+        $fecha = $fechaAten[0]['fecha'];
 
-        return $this->render('RecepcionBundle:Historial:imprimir.html.php', ['Nomdoctor'=>$Nomdoctor,'Nompaciente'=>  $Nompaciente,'Diagnostico' => $Adiagnostico, 'Procedimiento' => $Aprocedimiento, 'Receta' => $Amedicamento]);
+        return $this->render('RecepcionBundle:Historial:imprimir.html.php', ['Nomdoctor'=>$Nomdoctor,'Nompaciente'=>  $Nompaciente,'Diagnostico' => $Adiagnostico, 'Procedimiento' => $Aprocedimiento, 'Receta' => $Amedicamento, 'fecha' => $fecha]);
     }
 
     /**

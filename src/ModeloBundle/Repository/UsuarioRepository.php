@@ -10,22 +10,47 @@ namespace ModeloBundle\Repository;
  */
 class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 {
-   //  FUNCION PARA SESSION DEL USUARIO PARAMETRO CODIGO PERSONA
-    public function Data_usuario_by_cod($codper) {
-        $sql = " SELECT  t1.cod_user AS codigo ,
+   //  FUNCION PARA SESSION DEL USUARIO CON DNI BD PRESUPUESTO
+    public function Data_usuario_by_dni_cas($dni) {
+        $sql = "SELECT  t1.cod_user AS codigo ,
                         t1.percodigo AS codper ,
                         t1.user_perfil AS codperf ,
                         t2.cLe AS dni ,
                         ( CASE t1.user_perfil
-                            WHEN 1 THEN 'Recepcion'
-                            WHEN 2 THEN 'Doctor'
+                            WHEN 1 THEN 'RECEPCION'
+                            WHEN 2 THEN 'DOCTOR'
                           END ) AS perfil ,
                         t2.cNombres AS nombres ,
                         t2.cApePat AS apaterno ,
                         t2.cApeMat AS amaterno
                 FROM    Topico.dbo.Usuario AS t1
-                        INNER JOIN dbo.Trabajador AS t2 ON t1.percodigo = t2.nCodTra
-                        WHERE   t2.nCodTra = '$codper';";
+                        INNER JOIN Presupuesto.dbo.Trabajador AS t2 ON t1.percodigo = t2.nCodTra
+                        WHERE   t2.cLe = '$dni';";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        $datos = $stmt->fetch();
+        return $datos;
+    }
+
+    //FUNCION PARA RETORNAR DATOS DEL USUARIO TERCERO AUTHENTICADO
+
+    public function Data_usuario_by_dni_tercero($dni){
+        
+        $sql = "SELECT  t1.cod_user AS codigo ,
+                        t1.percodigo AS codper ,
+                        t1.user_perfil AS codperf ,
+                        t2.pac_dni AS dni ,
+                        ( CASE t1.user_perfil
+                            WHEN 1 THEN 'RECEPCION'
+                            WHEN 2 THEN 'DOCTOR'
+                          END ) AS perfil ,
+                        t2.pac_nombre AS nombres ,
+                        t2.pac_apaterno AS apaterno ,
+                        t2.pac_amaterno AS amaterno
+                FROM    Topico.dbo.Usuario AS t1
+                        INNER JOIN dbo.paciente AS t2 ON t1.user_name = t2.pac_dni
+                        WHERE   t2.pac_dni = '$dni';";
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();

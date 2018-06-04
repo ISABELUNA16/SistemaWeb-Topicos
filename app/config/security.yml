@@ -16,9 +16,12 @@ security:
                 property: username
     
     encoders:
+
         ModeloBundle\Entity\Usuario:
             algorithm: bcrypt
         
+        #Symfony\component\Security\Core\User\User: plaintext
+        #ModeloBundle\Entity\Usuario: plaintext
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

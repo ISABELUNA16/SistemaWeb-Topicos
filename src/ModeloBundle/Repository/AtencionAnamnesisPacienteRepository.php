@@ -29,7 +29,7 @@ class AtencionAnamnesisPacienteRepository extends \Doctrine\ORM\EntityRepository
 
     public function cantAnam($codAtencion){
     	
-    	$sql = "SELECT COUNT(*) AS cantidad FROM Atencion_anamnesis_paciente where  CONVERT(VARCHAR(10), aanamnesispac_feg_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103) AND cod_atencion = '43' AND aanamnesispac_estado = 1";
+    	$sql = "SELECT COUNT(*) AS cantidad FROM Atencion_anamnesis_paciente where  CONVERT(VARCHAR(10), aanamnesispac_feg_reg, 103) = CONVERT(VARCHAR(10), GETDATE(), 103) AND cod_atencion = '$codAtencion' AND aanamnesispac_estado = 1";
 
     	$stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();

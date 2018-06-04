@@ -37,7 +37,28 @@
 
 <div class="col-md-9" >
     <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-        <a onclick="CambiarVistaHistorial(1);" title="DIAGNOSTICO">
+        <a onclick="CambiarVistaHistorial(1);" title="RECETA">
+            <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
+                <div class="display" style="margin-bottom: 5px !important;">
+                    <div class="number">
+                        <h3 class="font-red-sharp">
+                            <span style="font-size: 20px !important;">Receta</span>
+                        </h3>
+                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Lista de recetas. </small>
+                    </div>
+                </div>
+                <div class="progress-info">
+                    <div class="progress">
+                        <span style="width: 100%;" class="progress-bar progress-bar-danger red-sharp">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
+        <a onclick="CambiarVistaHistorial(2);" title="DIAGNOSTICO">
             <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
                 <div class="display" style="margin-bottom: 5px !important;">
                     <div class="number">
@@ -57,7 +78,7 @@
         </a>
     </div>
     <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-        <a onclick="CambiarVistaHistorial(2);" title="PROCEDIMIENTO">
+        <a onclick="CambiarVistaHistorial(3);" title="PROCEDIMIENTO">
             <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
                 <div class="display" style="margin-bottom: 5px !important;">
                     <div class="number">
@@ -77,26 +98,7 @@
             </div>
         </a>
     </div>
-    <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
-        <a onclick="CambiarVistaHistorial(3);" title="RECETA">
-            <div class="dashboard-stat2 " style="    padding-bottom: 15px !important;">
-                <div class="display" style="margin-bottom: 5px !important;">
-                    <div class="number">
-                        <h3 class="font-red-sharp">
-                            <span style="font-size: 20px !important;">Receta</span>
-                        </h3>
-                        <small style="text-transform: initial !important; font-size: 11px !important;" id="hfechaR">Lista de recetas. </small>
-                    </div>
-                </div>
-                <div class="progress-info">
-                    <div class="progress">
-                        <span style="width: 100%;" class="progress-bar progress-bar-danger red-sharp">
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
+    
 
     <div class="col-md-3" style="padding-left: 5px;padding-right: 5px;">
         <a onclick="CambiarVistaHistorial(4);" title="ANAMNESIS">

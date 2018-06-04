@@ -1,19 +1,19 @@
 {%if LstSignos.ateValSignos==0%}
 <div class="col-md-6" style="padding-bottom: 10px;" >
     <label class="control-label">Frecuencia Cardiaca</label>
-    <input type="text" placeholder="FRECUENCIA CARDIACA" class="form-control" id="txtfcardiaca" name="txtfcardiaca" required>
+    <input type="number" placeholder="FRECUENCIA CARDIACA" class="form-control" id="txtfcardiaca" name="txtfcardiaca" required>
 </div>
 <div class="col-md-6" style="padding-bottom: 10px;">
     <label class="control-label">Frecuencia Respiratoria</label>
-    <input type="text" placeholder="FRECUENCIA RESPIRATORIA" class="form-control" id="txtfrespiratoria" name="txtfrespiratoria" required>
+    <input type="number" placeholder="FRECUENCIA RESPIRATORIA" class="form-control" id="txtfrespiratoria" name="txtfrespiratoria" required>
 </div>
 <div class="col-md-6" style="padding-bottom: 10px;" >
     <label class="control-label">Presion Arterial</label>
-    <input type="text" placeholder="PRESION ARTERIAL" class="form-control" id="txtparterial" name="txtparterial" required>
+    <input type="number" placeholder="PRESION ARTERIAL" class="form-control" id="txtparterial" name="txtparterial" required>
 </div>
 <div class="col-md-6" style="padding-bottom: 10px;">
     <label class="control-label">Temperatura</label>
-    <input type="text" placeholder="TEMPERATURA" class="form-control" id="txttemperatura" name="txttemperatura" required>
+    <input type="number" placeholder="TEMPERATURA" class="form-control" id="txttemperatura" name="txttemperatura" required>
 </div>
 <hr>
 <div class="col-md-12" style="padding-bottom: 10px;padding-bottom: 10px;text-align: center;">
@@ -22,20 +22,34 @@
 {%else%}
 <div class="col-md-6" style="padding-bottom: 10px;" >
     <label class="control-label">Frecuencia Cardiaca</label>
-    <input type="text" placeholder="FRECUENCIA CARDIACA" class="form-control" id="txtfcardicac" name="txtfcardiaca" disabled value="{{LstSignos.ateFreCardiaca}}">
+    <input type="number" placeholder="FRECUENCIA CARDIACA" class="form-control" id="txtfcardicac" name="txtfcardiaca" disabled value="{{LstSignos.ateFreCardiaca}}">
 </div>
 <div class="col-md-6" style="padding-bottom: 10px;">
     <label class="control-label">Frecuencia Respiratoria</label>
-    <input type="text" placeholder="FRECUENCIA RESPIRATORIA" class="form-control" id="txtfrespiratoria" name="txtfrespiratoria" disabled value="{{LstSignos.ateFreRespiratoria}}">
+    <input type="number" placeholder="FRECUENCIA RESPIRATORIA" class="form-control" id="txtfrespiratoria" name="txtfrespiratoria" disabled value="{{LstSignos.ateFreRespiratoria}}">
 </div>
 <div class="col-md-6" style="padding-bottom: 10px;" >
     <label class="control-label">Presion Arterial</label>
-    <input type="text" placeholder="PRESION ARTERIAL" class="form-control" id="txtparterial" name="txtparterial" disabled value="{{LstSignos.ateFreArterial}}">
+    <input type="number" placeholder="PRESION ARTERIAL" class="form-control" id="txtparterial" name="txtparterial" disabled value="{{LstSignos.ateFreArterial}}">
 </div>
 <div class="col-md-6" style="padding-bottom: 10px;">
     <label class="control-label">Temperatura</label>
-    <input type="text" placeholder="TEMPERATURA" class="form-control" id="txttemperatura" name="txttemperatura" disabled value="{{LstSignos.ateTemperatura}}">
+    <input type="number" placeholder="TEMPERATURA" class="form-control" id="txttemperatura" name="txttemperatura" disabled value="{{LstSignos.ateTemperatura}}">
 </div>
 {%endif%}
 
 
+<script type="text/javascript">
+    jQuery('#txtfcardiaca, #txtfrespiratoria, #txtparterial, #txttemperatura').on('keypress', function (e) {
+
+        if (e.keyCode == 101 || e.keyCode == 45 || e.keyCode == 43 || e.keyCode == 44 || e.keyCode == 47 || e.keyCode == 69 ) {
+            return false;
+        }
+        soloNumeros(e.keyCode);
+    });
+    
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+            return (key >= 48 && key <= 57)
+    }
+</script>
